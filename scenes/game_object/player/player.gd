@@ -6,6 +6,8 @@ const ACCELERATION_SMOOTHING = 25
 @onready var barrel_tip: Marker2D = $Barrel
 @onready var tank_body: Sprite2D = $TankBody/Sprite2D
 
+@onready var diagonal_movement: Array = [Vector2(-1, -1), Vector2(1, 1), Vector2(1, -1), Vector2(-1, 1)]
+
 func _process(delta):
 	var movement_vector = get_movement_vector()
 	var direction = movement_vector.normalized()
@@ -18,12 +20,14 @@ func _process(delta):
 	
 	barrel_tip.look_at(mouse_position)
 	
-	if movement_vector == Vector2(-1, 0) or movement_vector == Vector2(1, 0):
-		tank_body.rotation = 90
-	if movement_vector == Vector2(0, 1) or movement_vector == Vector2(0, -1):
-		tank_body.rotation = 0
-	if movement_vector == Vector2(-1, 1) or movement_vector == Vector2(1, -1):
-		tank_body.rotation = 45
+	if movement_vector == Vector2(-1, 0) || movement_vector == Vector2(1, 0):
+		tank_body.rotation_degrees = 90
+	if movement_vector == Vector2(0, 1) || movement_vector == Vector2(0, -1):
+		tank_body.rotation_degrees = 0
+	if movement_vector == Vector2(1, -1) || movement_vector == Vector2(-1, 1):
+		tank_body.rotation_degrees = 45
+	if movement_vector == Vector2(1, 1) || movement_vector == Vector2(-1, -1):
+		tank_body.rotation_degrees = -45
 		
 	
 	#var move_sign = sign(movement_vector.x)
