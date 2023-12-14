@@ -13,7 +13,7 @@ script = ExtResource("1_hkal2")
 [node name="TankBody" type="Marker2D" parent="."]
 
 [node name="Sprite2D" type="Sprite2D" parent="TankBody"]
-rotation = 1.5708
+rotation = -1.5708
 texture = ExtResource("2_51ww2")
 
 [node name="Barrel" type="Marker2D" parent="."]
