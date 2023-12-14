@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=3 uid="uid://bam04hog13mtt"]
+
+[ext_resource type="Script" path="res://scenes/game_object/player/player.gd" id="1_hkal2"]
+[ext_resource type="Texture2D" uid="uid://11ks20a40ekn" path="res://scenes/game_object/player/tank_green.png" id="2_oq22r"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_e32xm"]
+radius = 16.0312
+
+[node name="Player" type="CharacterBody2D"]
+script = ExtResource("1_hkal2")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_oq22r")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_e32xm")
