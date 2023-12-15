@@ -1,5 +1,6 @@
-[gd_scene load_steps=7 format=3 uid="uid://bi7arw5jp0g26"]
+[gd_scene load_steps=8 format=3 uid="uid://cg4nsyn3ngch8"]
 
+[ext_resource type="Script" path="res://scenes/game_object/multiplayer.gd" id="1_4e0li"]
 [ext_resource type="Texture2D" uid="uid://bee43w1v6ob6t" path="res://assets/environment/terrainTiles_default.png" id="1_jft5n"]
 [ext_resource type="PackedScene" uid="uid://bam04hog13mtt" path="res://scenes/game_object/player/player.tscn" id="2_kcqh6"]
 
@@ -59,6 +60,7 @@ blend_mode = 1
 blend_mode = 3
 
 [node name="World" type="Node2D"]
+script = ExtResource("1_4e0li")
 
 [node name="TileMap" type="TileMap" parent="."]
 position = Vector2(2, 1)
@@ -87,3 +89,47 @@ material = SubResource("CanvasItemMaterial_ky7c7")
 offset_right = 4482.0
 offset_bottom = 4482.0
 color = Color(0.796078, 0.815686, 0.898039, 1)
+
+[node name="Multiplayer UI" type="Node2D" parent="."]
+
+[node name="Join" type="Button" parent="Multiplayer UI"]
+offset_right = 8.0
+offset_bottom = 8.0
+
+[node name="Host" type="Button" parent="Multiplayer UI"]
+offset_right = 8.0
+offset_bottom = 8.0
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+root_path = NodePath("../..")
+
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
+spawn_path = NodePath("Spawn")
+
+[node name="Spawn" type="Marker2D" parent="MultiplayerSpawner"]
+position = Vector2(1663, 1674)
+scale = Vector2(2.21118, 1.49838)
+
+[node name="MultiplayerSpawner2" type="MultiplayerSpawner" parent="."]
+spawn_path = NodePath("../MultiplayerSpawner/Spawn")
+
+[node name="Spawn" type="Marker2D" parent="MultiplayerSpawner2"]
+position = Vector2(2845, 1657)
+scale = Vector2(2.21118, 1.49838)
+
+[node name="MultiplayerSpawner3" type="MultiplayerSpawner" parent="."]
+spawn_path = NodePath("../MultiplayerSpawner/Spawn")
+
+[node name="Spawn" type="Marker2D" parent="MultiplayerSpawner3"]
+position = Vector2(1657, 2834)
+scale = Vector2(2.21118, 1.49838)
+
+[node name="MultiplayerSpawner4" type="MultiplayerSpawner" parent="."]
+spawn_path = NodePath("Spawn")
+
+[node name="Spawn" type="Marker2D" parent="MultiplayerSpawner4"]
+position = Vector2(2828, 2839)
+scale = Vector2(2.21118, 1.49838)
+
+[connection signal="pressed" from="Multiplayer UI/Join" to="." method="_on_join_pressed"]
+[connection signal="pressed" from="Multiplayer UI/Host" to="." method="_on_host_pressed"]

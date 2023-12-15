@@ -1,0 +1,37 @@
+[gd_scene load_steps=2 format=3 uid="uid://c3j67cnen4n71"]
+
+[ext_resource type="Script" path="res://scenes/game_object/multiplayer.gd" id="1_7204e"]
+
+[node name="Multiplayer" type="Node2D"]
+script = ExtResource("1_7204e")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+root_path = NodePath("../..")
+
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
+spawn_path = NodePath("Spawn")
+
+[node name="Spawn" type="Marker2D" parent="MultiplayerSpawner"]
+position = Vector2(1663, 1674)
+scale = Vector2(2.21118, 1.49838)
+
+[node name="MultiplayerSpawner2" type="MultiplayerSpawner" parent="."]
+spawn_path = NodePath("../MultiplayerSpawner/Spawn")
+
+[node name="Spawn" type="Marker2D" parent="MultiplayerSpawner2"]
+position = Vector2(2845, 1657)
+scale = Vector2(2.21118, 1.49838)
+
+[node name="MultiplayerSpawner3" type="MultiplayerSpawner" parent="."]
+spawn_path = NodePath("../MultiplayerSpawner/Spawn")
+
+[node name="Spawn" type="Marker2D" parent="MultiplayerSpawner3"]
+position = Vector2(1657, 2834)
+scale = Vector2(2.21118, 1.49838)
+
+[node name="MultiplayerSpawner4" type="MultiplayerSpawner" parent="."]
+spawn_path = NodePath("Spawn")
+
+[node name="Spawn" type="Marker2D" parent="MultiplayerSpawner4"]
+position = Vector2(2828, 2839)
+scale = Vector2(2.21118, 1.49838)
