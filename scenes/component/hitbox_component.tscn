@@ -2,5 +2,5 @@
 
 [ext_resource type="Script" path="res://scenes/component/hitbox_component.gd" id="1_geclg"]
 
-[node name="HitboxComponent" type="Node"]
+[node name="HitboxComponent" type="Area2D"]
 script = ExtResource("1_geclg")
