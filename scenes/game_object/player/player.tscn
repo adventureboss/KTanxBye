@@ -1,9 +1,9 @@
 [gd_scene load_steps=8 format=3 uid="uid://bam04hog13mtt"]
 
 [ext_resource type="Script" path="res://scenes/game_object/player/player.gd" id="1_hkal2"]
-[ext_resource type="Texture2D" uid="uid://bkkw4eggqqy8s" path="res://scenes/game_object/player/tankBody_green_outline.png" id="2_51ww2"]
+[ext_resource type="Texture2D" uid="uid://bfc65a0v27tgu" path="res://scenes/game_object/player/tankBody_green_outline.png" id="2_51ww2"]
 [ext_resource type="PackedScene" uid="uid://73lr8fqud4" path="res://scenes/component/health_component.tscn" id="2_gt4m0"]
-[ext_resource type="Texture2D" uid="uid://cphdqa08uuq8a" path="res://scenes/game_object/player/tankGreen_barrel3_outline.png" id="3_vvwhs"]
+[ext_resource type="Texture2D" uid="uid://baryfpafcavs7" path="res://scenes/game_object/player/tankGreen_barrel3_outline.png" id="3_vvwhs"]
 [ext_resource type="PackedScene" uid="uid://dp7s6opobih82" path="res://scenes/component/hurtbox_component.tscn" id="5_fvhfs"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_e32xm"]
