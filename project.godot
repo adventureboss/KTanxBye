@@ -12,6 +12,7 @@ config_version=5
 
 config/name="KTanxBye"
 config/features=PackedStringArray("4.2", "Forward Plus")
+boot_splash/image="res://assets/VampireCastleGames.png"
 config/icon="res://icon.svg"
 
 [display]
