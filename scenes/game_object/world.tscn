@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://bi7arw5jp0g26"]
+[gd_scene load_steps=8 format=3 uid="uid://bi7arw5jp0g26"]
 
 [ext_resource type="Texture2D" uid="uid://bee43w1v6ob6t" path="res://assets/environment/terrainTiles_default.png" id="1_jft5n"]
 [ext_resource type="PackedScene" uid="uid://bam04hog13mtt" path="res://scenes/game_object/player/player.tscn" id="2_kcqh6"]
+[ext_resource type="AudioStream" uid="uid://ch1copgnoxios" path="res://assets/audio/music/KTANKBYE_MAP_TRACK.mp3" id="3_ecdtc"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_wvwmn"]
 resource_name = "terrainTiles"
@@ -87,3 +88,8 @@ material = SubResource("CanvasItemMaterial_ky7c7")
 offset_right = 4482.0
 offset_bottom = 4482.0
 color = Color(0.796078, 0.815686, 0.898039, 1)
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_ecdtc")
+volume_db = -20.0
+autoplay = true
