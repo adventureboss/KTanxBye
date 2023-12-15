@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://ctymmr41jyrii"]
+
+[ext_resource type="Script" path="res://scenes/game_object/player/tank_body.gd" id="1_pyoql"]
+[ext_resource type="Texture2D" uid="uid://b5bqj5g3g6imw" path="res://scenes/game_object/player/tankBody_green_outline.png" id="1_toagj"]
+
+[node name="TankBody" type="Marker2D"]
+script = ExtResource("1_pyoql")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+rotation = -1.5708
+texture = ExtResource("1_toagj")
