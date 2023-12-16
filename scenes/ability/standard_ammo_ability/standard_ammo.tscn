@@ -10,7 +10,7 @@ height = 12.0
 [node name="StandardAmmo" type="Area2D"]
 top_level = true
 script = ExtResource("1_2pw22")
-fire_delay = 0.75
+fire_delay = 0.5
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 rotation = 1.5708
