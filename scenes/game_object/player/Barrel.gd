@@ -10,6 +10,7 @@ var fire_wait : bool = false
 
 func _ready():
 	timer.timeout.connect(on_timer_timeout)
+	GameEvents.ability_pick_up.connect(update_ammo)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -28,3 +29,7 @@ func _fire():
 
 func on_timer_timeout():
 	fire_wait = false
+
+func update_ammo(ability, id):
+	print("updating ammo to id: " + str(id))
+	current_ammo = load(ability)

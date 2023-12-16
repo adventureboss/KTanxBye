@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://blbk3n3y7hc16"]
+
+[ext_resource type="Script" path="res://scenes/component/hitbox_component.gd" id="1_lk25m"]
+[ext_resource type="Texture2D" uid="uid://lamjkto5fgv6" path="res://scenes/ability/standard_ammo_ability/green_bullet.png" id="2_xy08k"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_oj6g5"]
+radius = 3.0
+height = 12.0
+
+[node name="RapidFireAmmo" type="Area2D"]
+top_level = true
+script = ExtResource("1_lk25m")
+damage = 7
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+rotation = 1.5708
+texture = ExtResource("2_xy08k")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_oj6g5")

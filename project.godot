@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 [autoload]
 
 GameManager="*res://scenes/manager/game_manager.gd"
+GameEvents="*res://scenes/autoload/game_events.gd"
 
 [display]
 
