@@ -4,9 +4,16 @@ extends Marker2D
 @export var turning_duration: float = 0.2
 
 @onready var rotate_tween: Tween = create_tween()
+@onready var parent: Node = get_parent()
 var current_rotation = 0
 
+func _ready():
+	$MultiplayerSynchronizer.set_multiplayer_authority(get_parent().name.to_int())
+
 func _process(_delta):
+	if $MultiplayerSynchronizer.get_multiplayer_authority() != multiplayer.get_unique_id():
+		return
+	
 	var movement_vector = get_movement_vector()
 	var proposed_rotation = rad_to_deg(movement_vector.angle())
 	

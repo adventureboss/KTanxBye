@@ -1,8 +1,8 @@
-[gd_scene load_steps=8 format=3 uid="uid://bam04hog13mtt"]
+[gd_scene load_steps=9 format=3 uid="uid://bam04hog13mtt"]
 
 [ext_resource type="Script" path="res://scenes/game_object/player/player.gd" id="1_hkal2"]
 [ext_resource type="PackedScene" uid="uid://73lr8fqud4" path="res://scenes/component/health_component.tscn" id="2_gt4m0"]
-[ext_resource type="PackedScene" uid="uid://ctymmr41jyrii" path="res://scenes/game_object/player/tank_body.tscn" id="3_1e010"]
+[ext_resource type="PackedScene" uid="uid://drybknwrows3o" path="res://scenes/game_object/player/tank_body.tscn" id="3_1e010"]
 [ext_resource type="Texture2D" uid="uid://8ip3d3virahl" path="res://scenes/game_object/player/tankGreen_barrel3_outline.png" id="3_vvwhs"]
 [ext_resource type="PackedScene" uid="uid://dp7s6opobih82" path="res://scenes/component/hurtbox_component.tscn" id="5_fvhfs"]
 
@@ -11,6 +11,17 @@ radius = 16.0312
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pm56w"]
 size = Vector2(34, 30)
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_2jkiu"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 2
+properties/1/path = NodePath(".:scale")
+properties/1/spawn = true
+properties/1/replication_mode = 2
+properties/2/path = NodePath("Barrel:rotation")
+properties/2/spawn = true
+properties/2/replication_mode = 2
 
 [node name="Player" type="CharacterBody2D" groups=["player"]]
 script = ExtResource("1_hkal2")
@@ -36,3 +47,8 @@ health_component = NodePath("../HealthComponent")
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="HurtboxComponent"]
 shape = SubResource("RectangleShape2D_pm56w")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_2jkiu")
+
+[editable path="TankBody"]

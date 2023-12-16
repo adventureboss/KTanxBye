@@ -1,0 +1,25 @@
+[gd_scene load_steps=4 format=3 uid="uid://cnoe7lwarfttu"]
+
+[ext_resource type="Script" path="res://scenes/manager/multiplayer_manager.gd" id="1_2jebv"]
+[ext_resource type="Script" path="res://scenes/manager/scene_manager.gd" id="1_22ckq"]
+[ext_resource type="PackedScene" uid="uid://c7re7lky8g0bl" path="res://scenes/start.tscn" id="3_k5fwe"]
+
+[node name="Main" type="Node2D"]
+
+[node name="StateManager" type="Node2D" parent="."]
+
+[node name="MultiplayerManager" type="Node2D" parent="." node_paths=PackedStringArray("scene_manager")]
+script = ExtResource("1_2jebv")
+scene_manager = NodePath("../SceneManager")
+address = null
+port = null
+
+[node name="SceneManager" type="Node2D" parent="."]
+script = ExtResource("1_22ckq")
+
+[node name="Start" parent="SceneManager" instance=ExtResource("3_k5fwe")]
+
+[connection signal="pressed" from="SceneManager/Start/Join" to="MultiplayerManager" method="_on_join_pressed"]
+[connection signal="pressed" from="SceneManager/Start/Host" to="MultiplayerManager" method="_on_host_pressed"]
+
+[editable path="SceneManager/Start"]
