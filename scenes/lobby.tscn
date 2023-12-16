@@ -1,0 +1,133 @@
+[gd_scene load_steps=2 format=3 uid="uid://b1ja334pp7vgj"]
+
+[ext_resource type="Script" path="res://scenes/lobby.gd" id="1_v3rvc"]
+
+[node name="Lobby" type="Control" node_paths=PackedStringArray("color_field", "name_field")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_v3rvc")
+color_field = NodePath("Elements/ColorButton")
+name_field = NodePath("Elements/NameField")
+
+[node name="Start" type="Button" parent="."]
+layout_mode = 0
+offset_left = 428.0
+offset_top = 351.0
+offset_right = 478.0
+offset_bottom = 382.0
+text = "Start!"
+
+[node name="Ready" type="Button" parent="."]
+layout_mode = 0
+offset_left = 326.0
+offset_top = 351.0
+offset_right = 376.0
+offset_bottom = 382.0
+text = "Ready!"
+
+[node name="Elements" type="Node2D" parent="."]
+position = Vector2(277, 25)
+scale = Vector2(2, 2)
+
+[node name="Players Title" type="RichTextLabel" parent="Elements"]
+offset_right = 61.0
+offset_bottom = 40.0
+scale = Vector2(2, 2)
+text = "Players:"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+
+[node name="Slot1" type="RichTextLabel" parent="Elements"]
+offset_left = -84.5
+offset_top = 47.5
+offset_right = 33.5
+offset_bottom = 87.5
+text = "Player 1 is here"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+
+[node name="Slot2" type="RichTextLabel" parent="Elements"]
+offset_left = 79.5
+offset_top = 47.0
+offset_right = 197.5
+offset_bottom = 87.0
+text = "Player 2 is here"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+
+[node name="Slot3" type="RichTextLabel" parent="Elements"]
+offset_left = -81.5
+offset_top = 89.5
+offset_right = 36.5
+offset_bottom = 129.5
+text = "Player 3 is here"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+
+[node name="Slot4" type="RichTextLabel" parent="Elements"]
+offset_left = 83.5
+offset_top = 87.5
+offset_right = 201.5
+offset_bottom = 127.5
+text = "Player 4 is here"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+metadata/_edit_use_anchors_ = true
+
+[node name="BattleTag" type="RichTextLabel" parent="Elements"]
+offset_left = -72.5
+offset_top = 123.5
+offset_right = 45.5
+offset_bottom = 163.5
+text = "Battle Tag:"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+
+[node name="NameField" type="LineEdit" parent="Elements"]
+offset_left = 18.0
+offset_top = 116.0
+offset_right = 85.0625
+offset_bottom = 147.0
+text = "Fury"
+placeholder_text = "Fury"
+
+[node name="Color" type="RichTextLabel" parent="Elements"]
+offset_left = 112.5
+offset_top = 124.5
+offset_right = 230.5
+offset_bottom = 164.5
+text = "Color
+"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+metadata/_edit_use_anchors_ = true
+
+[node name="ColorButton" type="OptionButton" parent="Elements"]
+offset_left = 162.5
+offset_top = 114.5
+offset_right = 255.5
+offset_bottom = 145.5
+item_count = 4
+selected = 0
+popup/item_0/text = "Blue"
+popup/item_0/id = 0
+popup/item_1/text = "Red"
+popup/item_1/id = 1
+popup/item_2/text = "Green"
+popup/item_2/id = 2
+popup/item_3/text = "Camo"
+popup/item_3/id = 3
+
+[connection signal="pressed" from="Start" to="." method="_on_start_pressed"]
+[connection signal="pressed" from="Ready" to="." method="_on_ready_pressed"]

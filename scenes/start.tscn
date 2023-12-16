@@ -1,0 +1,28 @@
+[gd_scene load_steps=2 format=3 uid="uid://c7re7lky8g0bl"]
+
+[ext_resource type="Script" path="res://scenes/start.gd" id="1_hjjl0"]
+
+[node name="Start" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_hjjl0")
+
+[node name="Join" type="Button" parent="."]
+layout_mode = 0
+offset_left = 591.0
+offset_top = 202.0
+offset_right = 629.0
+offset_bottom = 233.0
+scale = Vector2(2, 2)
+text = "Join"
+
+[node name="Host" type="Button" parent="."]
+layout_mode = 0
+offset_left = 593.0
+offset_top = 422.0
+offset_right = 637.0
+offset_bottom = 453.0
+scale = Vector2(2, 2)
+text = "Host"
