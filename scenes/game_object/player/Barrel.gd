@@ -22,6 +22,7 @@ func _process(delta):
 func _fire():
 	fire_wait = true
 	var ammo : HitboxComponent = current_ammo.instantiate()
+	ammo.projectile_owner = owner
 	timer.wait_time = ammo.fire_delay
 	add_child(ammo)
 	ammo.transform = fire_direction.global_transform

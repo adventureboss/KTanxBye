@@ -11,6 +11,9 @@ func _ready():
 func on_area_entered(other_area: Area2D):
 	if not other_area is HitboxComponent:
 		return
+	
+	if other_area.projectile_owner == owner:
+		return
 		
 	if health_component == null:
 		return

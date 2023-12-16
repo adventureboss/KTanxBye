@@ -8,13 +8,8 @@ class_name HitboxComponent
 @export var direction : Vector2 = Vector2.RIGHT
 
 @onready var ammo_sprite : Sprite2D = $Sprite2D
+@onready var projectile_owner = null
 
-
-	
 func _physics_process(delta):
 	position += transform.x * speed * delta
 	
-func _on_StandardAmmo_body_entered(body):
-	if body.is_in_group("player"):
-		body.queue_free()
-	queue_free()
