@@ -1,15 +1,15 @@
-[gd_scene load_steps=11 format=3 uid="uid://bi7arw5jp0g26"]
+[gd_scene load_steps=11 format=3 uid="uid://f7tdc54ijc2g"]
 
-[ext_resource type="Script" path="res://scenes/game_object/world.gd" id="1_2r7ig"]
-[ext_resource type="Texture2D" uid="uid://bee43w1v6ob6t" path="res://assets/environment/terrainTiles_default.png" id="1_jft5n"]
-[ext_resource type="PackedScene" uid="uid://bam04hog13mtt" path="res://scenes/game_object/player/player.tscn" id="2_kcqh6"]
-[ext_resource type="AudioStream" uid="uid://djf04umoxsx8s" path="res://assets/audio/music/KTANKBYE_MAP_TRACK.mp3" id="3_ecdtc"]
-[ext_resource type="PackedScene" uid="uid://b1oeve68we6sd" path="res://scenes/game_object/collectible/rapid_fire_pickup.tscn" id="5_26hcn"]
-[ext_resource type="PackedScene" uid="uid://dipeb45bdcrl6" path="res://scenes/game_object/collectible/spread_pickup.tscn" id="6_vok50"]
+[ext_resource type="Script" path="res://scenes/playground.gd" id="1_6m6m3"]
+[ext_resource type="PackedScene" uid="uid://bam04hog13mtt" path="res://scenes/game_object/player/player.tscn" id="2_a4ec5"]
+[ext_resource type="Texture2D" uid="uid://bee43w1v6ob6t" path="res://assets/environment/terrainTiles_default.png" id="3_6pq7r"]
+[ext_resource type="AudioStream" uid="uid://hh6feddnwr4j" path="res://assets/audio/music/KTANKBYE_MAP_TRACK.mp3" id="4_lqoi2"]
+[ext_resource type="PackedScene" uid="uid://b1oeve68we6sd" path="res://scenes/game_object/collectible/rapid_fire_pickup.tscn" id="5_xk6mq"]
+[ext_resource type="PackedScene" path="res://scenes/game_object/collectible/spread_pickup.tscn" id="6_0ay84"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_wvwmn"]
 resource_name = "terrainTiles"
-texture = ExtResource("1_jft5n")
+texture = ExtResource("3_6pq7r")
 texture_region_size = Vector2i(64, 64)
 0:0/0 = 0
 1:0/0 = 0
@@ -62,9 +62,9 @@ blend_mode = 1
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_ky7c7"]
 blend_mode = 3
 
-[node name="World" type="Node2D"]
-script = ExtResource("1_2r7ig")
-PlayerScene = ExtResource("2_kcqh6")
+[node name="Playground" type="Node2D"]
+script = ExtResource("1_6m6m3")
+PlayerScene = ExtResource("2_a4ec5")
 
 [node name="TileMap" type="TileMap" parent="."]
 position = Vector2(2, 1)
@@ -98,28 +98,28 @@ color = Color(0.796078, 0.815686, 0.898039, 1)
 [node name="SpawnPoints" type="Node" parent="."]
 
 [node name="0" type="Marker2D" parent="SpawnPoints" groups=["PlayerSpawnPoints"]]
-position = Vector2(238, 517)
+position = Vector2(1680, 1672)
 scale = Vector2(2.21118, 1.49838)
 
 [node name="1" type="Marker2D" parent="SpawnPoints" groups=["PlayerSpawnPoints"]]
-position = Vector2(558, 573)
+position = Vector2(2831, 1668)
 scale = Vector2(2.21118, 1.49838)
 
 [node name="2" type="Marker2D" parent="SpawnPoints" groups=["PlayerSpawnPoints"]]
-position = Vector2(910, 922)
+position = Vector2(1695, 2840)
 scale = Vector2(2.21118, 1.49838)
 
 [node name="3" type="Marker2D" parent="SpawnPoints" groups=["PlayerSpawnPoints"]]
-position = Vector2(918, 505)
+position = Vector2(2828, 2808)
 scale = Vector2(2.21118, 1.49838)
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("3_ecdtc")
+stream = ExtResource("4_lqoi2")
 volume_db = -20.0
 autoplay = true
 
-[node name="RapidFirePickup" parent="." instance=ExtResource("5_26hcn")]
+[node name="RapidFirePickup" parent="." instance=ExtResource("5_xk6mq")]
 position = Vector2(780, 597)
 
-[node name="SpreadPickup" parent="." instance=ExtResource("6_vok50")]
+[node name="SpreadPickup" parent="." instance=ExtResource("6_0ay84")]
 position = Vector2(661, 453)
