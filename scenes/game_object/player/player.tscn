@@ -29,6 +29,8 @@ collision_layer = 2
 collision_mask = 30
 script = ExtResource("1_hkal2")
 
+[node name="Camera2D" type="Camera2D" parent="."]
+
 [node name="HealthComponent" parent="." instance=ExtResource("2_gt4m0")]
 max_health = 100.0
 

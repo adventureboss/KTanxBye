@@ -8,6 +8,10 @@ const ACCELERATION_SMOOTHING = 25
 @onready var diagonal_movement: Array = [Vector2(-1, -1), Vector2(1, 1), Vector2(1, -1), Vector2(-1, 1)]
 @onready var previous_movement: Vector2 = Vector2.ZERO
 
+func _ready():
+	if $MultiplayerSynchronizer.get_multiplayer_authority() == multiplayer.get_unique_id():
+		$Camera2D.make_current()
+
 func _process(delta):
 	if $MultiplayerSynchronizer.get_multiplayer_authority() != multiplayer.get_unique_id():
 		return
