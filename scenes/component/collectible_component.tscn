@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://ds5yconv735ql"]
+
+[ext_resource type="Script" path="res://scenes/component/collectible_component.gd" id="1_d5wew"]
+
+[node name="CollectibleComponent" type="Area2D" groups=["collectible"]]
+script = ExtResource("1_d5wew")
