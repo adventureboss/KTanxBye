@@ -1,10 +1,12 @@
 extends Marker2D
 
 @onready var current_ammo : PackedScene = preload("res://scenes/ability/standard_ammo_ability/standard_ammo.tscn")
+@onready var ammo_name : String = "standard"
 @onready var ray_cast : RayCast2D = $RayCast2D
 @onready var fire_direction : Marker2D = $FireDirection
 @onready var timer : Timer = $Timer
 @onready var barrel_sprite : Sprite2D = $Sprite2D
+@onready var spread_arch : Node2D = $SpreadArch
 
 var fire_wait : bool = false
 
@@ -21,16 +23,29 @@ func _process(delta):
 		
 func _fire():
 	fire_wait = true
-	var ammo : HitboxComponent = current_ammo.instantiate()
-	ammo.projectile_owner = owner
-	timer.wait_time = ammo.fire_delay
-	add_child(ammo)
-	ammo.transform = fire_direction.global_transform
+	if ammo_name == "spread":
+		for n in spread_arch.get_children():
+			var new_bullet = current_ammo.instantiate()
+			new_bullet.projectile_owner = owner
+			timer.wait_time = new_bullet.fire_delay
+			add_child(new_bullet)
+			new_bullet.global_position = fire_direction.global_position
+			new_bullet.transform = n.global_transform
+	else:
+		var new_bullet = current_ammo.instantiate()
+		new_bullet.projectile_owner = owner
+		timer.wait_time = new_bullet.fire_delay
+		add_child(new_bullet)
+		new_bullet.transform = fire_direction.global_transform
 	timer.start()
 
 func on_timer_timeout():
 	fire_wait = false
 
 func update_ammo(ability, id):
-	print("updating ammo to id: " + str(id))
+	if ability == "spread":
+		current_ammo = preload("res://scenes/ability/standard_ammo_ability/standard_ammo.tscn")
+		ammo_name = "spread"
+		return
+	ammo_name = "standard"
 	current_ammo = load(ability)
