@@ -29,7 +29,10 @@ collision_layer = 2
 collision_mask = 30
 script = ExtResource("1_hkal2")
 
+[node name="Camera2D" type="Camera2D" parent="."]
+
 [node name="HealthComponent" parent="." instance=ExtResource("2_gt4m0")]
+max_health = 100.0
 
 [node name="TankBody" parent="." instance=ExtResource("3_1e010")]
 
@@ -49,6 +52,27 @@ visible = false
 rotation = -1.5708
 
 [node name="Timer" type="Timer" parent="Barrel"]
+
+[node name="SpreadArch" type="Node2D" parent="Barrel"]
+
+[node name="Spread1" type="Marker2D" parent="Barrel/SpreadArch"]
+position = Vector2(26, 3.8147e-06)
+rotation = -0.349066
+
+[node name="Spread2" type="Marker2D" parent="Barrel/SpreadArch"]
+position = Vector2(25, 0)
+
+[node name="Spread3" type="Marker2D" parent="Barrel/SpreadArch"]
+position = Vector2(26, -1.90735e-06)
+rotation = 0.349066
+
+[node name="Spread4" type="Marker2D" parent="Barrel/SpreadArch"]
+position = Vector2(26, 1.90735e-06)
+rotation = 0.698132
+
+[node name="Spread5" type="Marker2D" parent="Barrel/SpreadArch"]
+position = Vector2(26, 0)
+rotation = -0.698132
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_e32xm")
