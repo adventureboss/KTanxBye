@@ -125,7 +125,7 @@ popup/item_1/text = "Red"
 popup/item_1/id = 1
 popup/item_2/text = "Green"
 popup/item_2/id = 2
-popup/item_3/text = "Camo"
+popup/item_3/text = "Pink"
 popup/item_3/id = 3
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
