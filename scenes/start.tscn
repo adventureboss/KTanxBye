@@ -26,3 +26,21 @@ offset_right = 637.0
 offset_bottom = 453.0
 scale = Vector2(2, 2)
 text = "Host"
+
+[node name="BattleTag" type="RichTextLabel" parent="."]
+offset_left = 1074.0
+offset_top = 661.5
+offset_right = 1192.0
+offset_bottom = 701.5
+text = "Battle Tag:"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+
+[node name="NameField" type="LineEdit" parent="."]
+offset_left = 1164.5
+offset_top = 654.0
+offset_right = 1231.56
+offset_bottom = 685.0
+text = "Fury"
+placeholder_text = "Fury"

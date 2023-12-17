@@ -6,6 +6,7 @@ extends Node
 @export var world = "world"
 var current = null
 var scene_manager = null
+@export var multiplayer_manager: Node
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -25,6 +26,11 @@ func load_scene(scene_name: String):
 		current = resource.instantiate()
 		scene_manager.add_child(current)
 
-
 func load_world():
 	load_scene(world)
+
+func load_lobby():
+	load_scene(lobby)
+	# going to connect the lobby here
+	multiplayer_manager.load_player_into_lobby.connect(current.load_player_into_lobby)
+	multiplayer_manager.update_player_in_lobby.connect(current.update_player_in_lobby)
