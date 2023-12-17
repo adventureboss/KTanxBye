@@ -19,7 +19,7 @@ func _ready():
 	multiplayer.connection_failed.connect(connection_failed)
 
 @rpc("any_peer")
-func send_player_information(id, player_name, color="blue", score=0):
+func send_player_information(id, player_name, color="Blue", score=0):
 	if !GameManager.players.has(id):
 		GameManager.players[id] = {
 			"id": id,
@@ -87,7 +87,10 @@ func on_color_changed(player_color):
 	if multiplayer.get_unique_id() == 1:
 		# long store here
 		update_player_color(multiplayer.get_unique_id(), player_color)
-	update_player_in_lobby.emit(multiplayer.get_unique_id(), player_color)
+	for p in GameManager.players:
+		if GameManager.players[p].id == multiplayer.get_unique_id():
+			update_player_in_lobby.emit(multiplayer.get_unique_id(),  GameManager.players[p].name, player_color)
+			break
 
 @rpc("any_peer", "call_local")
 func start_game():

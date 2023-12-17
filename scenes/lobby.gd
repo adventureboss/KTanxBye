@@ -23,7 +23,7 @@ func _ready():
 func load_player_into_lobby(id, player_name, player_color):
 	if multiplayer.get_unique_id() == id:
 		for i in color_button.get_item_count():
-			if color_button.get_item_text(i).to_lower() == player_color:
+			if color_button.get_item_text(i) == player_color:
 				color_button.select(i)
 				break
 	
