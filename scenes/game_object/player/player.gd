@@ -16,10 +16,22 @@ func _ready():
 		$Camera2D.make_current()
 		
 		var tank_color = GameManager.players[player_id].color
-		tank_body.texture = load(GameManager.color_dict[tank_color]["Body"])
-		tank_body.scale = Vector2(0.5, 0.5)
-		barrel_color.texture = load(GameManager.color_dict[tank_color]["Barrel"])
-		barrel_color.scale = Vector2(0.5, 0.5)
+		set_tank_texture.rpc(player_id, tank_color)
+
+@rpc("any_peer", "call_local")
+func set_tank_texture(id, tank_color):
+	var body
+	var barrel
+	if $MultiplayerSynchronizer.get_multiplayer_authority() == id:
+		body = tank_body
+		barrel = barrel_color
+	else:
+		body = get_node("../%s/TankBody/Sprite2D" % id)
+		barrel = get_node("../%s/Barrel/Sprite2D" % id)
+	body.texture = load(GameManager.color_dict[tank_color]["Body"])
+	body.scale = Vector2(0.5, 0.5)
+	barrel.texture = load(GameManager.color_dict[tank_color]["Barrel"])
+	barrel.scale = Vector2(0.5, 0.5)
 
 
 func _process(delta):
