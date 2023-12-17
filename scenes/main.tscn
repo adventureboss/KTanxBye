@@ -8,14 +8,30 @@
 
 [node name="StateManager" type="Node2D" parent="."]
 
-[node name="MultiplayerManager" type="Node2D" parent="." node_paths=PackedStringArray("scene_manager")]
+[node name="MultiplayerManager" type="Node2D" parent="." node_paths=PackedStringArray("scene_manager", "name_field")]
 script = ExtResource("1_2jebv")
 scene_manager = NodePath("../SceneManager")
+name_field = NodePath("../SceneManager/Start/NameField")
 
-[node name="SceneManager" type="Node2D" parent="."]
+[node name="SceneManager" type="Node2D" parent="." node_paths=PackedStringArray("multiplayer_manager")]
 script = ExtResource("1_22ckq")
+multiplayer_manager = NodePath("../MultiplayerManager")
 
 [node name="Start" parent="SceneManager" instance=ExtResource("3_k5fwe")]
+
+[node name="BattleTag" parent="SceneManager/Start" index="2"]
+layout_mode = 0
+offset_left = 499.0
+offset_top = 533.0
+offset_right = 617.0
+offset_bottom = 573.0
+
+[node name="NameField" parent="SceneManager/Start" index="3"]
+layout_mode = 0
+offset_left = 631.0
+offset_top = 528.0
+offset_right = 698.063
+offset_bottom = 559.0
 
 [connection signal="pressed" from="SceneManager/Start/Join" to="MultiplayerManager" method="_on_join_pressed"]
 [connection signal="pressed" from="SceneManager/Start/Host" to="MultiplayerManager" method="_on_host_pressed"]

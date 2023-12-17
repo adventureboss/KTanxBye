@@ -1,9 +1,16 @@
 extends Node
 
-@export var scene_manager : Node2D
 @export var address = "localhost"
 @export var port = 135
 var peer # really, this'll be self
+
+@export var scene_manager : Node2D
+@export var name_field : LineEdit
+var selected_name # storing since we are sending client info after pushing the button
+var default_color
+
+signal load_player_into_lobby(id, player_name, player_color)
+signal update_player_in_lobby(id, player_name, player_color)
 
 func _ready():
 	multiplayer.peer_connected.connect(peer_connected)
@@ -11,34 +18,37 @@ func _ready():
 	multiplayer.connected_to_server.connect(connected_to_server)
 	multiplayer.connection_failed.connect(connection_failed)
 
-func on_start_pressed():
-	start_game.rpc()
-
-@rpc("any_peer", "call_local")
-func on_ready_pressed(player_name, player_color):
-	print("on_ready_pressed" + player_name + player_color)
-	send_player_information.rpc(multiplayer.get_unique_id(), player_name, player_color)
-	if multiplayer.get_unique_id() == 1:
-		# long store here
-		send_player_information(multiplayer.get_unique_id(), player_name, player_color)
-
-@rpc("any_peer", "call_local")
-func start_game():
-	scene_manager.load_world()
-
 @rpc("any_peer")
-func send_player_information(id, name, color, score=0):
+func send_player_information(id, player_name, color="blue", score=0):
 	if !GameManager.players.has(id):
 		GameManager.players[id] = {
 			"id": id,
-			"name": name,
+			"name": player_name,
 			"color": color,
 			"score": score
 		}
+		load_player_into_lobby.emit(id, player_name, color)
 	
 	if multiplayer.is_server():
 		for i in GameManager.players:
-			send_player_information.rpc(i, name, color, score)
+			send_player_information.rpc(i, player_name, color, score)
+
+@rpc("any_peer")
+func update_player_color(id, color):
+	GameManager.players[id].color = color
+	update_player_in_lobby.emit(id, GameManager.players[id].name, color)
+	 
+	if multiplayer.is_server():
+		for i in GameManager.players:
+			update_player_color.rpc(i, color)
+
+@rpc("any_peer")
+func update_player_score(id, score):
+	GameManager.players[id]["score"] = score
+	
+	if multiplayer.is_server():
+		for i in GameManager.players:
+			update_player_color.rpc(i, score)
 
 # a lot of these settings I got from this video
 # https://youtu.be/e0JLO_5UgQo?si=JCtArm_CeiQD4wBb
@@ -52,7 +62,10 @@ func _on_host_pressed():
 	peer.get_host().compress(ENetConnection.COMPRESS_RANGE_CODER)
 	multiplayer.set_multiplayer_peer(peer)
 	
-	scene_manager.load_scene("lobby")
+	selected_name = collect_player_name()
+	scene_manager.load_lobby()
+	
+	send_player_information(multiplayer.get_unique_id(), selected_name)
 
 func _on_join_pressed():
 	print("join_pressed")
@@ -61,9 +74,25 @@ func _on_join_pressed():
 	peer.get_host().compress(ENetConnection.COMPRESS_RANGE_CODER)
 	
 	multiplayer.set_multiplayer_peer(peer)
+	selected_name = collect_player_name()
+	scene_manager.load_lobby()
 	
-	scene_manager.load_scene("lobby")
-	
+func on_start_pressed():
+	start_game.rpc()
+
+@rpc("any_peer", "call_local")
+func on_color_changed(player_color):
+	print("on_color_changed" + player_color)
+	update_player_color.rpc(multiplayer.get_unique_id(), player_color)
+	if multiplayer.get_unique_id() == 1:
+		# long store here
+		update_player_color(multiplayer.get_unique_id(), player_color)
+	update_player_in_lobby.emit(multiplayer.get_unique_id(), player_color)
+
+@rpc("any_peer", "call_local")
+func start_game():
+	scene_manager.load_world()
+
 # called on server and all clients
 func peer_connected(id = 1):
 	print("peer connected: " + str(id))
@@ -76,8 +105,20 @@ func peer_disconnected(id):
 func connected_to_server():
 	var id = multiplayer.get_unique_id()
 	print("player connected to server: " + str(id))
+	send_player_information.rpc(id, selected_name)
 
 # called only from clients
 func connection_failed():
 	var id = multiplayer.get_unique_id()
 	print("player failed to connect: " + str(id))
+
+func collect_player_name():
+	return name_field.text
+
+func choose_default_color():
+	var options = ["blue", "red", "green", "camo"]
+	for p in GameManager.players:
+		print(GameManager.players[p].color)
+		options.erase(GameManager.players[p].color)
+	
+	return options[0]
