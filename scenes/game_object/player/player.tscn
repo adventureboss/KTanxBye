@@ -93,4 +93,8 @@ shape = SubResource("RectangleShape2D_pm56w")
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_2jkiu")
 
+[node name="BoostTimer" type="Timer" parent="."]
+wait_time = 4.0
+one_shot = true
+
 [editable path="TankBody"]

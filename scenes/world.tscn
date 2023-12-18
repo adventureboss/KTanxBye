@@ -1,5 +1,6 @@
 [gd_scene load_steps=15 format=3 uid="uid://bi7arw5jp0g26"]
 
+
 [ext_resource type="Script" path="res://scenes/world.gd" id="1_2r7ig"]
 [ext_resource type="Texture2D" uid="uid://bee43w1v6ob6t" path="res://assets/environment/terrainTiles_default.png" id="1_jft5n"]
 [ext_resource type="PackedScene" uid="uid://bam04hog13mtt" path="res://scenes/game_object/player/player.tscn" id="2_kcqh6"]
@@ -74,6 +75,10 @@ distance = -4482.04
 [node name="World" type="Node2D"]
 script = ExtResource("1_2r7ig")
 PlayerScene = ExtResource("2_kcqh6")
+
+[node name="RoundTimer" type="Timer" parent="."]
+wait_time = 300.0
+one_shot = true
 
 [node name="TileMap" type="TileMap" parent="."]
 position = Vector2(2, 1)
@@ -180,3 +185,5 @@ collision_mask = 6
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BorderWalls/RightWall"]
 shape = SubResource("WorldBoundaryShape2D_vh5um")
+
+[connection signal="timeout" from="RoundTimer" to="." method="_on_round_timer_timeout"]
