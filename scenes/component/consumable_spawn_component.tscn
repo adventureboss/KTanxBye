@@ -6,3 +6,4 @@
 script = ExtResource("1_7a1yr")
 
 [node name="Timer" type="Timer" parent="."]
+wait_time = 30.0

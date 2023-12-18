@@ -6,7 +6,7 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_likel"]
 size = Vector2(28, 28)
 
-[node name="SpreadPickup" type="Area2D"]
+[node name="SpreadPickup" type="Area2D" groups=["ammo", "consumables"]]
 collision_layer = 8
 collision_mask = 2
 script = ExtResource("1_npniu")
