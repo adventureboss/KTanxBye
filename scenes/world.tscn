@@ -1,9 +1,9 @@
-[gd_scene load_steps=13 format=3 uid="uid://bi7arw5jp0g26"]
+[gd_scene load_steps=14 format=3 uid="uid://bi7arw5jp0g26"]
 
 [ext_resource type="Script" path="res://scenes/world.gd" id="1_2r7ig"]
 [ext_resource type="Texture2D" uid="uid://bee43w1v6ob6t" path="res://assets/environment/terrainTiles_default.png" id="1_jft5n"]
 [ext_resource type="PackedScene" uid="uid://bam04hog13mtt" path="res://scenes/game_object/player/player.tscn" id="2_kcqh6"]
-[ext_resource type="AudioStream" uid="uid://dyrp2ud4r1x04" path="res://assets/audio/music/KTANKBYE_MAP_TRACK.mp3" id="3_ecdtc"]
+[ext_resource type="AudioStream" uid="uid://hh6feddnwr4j" path="res://assets/audio/music/KTANKBYE_MAP_TRACK.mp3" id="3_ecdtc"]
 [ext_resource type="PackedScene" uid="uid://b1oeve68we6sd" path="res://scenes/game_object/collectible/rapid_fire_pickup.tscn" id="5_26hcn"]
 [ext_resource type="PackedScene" uid="uid://dipeb45bdcrl6" path="res://scenes/game_object/collectible/spread_pickup.tscn" id="6_vok50"]
 [ext_resource type="Script" path="res://scenes/manager/bullet_manager.gd" id="7_q4krf"]
@@ -74,6 +74,10 @@ distance = -4482.04
 script = ExtResource("1_2r7ig")
 PlayerScene = ExtResource("2_kcqh6")
 
+[node name="RoundTimer" type="Timer" parent="."]
+wait_time = 300.0
+one_shot = true
+
 [node name="TileMap" type="TileMap" parent="."]
 position = Vector2(2, 1)
 scale = Vector2(2, 2)
@@ -115,6 +119,7 @@ position = Vector2(661, 453)
 
 [node name="BulletManager" type="Node2D" parent="." groups=["BulletManager"]]
 script = ExtResource("7_q4krf")
+
 [node name="BorderWalls" type="Node" parent="."]
 
 [node name="TopWall" type="StaticBody2D" parent="BorderWalls"]
@@ -144,3 +149,5 @@ collision_mask = 6
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BorderWalls/RightWall"]
 shape = SubResource("WorldBoundaryShape2D_vh5um")
+
+[connection signal="timeout" from="RoundTimer" to="." method="_on_round_timer_timeout"]

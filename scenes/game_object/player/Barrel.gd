@@ -16,13 +16,17 @@ var bullets_fired = 0
 func _ready():
 	timer.timeout.connect(on_timer_timeout)
 	GameEvents.ability_pick_up.connect(update_ammo)
+	process_mode = Node.PROCESS_MODE_ALWAYS
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	if multiplayer_synchronizer.get_multiplayer_authority() != multiplayer.get_unique_id():
 		return
 
-	if Input.is_action_pressed("fire_primary"):
+	var mouse_position = get_global_mouse_position()
+	look_at(mouse_position)
+	
+	if Input.is_action_pressed("fire_primary") and get_parent().process_mode == Node.PROCESS_MODE_INHERIT:
 		if !fire_wait:
 			_fire.rpc()
 
