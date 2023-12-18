@@ -5,10 +5,12 @@ class_name Collectible
 
 @onready var collision_shape_2d : CollisionShape2D = $CollisionShape2D
 @onready var sprite_2d : Sprite2D = $Sprite2D
+@onready var weapon_pick_up = $weapon_pick_up
 
 
 func _ready():
 	body_entered.connect(on_body_entered)
+	weapon_pick_up.play()
 	
 func collect(body):
 	GameEvents.emit_ability_pick_up(GameManager.abilities[ability_id], GameManager.players[body.to_int()].id)
@@ -19,3 +21,4 @@ func disable_collision():
 
 func on_body_entered(body):
 	collect(body.name)
+	

@@ -1,9 +1,9 @@
-[gd_scene load_steps=13 format=3 uid="uid://f7tdc54ijc2g"]
+[gd_scene load_steps=14 format=3 uid="uid://f7tdc54ijc2g"]
 
 [ext_resource type="Script" path="res://scenes/playground.gd" id="1_6m6m3"]
 [ext_resource type="PackedScene" uid="uid://bam04hog13mtt" path="res://scenes/game_object/player/player.tscn" id="2_a4ec5"]
 [ext_resource type="Texture2D" uid="uid://bee43w1v6ob6t" path="res://assets/environment/terrainTiles_default.png" id="3_6pq7r"]
-[ext_resource type="AudioStream" uid="uid://hh6feddnwr4j" path="res://assets/audio/music/KTANKBYE_MAP_TRACK.mp3" id="4_lqoi2"]
+[ext_resource type="AudioStream" uid="uid://ch1copgnoxios" path="res://assets/audio/music/KTANKBYE_MAP_TRACK.mp3" id="4_lqoi2"]
 [ext_resource type="PackedScene" uid="uid://b1oeve68we6sd" path="res://scenes/game_object/collectible/rapid_fire_pickup.tscn" id="5_xk6mq"]
 [ext_resource type="PackedScene" uid="uid://dipeb45bdcrl6" path="res://scenes/game_object/collectible/spread_pickup.tscn" id="6_0ay84"]
 [ext_resource type="Script" path="res://scenes/manager/bullet_manager.gd" id="7_xktor"]
@@ -115,6 +115,7 @@ position = Vector2(661, 453)
 
 [node name="BulletManager" type="Node2D" parent="." groups=["BulletManager"]]
 script = ExtResource("7_xktor")
+
 [node name="BorderWalls" type="Node" parent="."]
 
 [node name="TopWall" type="StaticBody2D" parent="BorderWalls"]

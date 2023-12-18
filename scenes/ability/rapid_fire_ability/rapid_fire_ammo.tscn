@@ -1,12 +1,13 @@
-[gd_scene load_steps=13 format=3 uid="uid://blbk3n3y7hc16"]
+[gd_scene load_steps=14 format=3 uid="uid://blbk3n3y7hc16"]
 
 [ext_resource type="Script" path="res://scenes/component/hitbox_component.gd" id="1_lk25m"]
-[ext_resource type="Texture2D" uid="uid://c6cvjlf33l0q0" path="res://scenes/ability/standard_ammo_ability/green_bullet.png" id="2_xy08k"]
-[ext_resource type="Texture2D" uid="uid://qy1axfax8jfx" path="res://assets/sprites/Effects/Explosion1/explosion1.png" id="3_8pbo0"]
-[ext_resource type="Texture2D" uid="uid://ct43tpf4bhlam" path="res://assets/sprites/Effects/Explosion1/explosion2.png" id="4_p71wi"]
-[ext_resource type="Texture2D" uid="uid://1bj57cp5m24g" path="res://assets/sprites/Effects/Explosion1/explosion3.png" id="5_kddms"]
-[ext_resource type="Texture2D" uid="uid://dh70asex6npw2" path="res://assets/sprites/Effects/Explosion1/explosion4.png" id="6_t87dm"]
-[ext_resource type="Texture2D" uid="uid://ctmtx3mrofxqa" path="res://assets/sprites/Effects/Explosion1/explosion5.png" id="7_sqa8j"]
+[ext_resource type="Texture2D" uid="uid://dfg8l8bl25boc" path="res://scenes/ability/standard_ammo_ability/green_bullet.png" id="2_xy08k"]
+[ext_resource type="Texture2D" uid="uid://bm6yk3j1m7ste" path="res://assets/sprites/Effects/Explosion1/explosion1.png" id="3_8pbo0"]
+[ext_resource type="Texture2D" uid="uid://d26r4m5lfv1x2" path="res://assets/sprites/Effects/Explosion1/explosion2.png" id="4_p71wi"]
+[ext_resource type="Texture2D" uid="uid://6qmui6uffnle" path="res://assets/sprites/Effects/Explosion1/explosion3.png" id="5_kddms"]
+[ext_resource type="Texture2D" uid="uid://corv011ajhhym" path="res://assets/sprites/Effects/Explosion1/explosion4.png" id="6_t87dm"]
+[ext_resource type="Texture2D" uid="uid://es0wab32a3dd" path="res://assets/sprites/Effects/Explosion1/explosion5.png" id="7_sqa8j"]
+[ext_resource type="AudioStream" uid="uid://veqeofdc3g4b" path="res://assets/audio/sfx/weapon_sounds/normal_cannon_fire.mp3" id="8_fiqhw"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_oj6g5"]
 radius = 3.0
@@ -83,3 +84,7 @@ libraries = {
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_xcugl")
 visibility_update_mode = 1
+
+[node name="std_ammo_sound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_fiqhw")
+volume_db = -20.0
