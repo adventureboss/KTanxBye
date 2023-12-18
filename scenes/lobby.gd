@@ -16,7 +16,6 @@ func _ready():
 	color_changed.connect(get_node("../../MultiplayerManager").on_color_changed)
 	if multiplayer.get_unique_id() != 1:
 		start_button.visible = false
-	start_button.set_disabled(true)
 	
 	player_slots = get_tree().get_nodes_in_group("PlayerSlots")
 
