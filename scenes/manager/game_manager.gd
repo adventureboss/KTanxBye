@@ -3,9 +3,18 @@ extends Node
 var players = {}
 
 var abilities = {
-	0: "res://scenes/ability/standard_ammo_ability/standard_ammo.tscn",
-	1: "res://scenes/ability/rapid_fire_ability/rapid_fire_ammo.tscn",
-	2: "spread",
+	0: {"name": "standard",
+	   "path": "res://scenes/ability/standard_ammo_ability/standard_ammo.tscn",
+	   "audio": "res://assets/audio/sfx/weapon_sounds/normal_cannon_fire.mp3"
+	   },
+	1: {"name": "rapid_fire",
+		"path": "res://scenes/ability/rapid_fire_ability/rapid_fire_ammo.tscn",
+		"audio": "res://assets/audio/sfx/weapon_sounds/normal_cannon_fire.mp3",
+	   },
+	2: {"name": "spread",
+		"path": "res://scenes/ability/standard_ammo_ability/standard_ammo.tscn",
+		"audio": "res://assets/audio/sfx/weapon_sounds/shotgun_fire.wav",
+	   },
 }
 
 var color_dict = {
