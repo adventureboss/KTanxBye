@@ -19,13 +19,14 @@ multiplayer_manager = NodePath("../MultiplayerManager")
 
 [node name="Start" parent="SceneManager" instance=ExtResource("3_k5fwe")]
 
-[node name="BattleTag" parent="SceneManager/Start" index="2"]
+
+[node name="BattleTag" parent="SceneManager/Start" index="4"]
 offset_left = 499.0
 offset_top = 533.0
 offset_right = 617.0
 offset_bottom = 573.0
 
-[node name="NameField" parent="SceneManager/Start" index="3"]
+[node name="NameField" parent="SceneManager/Start" index="5"]
 offset_left = 631.0
 offset_top = 528.0
 offset_right = 698.063
