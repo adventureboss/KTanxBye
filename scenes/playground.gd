@@ -10,13 +10,14 @@ func _ready():
 	players = [{
 		"id": 1,
 		"name": "History",
-		"color": "green"
+		"color": "Green"
 	},
 	{
 		"id": 1398740987,
 		"name": "Peerless",
-		"color": "camo"
+		"color": "Pink"
 	}]
+	GameManager.players = players
 	var i = 0
 	for p in players:
 		var current_player = PlayerScene.instantiate()

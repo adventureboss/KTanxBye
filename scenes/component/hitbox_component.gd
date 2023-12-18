@@ -9,7 +9,20 @@ class_name HitboxComponent
 
 @onready var ammo_sprite : Sprite2D = $Sprite2D
 @onready var projectile_owner = null
+@onready var animation_player : AnimationPlayer = null
+
+func _ready():
+	if find_child("AnimationPlayer"):
+		animation_player = $AnimationPlayer
+		animation_player.animation_finished.connect(_on_animation_finished)
 
 func _physics_process(delta):
 	position += transform.x * speed * delta
 	
+func dead():
+	speed = 0
+	if animation_player:
+		animation_player.play("explode")
+
+func _on_animation_finished(anim_name):
+	queue_free()
