@@ -8,9 +8,9 @@ class_name HitboxComponent
 @export var direction : Vector2 = Vector2.RIGHT
 
 @onready var ammo_sprite : Sprite2D = $Sprite2D
-@onready var projectile_owner = null
 @onready var animation_player : AnimationPlayer = null
 @onready var std_ammo_sounds = $std_ammo_sound
+var projectile_owner
 
 func _ready():
 	if find_child("AnimationPlayer"):

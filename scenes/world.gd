@@ -1,7 +1,9 @@
 extends Node2D
 
 @export var PlayerScene : PackedScene
+@export var kill_bonus = 1
 
+@onready var multiplayer_manager : MultiplayerManager = get_tree().get_first_node_in_group("MultiplayerManager")
 @onready var round_timer = $RoundTimer
 
 # Called when the node enters the scene tree for the first time.
@@ -10,6 +12,7 @@ func _ready():
 	for p in GameManager.players:
 		var current_player = PlayerScene.instantiate()
 		current_player.name = str(GameManager.players[p].id)
+		current_player.get_node("HealthComponent").died.connect(_on_player_died)
 		add_child(current_player)
 		for spawn in get_tree().get_nodes_in_group("PlayerSpawnPoints"):
 			if spawn.name == str(i):
@@ -24,3 +27,7 @@ func _on_round_timer_timeout():
 		# ideas:
 		# - camera zoom out
 		# - trigger UI round over with scoreboard
+
+func _on_player_died(id, enemy_id):
+	print("id %s, enemy %s" % [str(id), str(enemy_id)])
+	multiplayer_manager.update_player_score(enemy_id, kill_bonus)

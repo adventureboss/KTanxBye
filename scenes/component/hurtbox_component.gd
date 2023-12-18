@@ -19,6 +19,6 @@ func on_area_entered(other_area: Area2D):
 		return
 		
 	var hitbox_component = other_area as HitboxComponent
-	print(multiplayer.get_unique_id())
-	health_component.damage.rpc(multiplayer.get_unique_id(), hitbox_component.damage)
+	var hit_by = hitbox_component.projectile_owner.name.to_int()
+	health_component.damage.rpc(multiplayer.get_unique_id(), hit_by, hitbox_component.damage)
 	hitbox_component.dead.rpc(multiplayer.get_unique_id())
