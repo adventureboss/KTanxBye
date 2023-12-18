@@ -1,4 +1,4 @@
-extends Node
+class_name MultiplayerManager extends Node
 
 @export var address = "localhost"
 @export var port = 8910
