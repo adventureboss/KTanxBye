@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://scenes/game_object/player/player.gd" id="1_hkal2"]
 [ext_resource type="PackedScene" uid="uid://73lr8fqud4" path="res://scenes/component/health_component.tscn" id="2_gt4m0"]
 [ext_resource type="PackedScene" uid="uid://drybknwrows3o" path="res://scenes/game_object/player/tank_body.tscn" id="3_1e010"]
-[ext_resource type="Texture2D" uid="uid://baryfpafcavs7" path="res://scenes/game_object/player/tankGreen_barrel3_outline.png" id="3_vvwhs"]
+[ext_resource type="Texture2D" uid="uid://cphdqa08uuq8a" path="res://scenes/game_object/player/tankGreen_barrel3_outline.png" id="3_vvwhs"]
 [ext_resource type="Script" path="res://scenes/game_object/player/Barrel.gd" id="4_yiyg3"]
 [ext_resource type="PackedScene" uid="uid://dp7s6opobih82" path="res://scenes/component/hurtbox_component.tscn" id="5_fvhfs"]
 
@@ -92,5 +92,9 @@ shape = SubResource("RectangleShape2D_pm56w")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_2jkiu")
+
+[node name="BoostTimer" type="Timer" parent="."]
+wait_time = 4.0
+one_shot = true
 
 [editable path="TankBody"]

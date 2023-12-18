@@ -1,13 +1,13 @@
 [gd_scene load_steps=5 format=3 uid="uid://b1oeve68we6sd"]
 
 [ext_resource type="Script" path="res://scenes/component/collectible_component.gd" id="1_yno0p"]
-[ext_resource type="Texture2D" uid="uid://cuhbswnm6qgn" path="res://assets/sprites/Collectibles/crateWood.png" id="2_yaorj"]
+[ext_resource type="Texture2D" uid="uid://ih8cb8lgmbix" path="res://assets/sprites/Collectibles/crateWood.png" id="2_yaorj"]
 [ext_resource type="AudioStream" uid="uid://bwiageclksl88" path="res://assets/audio/sfx/weapon_sounds/weapon_pick_up.mp3" id="3_jtn45"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_likel"]
 size = Vector2(28, 28)
 
-[node name="RapidFirePickup" type="Area2D"]
+[node name="RapidFirePickup" type="Area2D" groups=["ammo", "consumables"]]
 collision_layer = 8
 collision_mask = 2
 script = ExtResource("1_yno0p")
