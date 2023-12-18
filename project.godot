@@ -66,3 +66,4 @@ fire_primary={
 2d_physics/layer_3="Bots"
 2d_physics/layer_4="PlayerPickup"
 2d_physics/layer_5="Projectiles"
+2d_physics/layer_6="Borders"
