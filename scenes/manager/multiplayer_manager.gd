@@ -1,7 +1,7 @@
 extends Node
 
 @export var address = "localhost"
-@export var port = 135
+@export var port = 8910
 var peer # really, this'll be self
 
 @export var scene_manager : Node2D
@@ -57,7 +57,7 @@ func _on_host_pressed():
 	peer = ENetMultiplayerPeer.new()
 	var error = peer.create_server(port, 4) # this second value is maximum number of peers
 	if error != OK:
-		print("error occured hosting" + error)
+		print("error occured hosting" + error) # I don't think these errors are actually useful strings
 	
 	peer.get_host().compress(ENetConnection.COMPRESS_RANGE_CODER)
 	multiplayer.set_multiplayer_peer(peer)

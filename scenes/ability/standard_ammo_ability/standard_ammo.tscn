@@ -1,11 +1,53 @@
-[gd_scene load_steps=4 format=3 uid="uid://b6yfe482j7oik"]
+[gd_scene load_steps=12 format=3 uid="uid://b6yfe482j7oik"]
 
 [ext_resource type="Script" path="res://scenes/component/hitbox_component.gd" id="1_2pw22"]
-[ext_resource type="Texture2D" uid="uid://lamjkto5fgv6" path="res://scenes/ability/standard_ammo_ability/green_bullet.png" id="2_dfaoj"]
+[ext_resource type="Texture2D" uid="uid://dt2xsmqvmjt5f" path="res://assets/sprites/Effects/Explosion1/explosion1.png" id="2_3d4u7"]
+[ext_resource type="Texture2D" uid="uid://b64glk45yxxnb" path="res://assets/sprites/Bullets/bulletGreen_outline.png" id="3_ty7kh"]
+[ext_resource type="Texture2D" uid="uid://cr1vv7cwjbr32" path="res://assets/sprites/Effects/Explosion1/explosion2.png" id="4_7ioyc"]
+[ext_resource type="Texture2D" uid="uid://v5t8lkjml3h5" path="res://assets/sprites/Effects/Explosion1/explosion4.png" id="5_73tnv"]
+[ext_resource type="Texture2D" uid="uid://bxb4xuvut1jo" path="res://assets/sprites/Effects/Explosion1/explosion3.png" id="5_g2myc"]
+[ext_resource type="Texture2D" uid="uid://d4eyuufvvmc3j" path="res://assets/sprites/Effects/Explosion1/explosion5.png" id="6_f0dbh"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_oj6g5"]
 radius = 3.0
 height = 12.0
+
+[sub_resource type="Animation" id="Animation_bxjnh"]
+resource_name = "explode"
+length = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0125603, 0.0235635, 0.0393417, 0.046089),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("3_ty7kh"), ExtResource("2_3d4u7"), ExtResource("4_7ioyc"), ExtResource("5_73tnv"), ExtResource("6_f0dbh")]
+}
+
+[sub_resource type="Animation" id="Animation_ewq38"]
+length = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.00662237, 0.0150508, 0.0250847, 0.03552, 0.0463566),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("3_ty7kh"), ExtResource("2_3d4u7"), ExtResource("4_7ioyc"), ExtResource("5_g2myc"), ExtResource("5_73tnv"), ExtResource("6_f0dbh")]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_pixsf"]
+_data = {
+"RESET": SubResource("Animation_ewq38"),
+"explode": SubResource("Animation_bxjnh")
+}
 
 [node name="StandardAmmo" type="Area2D"]
 top_level = true
@@ -16,8 +58,14 @@ fire_delay = 0.5
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 rotation = 1.5708
-texture = ExtResource("2_dfaoj")
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("3_ty7kh")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_oj6g5")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_pixsf")
+}
