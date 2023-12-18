@@ -10,10 +10,12 @@ class_name HitboxComponent
 @onready var ammo_sprite : Sprite2D = $Sprite2D
 @onready var projectile_owner = null
 @onready var animation_player : AnimationPlayer = null
+@onready var std_ammo_sounds = $std_ammo_sound
 
 func _ready():
 	if find_child("AnimationPlayer"):
 		animation_player = $AnimationPlayer
+		std_ammo_sounds.play()
 		animation_player.animation_finished.connect(_on_animation_finished)
 
 func _physics_process(delta):
