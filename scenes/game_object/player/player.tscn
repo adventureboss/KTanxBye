@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://scenes/game_object/player/player.gd" id="1_hkal2"]
 [ext_resource type="PackedScene" uid="uid://73lr8fqud4" path="res://scenes/component/health_component.tscn" id="2_gt4m0"]
 [ext_resource type="PackedScene" uid="uid://drybknwrows3o" path="res://scenes/game_object/player/tank_body.tscn" id="3_1e010"]
-[ext_resource type="Texture2D" uid="uid://migc5rqexehm" path="res://scenes/game_object/player/tankGreen_barrel3_outline.png" id="3_vvwhs"]
+[ext_resource type="Texture2D" uid="uid://8ip3d3virahl" path="res://scenes/game_object/player/tankGreen_barrel3_outline.png" id="3_vvwhs"]
 [ext_resource type="Script" path="res://scenes/game_object/player/Barrel.gd" id="4_yiyg3"]
 [ext_resource type="PackedScene" uid="uid://dp7s6opobih82" path="res://scenes/component/hurtbox_component.tscn" id="5_fvhfs"]
 
@@ -32,7 +32,7 @@ script = ExtResource("1_hkal2")
 [node name="Camera2D" type="Camera2D" parent="."]
 
 [node name="HealthComponent" parent="." instance=ExtResource("2_gt4m0")]
-max_health = 100.0
+max_health = 50.0
 
 [node name="TankBody" parent="." instance=ExtResource("3_1e010")]
 

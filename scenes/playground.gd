@@ -8,14 +8,14 @@ var players = {}
 func _ready():
 	# faking some characters
 	players = [{
-		"id": 1,
-		"name": "History",
-		"color": "Green"
-	},
-	{
 		"id": 1398740987,
 		"name": "Peerless",
 		"color": "Pink"
+	},
+	{
+		"id": 1,
+		"name": "History",
+		"color": "Green"
 	}]
 	GameManager.players = players
 	var i = 0
