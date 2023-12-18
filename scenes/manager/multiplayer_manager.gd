@@ -80,7 +80,7 @@ func _on_join_pressed():
 func on_start_pressed():
 	start_game.rpc()
 
-@rpc("any_peer", "call_local")
+@rpc("call_local")
 func on_color_changed(player_color):
 	print("on_color_changed" + player_color)
 	update_player_color.rpc(multiplayer.get_unique_id(), player_color)
