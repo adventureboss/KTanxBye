@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://b1ja334pp7vgj"]
 
 [ext_resource type="Script" path="res://scenes/lobby.gd" id="1_v3rvc"]
-[ext_resource type="Texture2D" uid="uid://be3ye82a5x4uh" path="res://assets/menu/Main_Menu.png" id="2_542gn"]
+[ext_resource type="Texture2D" uid="uid://clmr0ufqu7cky" path="res://assets/menu/Main_Menu2.png" id="2_wuriw"]
 [ext_resource type="Texture2D" uid="uid://b7o4oexf7m88c" path="res://assets/menu/logo.png" id="3_mcnqm"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_v6ptr"]
@@ -44,20 +44,20 @@ metadata/_edit_horizontal_guides_ = [264.0, 308.0, 352.0, 396.0, 503.0, 523.0]
 
 [node name="bg_image" type="Sprite2D" parent="."]
 position = Vector2(640, 360)
-texture = ExtResource("2_542gn")
+texture = ExtResource("2_wuriw")
 
 [node name="Start" type="Button" parent="."]
 layout_mode = 0
 offset_left = 24.0
-offset_top = 576.0
+offset_top = 536.0
 offset_right = 250.0
-offset_bottom = 607.0
+offset_bottom = 567.0
 scale = Vector2(1.14231, 1.2292)
 theme_override_colors/font_color = Color(0.929412, 0.454902, 0.219608, 1)
 text = "Start!"
 
 [node name="Elements" type="Node2D" parent="."]
-position = Vector2(277, 25)
+position = Vector2(277, -15)
 scale = Vector2(2, 2)
 
 [node name="Players Title" type="RichTextLabel" parent="Elements"]
