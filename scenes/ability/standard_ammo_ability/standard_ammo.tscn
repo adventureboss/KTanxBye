@@ -1,16 +1,31 @@
-[gd_scene load_steps=12 format=3 uid="uid://b6yfe482j7oik"]
+[gd_scene load_steps=13 format=3 uid="uid://b6yfe482j7oik"]
 
 [ext_resource type="Script" path="res://scenes/component/hitbox_component.gd" id="1_2pw22"]
-[ext_resource type="Texture2D" uid="uid://dt2xsmqvmjt5f" path="res://assets/sprites/Effects/Explosion1/explosion1.png" id="2_3d4u7"]
-[ext_resource type="Texture2D" uid="uid://b64glk45yxxnb" path="res://assets/sprites/Bullets/bulletGreen_outline.png" id="3_ty7kh"]
-[ext_resource type="Texture2D" uid="uid://cr1vv7cwjbr32" path="res://assets/sprites/Effects/Explosion1/explosion2.png" id="4_7ioyc"]
-[ext_resource type="Texture2D" uid="uid://v5t8lkjml3h5" path="res://assets/sprites/Effects/Explosion1/explosion4.png" id="5_73tnv"]
-[ext_resource type="Texture2D" uid="uid://bxb4xuvut1jo" path="res://assets/sprites/Effects/Explosion1/explosion3.png" id="5_g2myc"]
-[ext_resource type="Texture2D" uid="uid://d4eyuufvvmc3j" path="res://assets/sprites/Effects/Explosion1/explosion5.png" id="6_f0dbh"]
+[ext_resource type="Texture2D" uid="uid://c0loedn3vjkxc" path="res://assets/sprites/Bullets/bulletGreen_outline.png" id="2_d2ygt"]
+[ext_resource type="Texture2D" uid="uid://qy1axfax8jfx" path="res://assets/sprites/Effects/Explosion1/explosion1.png" id="3_ay8bx"]
+[ext_resource type="Texture2D" uid="uid://ct43tpf4bhlam" path="res://assets/sprites/Effects/Explosion1/explosion2.png" id="4_wgomf"]
+[ext_resource type="Texture2D" uid="uid://1bj57cp5m24g" path="res://assets/sprites/Effects/Explosion1/explosion3.png" id="5_eiasr"]
+[ext_resource type="Texture2D" uid="uid://dh70asex6npw2" path="res://assets/sprites/Effects/Explosion1/explosion4.png" id="6_cojmy"]
+[ext_resource type="Texture2D" uid="uid://ctmtx3mrofxqa" path="res://assets/sprites/Effects/Explosion1/explosion5.png" id="7_kdpt0"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_oj6g5"]
 radius = 3.0
 height = 12.0
+
+[sub_resource type="Animation" id="Animation_ewq38"]
+length = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.00662237, 0.0150508, 0.0250847, 0.03552, 0.0463566),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("2_d2ygt"), ExtResource("3_ay8bx"), ExtResource("4_wgomf"), ExtResource("5_eiasr"), ExtResource("6_cojmy"), ExtResource("7_kdpt0")]
+}
 
 [sub_resource type="Animation" id="Animation_bxjnh"]
 resource_name = "explode"
@@ -25,22 +40,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.0125603, 0.0235635, 0.0393417, 0.046089),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1),
 "update": 1,
-"values": [ExtResource("3_ty7kh"), ExtResource("2_3d4u7"), ExtResource("4_7ioyc"), ExtResource("5_73tnv"), ExtResource("6_f0dbh")]
-}
-
-[sub_resource type="Animation" id="Animation_ewq38"]
-length = 0.05
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:texture")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.00662237, 0.0150508, 0.0250847, 0.03552, 0.0463566),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
-"update": 1,
-"values": [ExtResource("3_ty7kh"), ExtResource("2_3d4u7"), ExtResource("4_7ioyc"), ExtResource("5_g2myc"), ExtResource("5_73tnv"), ExtResource("6_f0dbh")]
+"values": [ExtResource("2_d2ygt"), ExtResource("3_ay8bx"), ExtResource("4_wgomf"), ExtResource("6_cojmy"), ExtResource("7_kdpt0")]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_pixsf"]
@@ -48,6 +48,17 @@ _data = {
 "RESET": SubResource("Animation_ewq38"),
 "explode": SubResource("Animation_bxjnh")
 }
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_5di6b"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:scale")
+properties/1/spawn = true
+properties/1/replication_mode = 2
+properties/2/path = NodePath(".:rotation")
+properties/2/spawn = true
+properties/2/replication_mode = 1
 
 [node name="StandardAmmo" type="Area2D"]
 top_level = true
@@ -59,7 +70,7 @@ fire_delay = 0.5
 [node name="Sprite2D" type="Sprite2D" parent="."]
 rotation = 1.5708
 scale = Vector2(0.5, 0.5)
-texture = ExtResource("3_ty7kh")
+texture = ExtResource("2_d2ygt")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 rotation = 1.5708
@@ -69,3 +80,7 @@ shape = SubResource("CapsuleShape2D_oj6g5")
 libraries = {
 "": SubResource("AnimationLibrary_pixsf")
 }
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_5di6b")
+visibility_update_mode = 1

@@ -8,8 +8,10 @@ extends Marker2D
 @onready var barrel_sprite : Sprite2D = $Sprite2D
 @onready var spread_arch : Node2D = $SpreadArch
 @onready var multiplayer_synchronizer : MultiplayerSynchronizer = get_parent().find_child("MultiplayerSynchronizer")
+@onready var bullet_manager : BulletManager = get_tree().get_first_node_in_group("BulletManager")
 
 var fire_wait : bool = false
+var bullets_fired = 0
 
 func _ready():
 	timer.timeout.connect(on_timer_timeout)
@@ -22,8 +24,9 @@ func _process(delta):
 
 	if Input.is_action_pressed("fire_primary"):
 		if !fire_wait:
-			_fire()
-		
+			_fire.rpc()
+
+@rpc("authority", "call_local")
 func _fire():
 	fire_wait = true
 	if ammo_name == "spread":
@@ -31,16 +34,18 @@ func _fire():
 			var new_bullet = current_ammo.instantiate()
 			new_bullet.projectile_owner = owner
 			timer.wait_time = new_bullet.fire_delay
-			add_child(new_bullet)
+			bullet_manager.add_child(new_bullet)
 			new_bullet.global_position = fire_direction.global_position
-			new_bullet.transform = n.global_transform
+			new_bullet.global_transform = n.global_transform
 	else:
 		var new_bullet = current_ammo.instantiate()
+		new_bullet.name = "%s-%s" % [str(multiplayer_synchronizer.get_multiplayer_authority()), bullets_fired]
 		new_bullet.projectile_owner = owner
 		timer.wait_time = new_bullet.fire_delay
-		add_child(new_bullet)
-		new_bullet.transform = fire_direction.global_transform
+		bullet_manager.add_child(new_bullet)
+		new_bullet.global_transform = fire_direction.global_transform
 	timer.start()
+	bullets_fired += 1
 
 func on_timer_timeout():
 	fire_wait = false

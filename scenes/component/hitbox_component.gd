@@ -18,8 +18,12 @@ func _ready():
 
 func _physics_process(delta):
 	position += transform.x * speed * delta
-	
-func dead():
+
+@rpc("call_local", "any_peer")
+func dead(id):
+	if multiplayer.get_unique_id() != id:
+		return
+
 	speed = 0
 	if animation_player:
 		animation_player.play("explode")

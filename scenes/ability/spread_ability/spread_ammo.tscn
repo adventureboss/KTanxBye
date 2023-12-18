@@ -1,16 +1,31 @@
-[gd_scene load_steps=12 format=3 uid="uid://1e3fr6viacsu"]
+[gd_scene load_steps=13 format=3 uid="uid://1e3fr6viacsu"]
 
 [ext_resource type="Script" path="res://scenes/component/hitbox_component.gd" id="1_j6n15"]
-[ext_resource type="Texture2D" uid="uid://b64glk45yxxnb" path="res://assets/sprites/Bullets/bulletGreen_outline.png" id="2_b8f65"]
-[ext_resource type="Texture2D" uid="uid://dt2xsmqvmjt5f" path="res://assets/sprites/Effects/Explosion1/explosion1.png" id="3_km5db"]
-[ext_resource type="Texture2D" uid="uid://cr1vv7cwjbr32" path="res://assets/sprites/Effects/Explosion1/explosion2.png" id="4_1la73"]
-[ext_resource type="Texture2D" uid="uid://v5t8lkjml3h5" path="res://assets/sprites/Effects/Explosion1/explosion4.png" id="5_hxe56"]
-[ext_resource type="Texture2D" uid="uid://d4eyuufvvmc3j" path="res://assets/sprites/Effects/Explosion1/explosion5.png" id="6_mjp2i"]
-[ext_resource type="Texture2D" uid="uid://bxb4xuvut1jo" path="res://assets/sprites/Effects/Explosion1/explosion3.png" id="7_erhkp"]
+[ext_resource type="Texture2D" uid="uid://c0loedn3vjkxc" path="res://assets/sprites/Bullets/bulletGreen_outline.png" id="2_b8f65"]
+[ext_resource type="Texture2D" uid="uid://qy1axfax8jfx" path="res://assets/sprites/Effects/Explosion1/explosion1.png" id="3_km5db"]
+[ext_resource type="Texture2D" uid="uid://ct43tpf4bhlam" path="res://assets/sprites/Effects/Explosion1/explosion2.png" id="4_1la73"]
+[ext_resource type="Texture2D" uid="uid://dh70asex6npw2" path="res://assets/sprites/Effects/Explosion1/explosion4.png" id="5_hxe56"]
+[ext_resource type="Texture2D" uid="uid://ctmtx3mrofxqa" path="res://assets/sprites/Effects/Explosion1/explosion5.png" id="6_mjp2i"]
+[ext_resource type="Texture2D" uid="uid://1bj57cp5m24g" path="res://assets/sprites/Effects/Explosion1/explosion3.png" id="7_erhkp"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_oj6g5"]
 radius = 3.0
 height = 12.0
+
+[sub_resource type="Animation" id="Animation_ewq38"]
+length = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.00662237, 0.0150508, 0.0250847, 0.03552, 0.0463566),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("2_b8f65"), ExtResource("3_km5db"), ExtResource("4_1la73"), ExtResource("7_erhkp"), ExtResource("5_hxe56"), ExtResource("6_mjp2i")]
+}
 
 [sub_resource type="Animation" id="Animation_bxjnh"]
 resource_name = "explode"
@@ -28,26 +43,22 @@ tracks/0/keys = {
 "values": [ExtResource("2_b8f65"), ExtResource("3_km5db"), ExtResource("4_1la73"), ExtResource("5_hxe56"), ExtResource("6_mjp2i")]
 }
 
-[sub_resource type="Animation" id="Animation_ewq38"]
-length = 0.05
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:texture")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.00662237, 0.0150508, 0.0250847, 0.03552, 0.0463566),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
-"update": 1,
-"values": [ExtResource("2_b8f65"), ExtResource("3_km5db"), ExtResource("4_1la73"), ExtResource("7_erhkp"), ExtResource("5_hxe56"), ExtResource("6_mjp2i")]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_pixsf"]
 _data = {
 "RESET": SubResource("Animation_ewq38"),
 "explode": SubResource("Animation_bxjnh")
 }
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_f7166"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:rotation")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+properties/2/path = NodePath(".:scale")
+properties/2/spawn = true
+properties/2/replication_mode = 2
 
 [node name="SpreadAmmo" type="Area2D"]
 top_level = true
@@ -69,3 +80,7 @@ shape = SubResource("CapsuleShape2D_oj6g5")
 libraries = {
 "": SubResource("AnimationLibrary_pixsf")
 }
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_f7166")
+visibility_update_mode = 1

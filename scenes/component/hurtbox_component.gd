@@ -19,5 +19,6 @@ func on_area_entered(other_area: Area2D):
 		return
 		
 	var hitbox_component = other_area as HitboxComponent
-	health_component.damage(hitbox_component.damage)
-	hitbox_component.dead()
+	print(multiplayer.get_unique_id())
+	health_component.damage.rpc(multiplayer.get_unique_id(), hitbox_component.damage)
+	hitbox_component.dead.rpc(multiplayer.get_unique_id())

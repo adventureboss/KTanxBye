@@ -6,6 +6,7 @@
 [ext_resource type="AudioStream" uid="uid://dyrp2ud4r1x04" path="res://assets/audio/music/KTANKBYE_MAP_TRACK.mp3" id="3_ecdtc"]
 [ext_resource type="PackedScene" uid="uid://b1oeve68we6sd" path="res://scenes/game_object/collectible/rapid_fire_pickup.tscn" id="5_26hcn"]
 [ext_resource type="PackedScene" uid="uid://dipeb45bdcrl6" path="res://scenes/game_object/collectible/spread_pickup.tscn" id="6_vok50"]
+[ext_resource type="Script" path="res://scenes/manager/bullet_manager.gd" id="7_q4krf"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_wvwmn"]
 resource_name = "terrainTiles"
@@ -112,6 +113,8 @@ position = Vector2(780, 597)
 [node name="SpreadPickup" parent="." instance=ExtResource("6_vok50")]
 position = Vector2(661, 453)
 
+[node name="BulletManager" type="Node2D" parent="." groups=["BulletManager"]]
+script = ExtResource("7_q4krf")
 [node name="BorderWalls" type="Node" parent="."]
 
 [node name="TopWall" type="StaticBody2D" parent="BorderWalls"]

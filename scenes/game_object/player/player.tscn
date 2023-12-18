@@ -37,7 +37,7 @@ limit_bottom = 4480
 position_smoothing_enabled = true
 
 [node name="HealthComponent" parent="." instance=ExtResource("2_gt4m0")]
-max_health = 100.0
+max_health = 50.0
 
 [node name="TankBody" parent="." instance=ExtResource("3_1e010")]
 
