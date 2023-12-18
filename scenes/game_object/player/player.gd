@@ -7,7 +7,6 @@ const ACCELERATION_SMOOTHING = 25
 @onready var tank_body: Sprite2D = $TankBody/Sprite2D
 @onready var barrel_color: Sprite2D = $Barrel/Sprite2D
 
-@onready var diagonal_movement: Array = [Vector2(-1, -1), Vector2(1, 1), Vector2(1, -1), Vector2(-1, 1)]
 @onready var previous_movement: Vector2 = Vector2.ZERO
 
 func _ready():
