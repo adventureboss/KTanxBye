@@ -41,6 +41,7 @@ func _fire():
 		for n in spread_arch.get_children():
 			var new_bullet = load(current_ammo.path).instantiate()
 			var bullet_sprite = new_bullet.find_child("Sprite2D")
+			bullet_sprite.scale = Vector2(0.35, 0.35)
 			bullet_sprite.texture = load(bullet_manager.bullet_sprites[tank_color][new_bullet.bullet_name])
 			new_bullet.projectile_owner = owner
 			timer.wait_time = new_bullet.fire_delay
