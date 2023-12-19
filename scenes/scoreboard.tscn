@@ -1,0 +1,46 @@
+[gd_scene load_steps=2 format=3 uid="uid://cy38vh1bea4dy"]
+
+[ext_resource type="Script" path="res://scenes/scoreboard.gd" id="1_6f6am"]
+
+[node name="Scoreboard" type="Control" groups=["Scoreboard"]]
+visible = false
+z_index = 5
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+script = ExtResource("1_6f6am")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 0
+offset_right = 600.0
+offset_bottom = 600.0
+color = Color(0, 0, 0, 0.501961)
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 50.0
+offset_top = 50.0
+offset_right = 50.0
+offset_bottom = 50.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="GridContainer" type="GridContainer" parent="ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/h_separation = 20
+columns = 4
+
+[node name="RefreshTimer" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+autostart = true
