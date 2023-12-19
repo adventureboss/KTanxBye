@@ -8,6 +8,8 @@ var can_boost = true
 @onready var tank_body: Sprite2D = $TankBody/Sprite2D
 @onready var barrel_color: Sprite2D = $Barrel/Sprite2D
 @onready var boost_timer: Timer = $BoostTimer
+@onready var player_name : Label = $PlayerName
+
 
 @onready var previous_movement: Vector2 = Vector2.ZERO
 
@@ -18,6 +20,15 @@ func _ready():
 		
 		var tank_color = GameManager.players[player_id].color
 		set_tank_texture.rpc(player_id, tank_color)
+		set_player_name.rpc(player_id)
+		
+@rpc("any_peer", "call_local")
+func set_player_name(player_id):
+	if $MultiplayerSynchronizer.get_multiplayer_authority() == player_id:
+		player_name.text = GameManager.players[player_id].name
+	else:
+		get_node("../%s/PlayerName" % player_id).text = GameManager.players[player_id].name
+	
 
 @rpc("any_peer", "call_local")
 func set_tank_texture(id, tank_color):
