@@ -1,26 +1,27 @@
 extends Node
 
 enum Message {
-	id,
-	join,
-	userConnected,
-	userDisconnected,
-	lobby,
-	candidate,
-	offer,
-	answer,
-	checkIn
+	ID,
+	JOIN,
+	USER_CONNECTED,
+	USER_DISCONNECTED,
+	LOBBY,
+	CANDIDATE,
+	OFFER,
+	ANSWER,
+	CHECK_IN
 }
 
 # free stun server provided by google (temporary)
 @export var stun_server: String = "stun:stun1.l.google.com:19302"
 
-var peer = WebSocketMultiplayerPeer.new() # for connecting the users to each other
-var rtc_peer: WebRTCMultiplayerPeer = WebRTCMultiplayerPeer.new() # for sending real data
+@onready var peer = WebSocketMultiplayerPeer.new() # for connecting the users to each other
+@onready var rtc_peer: WebRTCMultiplayerPeer = WebRTCMultiplayerPeer.new() # for sending real data
 
 var id = 0
-var lobby_id = ""
 var host_id: int
+var lobby_id = ""
+var lobby_info = {}
 
 func _ready():
 	multiplayer.connected_to_server.connect(rtc_server_connnected)
@@ -30,10 +31,10 @@ func _ready():
 func rtc_server_connnected():
 	print("rtc server connected")
 
-func rtc_peer_connnected():
+func rtc_peer_connnected(id):
 	print("rtc peer connected; id %d" % id)
 
-func rtc_peer_disconnnected():
+func rtc_peer_disconnnected(id):
 	print("rtc peer disconnected; id %d" % id)
 
 func _process(_delta):
@@ -44,27 +45,26 @@ func _process(_delta):
 			var dataString = packet.get_string_from_utf8()
 			var data = JSON.parse_string(dataString)
 			print(data)
-			if data.message == Message.id:
+			if data.message == Message.ID:
 				id = data.id
 				connected(id)
-			if data.message == Message.userConnected:
+			if data.message == Message.USER_CONNECTED:
 				create_peer(data.id)
-			if data.message == Message.lobby:
+			if data.message == Message.LOBBY:
 				GameManager.players = JSON.parse_string(data.players)
 				lobby_id = data.lobby_id
 				host_id = data.host
-			if data.message == Message.candidate:
-				var peers = rtc_peer.get_peers()
-				print("peers")
-				print(peers)
+				print("players:")
+				print(GameManager.players)
+			if data.message == Message.CANDIDATE:
 				if rtc_peer.has_peer(data.original_peer):
 					print("got candidate: original peer %s; my id %s" % [str(data.original_peer), str(id)])
 					rtc_peer.get_peer(data.original_peer).connection.add_ice_candidate(data.mid, data.index, data.sdp)
-			if data.message == Message.offer:
+			if data.message == Message.OFFER:
 				print("offer; original peer %d" % data.original_peer)
 				if rtc_peer.has_peer(data.original_peer):
 					rtc_peer.get_peer(data.original_peer).connection.set_remote_description("offer", data.data)
-			if data.message == Message.answer:
+			if data.message == Message.ANSWER:
 				print("answer; original peer %d" % data.original_peer)
 				if rtc_peer.has_peer(data.original_peer):
 					rtc_peer.get_peer(data.original_peer).connection.set_remote_description("answer", data.data)
@@ -81,22 +81,6 @@ func connect_to_server():
 	print("started client")
 
 # WebRTC Connection
-#func create_peer(peer_id):
-	#if peer_id != id:
-		#var peer_connection : WebRTCPeerConnection = WebRTCPeerConnection.new()
-		#var error = peer_connection.initialize({
-			#"iceServers": [{"urls": [stun_server]}]
-		#})
-		#if error != Error.OK:
-			#print("err initializing RTCPeerConnection %s" % str(error))
-		#print("binding id %s, my id %s" % [peer_id, id])
-		#
-		#peer_connection.session_description_created.connect(self.offer_created.bind(peer_id))
-		#peer_connection.ice_candidate_created.connect(self.ice_candidate_created.bind(peer_id))
-		#rtc_peer.add_peer(peer_connection, peer_id)
-		#
-		#if peer_id < rtc_peer.get_unique_id(): 
-			#peer_connection.create_offer()
 func create_peer(id):
 	if id != self.id:
 		var peer : WebRTCPeerConnection = WebRTCPeerConnection.new()
@@ -111,9 +95,7 @@ func create_peer(id):
 		if error != 0:
 			print("error adding peer %d" % error)
 		
-		print("id and peer get_unqiue_id comp %d < %d" % [id, rtc_peer.get_unique_id()])
-		print(rtc_peer.get_peers())
-		#if host_id != self.id:
+		print("peer_id and peer get_unqiue_id comp %d < %d" % [id, rtc_peer.get_unique_id()])
 		if id != rtc_peer.get_unique_id():
 			peer.create_offer()
 
@@ -135,7 +117,7 @@ func ice_candidate_created(mid_name, index_name, sdp_name, peer_id):
 	var message = {
 		"id": peer_id,
 		"original_peer": self.id,
-		"message": Message.candidate,
+		"message": Message.CANDIDATE,
 		"mid": mid_name,
 		"index": index_name,
 		"sdp": sdp_name,
@@ -143,13 +125,12 @@ func ice_candidate_created(mid_name, index_name, sdp_name, peer_id):
 	}
 	peer.put_packet(JSON.stringify(message).to_utf8_buffer())
 
-
 # here's my information
 func send_offer(id, data):
 	var message = {
 		"id": id,
 		"original_peer": self.id,
-		"message": Message.offer,
+		"message": Message.OFFER,
 		"data": data,
 		"lobby_id": lobby_id
 	}
@@ -160,13 +141,13 @@ func send_answer(id, data):
 	var message = {
 		"id": id,
 		"original_peer": self.id,
-		"message": Message.answer,
+		"message": Message.ANSWER,
 		"data": data,
 		"lobby_id": lobby_id
 	}
 	peer.put_packet(JSON.stringify(message).to_utf8_buffer())
 
-@rpc("any_peer", "call_local")
+@rpc("any_peer")
 func ping():
 	print("ping from %s" % str(multiplayer.get_remote_sender_id()))
 
@@ -179,7 +160,7 @@ func _on_start_client_button_down():
 func _on_lobby_button_down():
 	var message = {
 		"id": id,
-		"message": Message.lobby,
+		"message": Message.LOBBY,
 		"lobby_id": $LobbyVal.text,
 		"name": ""
 	}
