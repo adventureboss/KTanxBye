@@ -21,16 +21,10 @@ var characters ="abcdefghijklmnopqrstuvwyzABCDEFGHIJKLMNPQRSTUVWXYZ123456789"
 
 func _ready():
 	if "--server" in OS.get_cmdline_args():
-		start_server(host_port)
+		print("hosting on " + str(8915))
+		peer.create_server(8915)
 	peer.connect("peer_connected", peer_connected)
 	peer.connect("peer_disconnected", peer_disconnected)
-
-func start_server(port):
-	var error = peer.create_server(port)
-	if error != 0:
-		print("error hosting server: %d" % error)
-		return
-	print("started server; hosting on %d" % port)
 
 func _process(_delta):
 	peer.poll()
@@ -47,6 +41,10 @@ func _process(_delta):
 				if data.message == Message.ANSWER:
 					print("we are not alone!!!")
 				send_to_player(data.peer, data) # passes data to other peer
+
+func start_server():
+	peer.create_server(8915)
+	print("started server")
 
 func join_lobby(user_id, lobby_id, user_name):
 	if lobby_id == "":
@@ -114,3 +112,14 @@ func peer_disconnected(id):
 	users.erase(id)
 	print("peer disconnected: %s" % str(id))
 	pass
+
+func _on_start_server_button_down():
+	start_server()
+
+func _on_test_2_button_down():
+	var message = {
+		"message": Message.JOIN,
+		"data": 'test'
+	}
+	var messageBytes = JSON.stringify(message).to_utf8_buffer()
+	peer.put_packet(messageBytes)
