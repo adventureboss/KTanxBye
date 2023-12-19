@@ -11,7 +11,7 @@ func _ready():
 	body_entered.connect(on_body_entered)
 	
 func collect(body):
-	GameEvents.emit_ability_pick_up(GameManager.abilities[ability_id], GameManager.players[body.to_int()].id)
+	GameEvents.emit_ability_pick_up(GameManager.abilities[ability_id], GameManager.players[body.to_int()].id, global_position)
 	queue_free()
 	
 func disable_collision():
