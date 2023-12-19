@@ -40,7 +40,7 @@ func _process(_delta):
 				print("original peer id %s" % data.original_peer)
 				if data.message == Message.ANSWER:
 					print("we are not alone!!!")
-				send_to_player(data.id, data) # passes data to other peer
+				send_to_player(data.peer, data) # passes data to other peer
 
 func start_server():
 	peer.create_server(8915)
@@ -51,6 +51,10 @@ func join_lobby(user_id, lobby_id, user_name):
 		lobby_id = generate_lobby_id()
 		lobbies[lobby_id] = Lobby.new(user_id)
 		print(lobby_id)
+	
+	if lobby_id not in lobbies:
+		print("lobby not found")
+		return
 	
 	var player = lobbies[lobby_id].add_player(user_id, user_name)
 	

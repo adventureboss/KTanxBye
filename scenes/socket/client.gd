@@ -85,18 +85,15 @@ func create_peer(id):
 	if id != self.id:
 		var peer : WebRTCPeerConnection = WebRTCPeerConnection.new()
 		peer.initialize({
-			"iceServers" : [{ "urls": [stun_server] }]
+			"iceServers" : [{ "urls": ["stun:stun.l.google.com:19302"] }]
 		})
 		print("binding id " + str(id) + "my id is " + str(self.id))
 		
 		peer.session_description_created.connect(self.offer_created.bind(id))
 		peer.ice_candidate_created.connect(self.ice_candidate_created.bind(id))
-		var error = rtc_peer.add_peer(peer, id)
-		if error != 0:
-			print("error adding peer %d" % error)
+		rtc_peer.add_peer(peer, id)
 		
-		print("peer_id and peer get_unqiue_id comp %d < %d" % [id, rtc_peer.get_unique_id()])
-		if id != rtc_peer.get_unique_id():
+		if id < rtc_peer.get_unique_id(): # this is a strange expression, but its to decide order
 			peer.create_offer()
 
 func offer_created(type, data, peer_id):
@@ -113,39 +110,40 @@ func offer_created(type, data, peer_id):
 		# type must be answer
 		send_answer(peer_id, data)
 
-func ice_candidate_created(mid_name, index_name, sdp_name, peer_id):
-	var message = {
-		"id": peer_id,
-		"original_peer": self.id,
-		"message": Message.CANDIDATE,
-		"mid": mid_name,
-		"index": index_name,
-		"sdp": sdp_name,
-		"lobby_id": lobby_id
-	}
-	peer.put_packet(JSON.stringify(message).to_utf8_buffer())
-
-# here's my information
 func send_offer(id, data):
 	var message = {
-		"id": id,
-		"original_peer": self.id,
-		"message": Message.OFFER,
+		"peer" : id,
+		"original_peer" : self.id,
+		"message" : Message.OFFER,
 		"data": data,
 		"lobby_id": lobby_id
 	}
 	peer.put_packet(JSON.stringify(message).to_utf8_buffer())
+	pass
 
-# response based on that information
 func send_answer(id, data):
 	var message = {
-		"id": id,
-		"original_peer": self.id,
-		"message": Message.ANSWER,
+		"peer" : id,
+		"original_peer" : self.id,
+		"message" : Message.ANSWER,
 		"data": data,
 		"lobby_id": lobby_id
 	}
 	peer.put_packet(JSON.stringify(message).to_utf8_buffer())
+	pass
+
+func ice_candidate_created(midName, indexName, sdpName, id):
+	var message = {
+		"peer" : id,
+		"original_peer" : self.id,
+		"message" : Message.CANDIDATE,
+		"mid": midName,
+		"index": indexName,
+		"sdp": sdpName,
+		"lobby_id": lobby_id
+	}
+	peer.put_packet(JSON.stringify(message).to_utf8_buffer())
+	pass
 
 @rpc("any_peer")
 func ping():
