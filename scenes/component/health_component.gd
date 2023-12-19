@@ -13,9 +13,6 @@ func _ready():
 
 @rpc("any_peer", "call_local")
 func damage(id, enemy_id, damage_amount: float):
-	if multiplayer.get_unique_id() != id:
-		return
-	print("changed current health")
 	current_health = max(current_health - damage_amount, 0)
 	health_changed.emit()
 	Callable(check_death).call_deferred(id, enemy_id)
