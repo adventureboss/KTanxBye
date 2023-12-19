@@ -65,7 +65,7 @@ func _fire():
 func on_timer_timeout():
 	fire_wait = false
 
-func update_ammo(ability, id):
+func update_ammo(ability, id, _position):
 	if id != multiplayer.get_unique_id():
 		return
 	
