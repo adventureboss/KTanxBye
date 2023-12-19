@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://ds5yconv735ql"]
+[gd_scene load_steps=4 format=3 uid="uid://ds5yconv735ql"]
 
 [ext_resource type="Script" path="res://scenes/component/collectible_component.gd" id="1_d5wew"]
-[ext_resource type="Texture2D" uid="uid://ih8cb8lgmbix" path="res://assets/sprites/Collectibles/crateWood.png" id="2_3fss7"]
+[ext_resource type="Texture2D" uid="uid://cuhbswnm6qgn" path="res://assets/sprites/Collectibles/crateWood.png" id="2_3fss7"]
+[ext_resource type="AudioStream" uid="uid://bwiageclksl88" path="res://assets/audio/sfx/weapon_sounds/weapon_pick_up.mp3" id="3_7537f"]
 
 [node name="CollectibleComponent" type="Area2D" groups=["collectible"]]
 script = ExtResource("1_d5wew")
@@ -9,3 +10,7 @@ script = ExtResource("1_d5wew")
 [node name="CrateWood" type="Sprite2D" parent="."]
 position = Vector2(-2, -2)
 texture = ExtResource("2_3fss7")
+
+[node name="weapon_pick_up" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_7537f")
+volume_db = -20.0

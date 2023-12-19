@@ -1,12 +1,12 @@
 [gd_scene load_steps=13 format=3 uid="uid://b6yfe482j7oik"]
 
 [ext_resource type="Script" path="res://scenes/component/hitbox_component.gd" id="1_2pw22"]
-[ext_resource type="Texture2D" uid="uid://cx7feb40bp5vw" path="res://assets/sprites/Bullets/bulletGreen_outline.png" id="2_d2ygt"]
-[ext_resource type="Texture2D" uid="uid://bh74bxar0ghpn" path="res://assets/sprites/Effects/Explosion1/explosion1.png" id="3_ay8bx"]
-[ext_resource type="Texture2D" uid="uid://cfdfosrj6jftq" path="res://assets/sprites/Effects/Explosion1/explosion2.png" id="4_wgomf"]
-[ext_resource type="Texture2D" uid="uid://civngppv5n2ow" path="res://assets/sprites/Effects/Explosion1/explosion3.png" id="5_eiasr"]
-[ext_resource type="Texture2D" uid="uid://c3ujarddh4c3j" path="res://assets/sprites/Effects/Explosion1/explosion4.png" id="6_cojmy"]
-[ext_resource type="Texture2D" uid="uid://bdw12ylwud1yh" path="res://assets/sprites/Effects/Explosion1/explosion5.png" id="7_kdpt0"]
+[ext_resource type="Texture2D" uid="uid://bfahasvxwt7up" path="res://assets/sprites/Bullets/bulletGreen_outline.png" id="2_d2ygt"]
+[ext_resource type="Texture2D" uid="uid://bm6yk3j1m7ste" path="res://assets/sprites/Effects/Explosion1/explosion1.png" id="3_ay8bx"]
+[ext_resource type="Texture2D" uid="uid://d26r4m5lfv1x2" path="res://assets/sprites/Effects/Explosion1/explosion2.png" id="4_wgomf"]
+[ext_resource type="Texture2D" uid="uid://6qmui6uffnle" path="res://assets/sprites/Effects/Explosion1/explosion3.png" id="5_eiasr"]
+[ext_resource type="Texture2D" uid="uid://corv011ajhhym" path="res://assets/sprites/Effects/Explosion1/explosion4.png" id="6_cojmy"]
+[ext_resource type="Texture2D" uid="uid://es0wab32a3dd" path="res://assets/sprites/Effects/Explosion1/explosion5.png" id="7_kdpt0"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_oj6g5"]
 radius = 3.0
