@@ -31,4 +31,4 @@ func _on_player_died(id, enemy_id):
 	multiplayer_manager.update_player_score_by.rpc(id, {"kills": 0, "deaths": 1, "assists": 0})
 	multiplayer_manager.update_player_score_by.rpc(enemy_id, {"kills": 1, "deaths": 0, "assists": 0})
 
-	# trigger UI screen, etc.
+	# trigger UI screen, respawn, etc.
