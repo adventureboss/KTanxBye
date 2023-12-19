@@ -12,11 +12,14 @@ extends Marker2D
 
 var fire_wait : bool = false
 var bullets_fired = 0
+var tank_color
 
 func _ready():
 	timer.timeout.connect(on_timer_timeout)
 	GameEvents.ability_pick_up.connect(update_ammo)
 	process_mode = Node.PROCESS_MODE_ALWAYS
+	
+	tank_color = GameManager.players[multiplayer.get_unique_id()].color
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -43,6 +46,8 @@ func _fire():
 			new_bullet.global_transform = n.global_transform
 	else:
 		var new_bullet = current_ammo.instantiate()
+		var bullet_sprite = new_bullet.find_child("Sprite2D")
+		bullet_sprite.texture = load(bullet_manager.bullet_sprites[tank_color][new_bullet.bullet_name])
 		new_bullet.name = "%s-%s" % [str(multiplayer_synchronizer.get_multiplayer_authority()), bullets_fired]
 		new_bullet.projectile_owner = owner
 		timer.wait_time = new_bullet.fire_delay

@@ -6,6 +6,7 @@ class_name HitboxComponent
 @export var max_range : int = 150 # need to just remove the projectiles when they go off camera
 @export var fire_delay : float = 0.1
 @export var direction : Vector2 = Vector2.RIGHT
+@export var bullet_name : String = "standard"
 
 @onready var ammo_sprite : Sprite2D = $Sprite2D
 @onready var animation_player : AnimationPlayer = null

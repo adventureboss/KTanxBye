@@ -1,12 +1,12 @@
 [gd_scene load_steps=13 format=3 uid="uid://blbk3n3y7hc16"]
 
 [ext_resource type="Script" path="res://scenes/component/hitbox_component.gd" id="1_lk25m"]
-[ext_resource type="Texture2D" uid="uid://dfg8l8bl25boc" path="res://scenes/ability/standard_ammo_ability/green_bullet.png" id="2_xy08k"]
-[ext_resource type="Texture2D" uid="uid://bm6yk3j1m7ste" path="res://assets/sprites/Effects/Explosion1/explosion1.png" id="3_8pbo0"]
-[ext_resource type="Texture2D" uid="uid://d26r4m5lfv1x2" path="res://assets/sprites/Effects/Explosion1/explosion2.png" id="4_p71wi"]
-[ext_resource type="Texture2D" uid="uid://6qmui6uffnle" path="res://assets/sprites/Effects/Explosion1/explosion3.png" id="5_kddms"]
-[ext_resource type="Texture2D" uid="uid://corv011ajhhym" path="res://assets/sprites/Effects/Explosion1/explosion4.png" id="6_t87dm"]
-[ext_resource type="Texture2D" uid="uid://es0wab32a3dd" path="res://assets/sprites/Effects/Explosion1/explosion5.png" id="7_sqa8j"]
+[ext_resource type="Texture2D" uid="uid://lamjkto5fgv6" path="res://scenes/ability/standard_ammo_ability/green_bullet.png" id="2_xy08k"]
+[ext_resource type="Texture2D" uid="uid://bh74bxar0ghpn" path="res://assets/sprites/Effects/Explosion1/explosion1.png" id="3_8pbo0"]
+[ext_resource type="Texture2D" uid="uid://cfdfosrj6jftq" path="res://assets/sprites/Effects/Explosion1/explosion2.png" id="4_p71wi"]
+[ext_resource type="Texture2D" uid="uid://civngppv5n2ow" path="res://assets/sprites/Effects/Explosion1/explosion3.png" id="5_kddms"]
+[ext_resource type="Texture2D" uid="uid://c3ujarddh4c3j" path="res://assets/sprites/Effects/Explosion1/explosion4.png" id="6_t87dm"]
+[ext_resource type="Texture2D" uid="uid://bdw12ylwud1yh" path="res://assets/sprites/Effects/Explosion1/explosion5.png" id="7_sqa8j"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_oj6g5"]
 radius = 3.0
@@ -66,6 +66,7 @@ collision_layer = 16
 collision_mask = 6
 script = ExtResource("1_lk25m")
 damage = 7
+bullet_name = "rapid_fire"
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 rotation = 1.5708
