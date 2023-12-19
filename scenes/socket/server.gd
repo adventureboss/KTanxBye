@@ -1,14 +1,14 @@
 extends Node
 
 enum Message {
-	id,
-	join,
-	userConnected,
-	userDisconnected,
-	lobby,
-	candidate,
-	offer,
-	answer,
+	id, # 0
+	join, #1
+	userConnected, #2
+	userDisconnected, #3
+	lobby,#4
+	candidate,#5
+	offer,#6
+	answer,#7
 	checkIn
 }
 
@@ -38,10 +38,12 @@ func _process(_delta):
 				join_lobby(data.id, data.lobby_id, data.name)
 			if data.message == Message.offer || data.message == Message.answer || data.message == Message.candidate:
 				print("original peer id %s" % data.original_peer)
+				if data.message == Message.answer:
+					print("we are not alone!!!")
 				send_to_player(data.id, data) # passes data to other peer
 
 func start_server():
-	peer.create_server(3456)
+	peer.create_server(8915)
 	print("started server")
 
 func join_lobby(user_id, lobby_id, user_name):

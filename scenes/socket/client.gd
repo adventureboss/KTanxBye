@@ -13,13 +13,14 @@ enum Message {
 }
 
 # free stun server provided by google (temporary)
-@export var stun_server: String = "stun:stun.l.google.com:19302"
+@export var stun_server: String = "stun:stun1.l.google.com:19302"
 
 var peer = WebSocketMultiplayerPeer.new() # for connecting the users to each other
 var rtc_peer: WebRTCMultiplayerPeer = WebRTCMultiplayerPeer.new() # for sending real data
 
 var id = 0
 var lobby_id = ""
+var host_id: int
 
 func _ready():
 	multiplayer.connected_to_server.connect(rtc_server_connnected)
@@ -51,7 +52,11 @@ func _process(_delta):
 			if data.message == Message.lobby:
 				GameManager.players = JSON.parse_string(data.players)
 				lobby_id = data.lobby_id
+				host_id = data.host
 			if data.message == Message.candidate:
+				var peers = rtc_peer.get_peers()
+				print("peers")
+				print(peers)
 				if rtc_peer.has_peer(data.original_peer):
 					print("got candidate: original peer %s; my id %s" % [str(data.original_peer), str(id)])
 					rtc_peer.get_peer(data.original_peer).connection.add_ice_candidate(data.mid, data.index, data.sdp)
@@ -71,7 +76,8 @@ func connected(peer_id):
 	multiplayer.multiplayer_peer = rtc_peer
 
 func connect_to_server():
-	peer.create_client("ws://127.0.0.1:3456")
+	#peer.create_client("ws://139.144.56.116:8915")
+	peer.create_client("ws://127.0.0.1:8915")
 	print("started client")
 
 # WebRTC Connection
@@ -95,20 +101,25 @@ func create_peer(id):
 	if id != self.id:
 		var peer : WebRTCPeerConnection = WebRTCPeerConnection.new()
 		peer.initialize({
-			"iceServers" : [{ "urls": ["stun:stun.l.google.com:19302"] }]
+			"iceServers" : [{ "urls": [stun_server] }]
 		})
 		print("binding id " + str(id) + "my id is " + str(self.id))
 		
 		peer.session_description_created.connect(self.offer_created.bind(id))
 		peer.ice_candidate_created.connect(self.ice_candidate_created.bind(id))
-		rtc_peer.add_peer(peer, id)
+		var error = rtc_peer.add_peer(peer, id)
+		if error != 0:
+			print("error adding peer %d" % error)
 		
 		print("id and peer get_unqiue_id comp %d < %d" % [id, rtc_peer.get_unique_id()])
-		if id < rtc_peer.get_unique_id():
+		print(rtc_peer.get_peers())
+		#if host_id != self.id:
+		if id != rtc_peer.get_unique_id():
 			peer.create_offer()
 
 func offer_created(type, data, peer_id):
 	if !rtc_peer.has_peer(peer_id):
+		print("offer not created")
 		return
 	
 	# create a local description, becomes a peers remote_description
@@ -155,7 +166,7 @@ func send_answer(id, data):
 	}
 	peer.put_packet(JSON.stringify(message).to_utf8_buffer())
 
-@rpc("any_peer")
+@rpc("any_peer", "call_local")
 func ping():
 	print("ping from %s" % str(multiplayer.get_remote_sender_id()))
 

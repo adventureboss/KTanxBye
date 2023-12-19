@@ -44,7 +44,6 @@ offset_top = 74.0
 offset_right = 83.0
 offset_bottom = 105.0
 text = "Test"
-metadata/_edit_lock_ = true
 
 [node name="test2" type="Button" parent="."]
 layout_mode = 0
