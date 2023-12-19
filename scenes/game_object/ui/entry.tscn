@@ -3,6 +3,7 @@
 [node name="Entry" type="RichTextLabel"]
 offset_right = 40.0
 offset_bottom = 40.0
+theme_override_font_sizes/normal_font_size = 30
 fit_content = true
 scroll_active = false
 autowrap_mode = 0
