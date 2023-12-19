@@ -75,6 +75,8 @@ distance = -4482.04
 script = ExtResource("1_2r7ig")
 PlayerScene = ExtResource("2_kcqh6")
 
+[node name="BulletManager" parent="." instance=ExtResource("3_oyu42")]
+
 [node name="RoundTimer" type="Timer" parent="."]
 wait_time = 300.0
 one_shot = true
