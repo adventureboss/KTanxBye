@@ -12,7 +12,7 @@ var abilities = {
 		"audio": "res://assets/audio/sfx/weapon_sounds/normal_cannon_fire.mp3",
 	   },
 	2: {"name": "spread",
-		"path": "res://scenes/ability/standard_ammo_ability/standard_ammo.tscn",
+		"path": "res://scenes/ability/spread_ability/spread_ammo.tscn",
 		"audio": "res://assets/audio/sfx/weapon_sounds/shotgun_fire.wav",
 	   },
 }
