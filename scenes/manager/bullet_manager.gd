@@ -28,12 +28,12 @@ var bullet_sprites = {
 
 func _ready():
 	GameEvents.ability_pick_up.connect(update_audio)
-	update_audio(GameManager.abilities[0], 0)
+	update_audio(GameManager.abilities[0], null, null)
 
 func play():
 	bullet_audio.play()
 
-func update_audio(ability, id):
+func update_audio(ability, _id, _position):
 	var audio_to_play = load(ability.audio)
 	new_weapon_pickup.play()
 	bullet_audio.stream = audio_to_play
