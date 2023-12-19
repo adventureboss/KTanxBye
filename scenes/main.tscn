@@ -1,9 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://cnoe7lwarfttu"]
+[gd_scene load_steps=5 format=3 uid="uid://cnoe7lwarfttu"]
 
 [ext_resource type="Script" path="res://scenes/manager/multiplayer_manager.gd" id="1_2jebv"]
 [ext_resource type="Script" path="res://scenes/manager/scene_manager.gd" id="1_22ckq"]
 [ext_resource type="PackedScene" uid="uid://c7re7lky8g0bl" path="res://scenes/start.tscn" id="3_k5fwe"]
-[ext_resource type="Texture2D" uid="uid://clmr0ufqu7cky" path="res://assets/menu/Main_Menu2.png" id="4_xx3dg"]
 [ext_resource type="Script" path="res://scenes/scoreboard.gd" id="5_water"]
 
 [node name="Main" type="Node2D"]
@@ -21,9 +20,6 @@ script = ExtResource("1_22ckq")
 multiplayer_manager = NodePath("../MultiplayerManager")
 
 [node name="Start" parent="SceneManager" instance=ExtResource("3_k5fwe")]
-
-[node name="bg_image" parent="SceneManager/Start" index="0"]
-texture = ExtResource("4_xx3dg")
 
 [node name="Join" parent="SceneManager/Start" index="2"]
 offset_top = 422.0
