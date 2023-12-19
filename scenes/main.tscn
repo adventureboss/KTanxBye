@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://scenes/manager/multiplayer_manager.gd" id="1_2jebv"]
 [ext_resource type="Script" path="res://scenes/manager/scene_manager.gd" id="1_22ckq"]
 [ext_resource type="PackedScene" uid="uid://c7re7lky8g0bl" path="res://scenes/start.tscn" id="3_k5fwe"]
-[ext_resource type="Texture2D" uid="uid://dxlxnwgbdkk3d" path="res://assets/menu/Main_Menu2.png" id="4_xx3dg"]
+[ext_resource type="Texture2D" uid="uid://clmr0ufqu7cky" path="res://assets/menu/Main_Menu2.png" id="4_xx3dg"]
 [ext_resource type="Script" path="res://scenes/scoreboard.gd" id="5_water"]
 
 [node name="Main" type="Node2D"]
