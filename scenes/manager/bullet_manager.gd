@@ -7,22 +7,22 @@ var bullet_sprites = {
 	"Green": {
 		"standard": "res://assets/sprites/Bullets/bullet_sprites/09.png",
 		"rapid_fire": "res://assets/sprites/Bullets/bullet_sprites/16.png",
-		"spread": "res://assets/sprites/Bullets/bullet_sprites/09.png",
+		"spread": "res://assets/sprites/Bullets/bullet_sprites/66.png",
 		},
 	"Red": {
 		"standard": "res://assets/sprites/Bullets/bullet_sprites/02.png",
 		"rapid_fire": "res://assets/sprites/Bullets/bullet_sprites/14.png",
-		"spread": "res://assets/sprites/Bullets/bullet_sprites/02.png",
+		"spread": "res://assets/sprites/Bullets/bullet_sprites/64.png",
 		},
 	"Blue": {
 		"standard": "res://assets/sprites/Bullets/bullet_sprites/06.png",
 		"rapid_fire": "res://assets/sprites/Bullets/bullet_sprites/11.png",
-		"spread": "res://assets/sprites/Bullets/bullet_sprites/06.png",
+		"spread": "res://assets/sprites/Bullets/bullet_sprites/55.png",
 		},
 	"Pink": {
 		"standard": "res://assets/sprites/Bullets/bullet_sprites/03.png",
 		"rapid_fire": "res://assets/sprites/Bullets/bullet_sprites/13.png",
-		"spread": "res://assets/sprites/Bullets/bullet_sprites/03.png",
+		"spread": "res://assets/sprites/Bullets/bullet_sprites/58.png",
 		}
 	}
 
