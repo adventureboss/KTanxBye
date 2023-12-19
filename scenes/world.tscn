@@ -1,14 +1,13 @@
 [gd_scene load_steps=15 format=3 uid="uid://bi7arw5jp0g26"]
 
-
 [ext_resource type="Script" path="res://scenes/world.gd" id="1_2r7ig"]
 [ext_resource type="Texture2D" uid="uid://bee43w1v6ob6t" path="res://assets/environment/terrainTiles_default.png" id="1_jft5n"]
 [ext_resource type="PackedScene" uid="uid://bam04hog13mtt" path="res://scenes/game_object/player/player.tscn" id="2_kcqh6"]
-[ext_resource type="AudioStream" uid="uid://djf04umoxsx8s" path="res://assets/audio/music/KTANKBYE_MAP_TRACK.mp3" id="3_ecdtc"]
+[ext_resource type="AudioStream" uid="uid://hh6feddnwr4j" path="res://assets/audio/music/KTANKBYE_MAP_TRACK.mp3" id="3_ecdtc"]
 [ext_resource type="PackedScene" uid="uid://b7ukeajhup4b5" path="res://scenes/component/consumable_spawn_component.tscn" id="4_68m35"]
 [ext_resource type="PackedScene" uid="uid://b1oeve68we6sd" path="res://scenes/game_object/collectible/rapid_fire_pickup.tscn" id="5_26hcn"]
 [ext_resource type="PackedScene" uid="uid://dipeb45bdcrl6" path="res://scenes/game_object/collectible/spread_pickup.tscn" id="6_vok50"]
-[ext_resource type="Script" path="res://scenes/manager/bullet_manager.gd" id="7_q4krf"]
+[ext_resource type="PackedScene" uid="uid://bsqs1ftdnl6xb" path="res://scenes/manager/bullet_manager.tscn" id="8_nt0m4"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_wvwmn"]
 resource_name = "terrainTiles"
@@ -153,8 +152,7 @@ position = Vector2(780, 597)
 [node name="SpreadPickup" parent="." instance=ExtResource("6_vok50")]
 position = Vector2(661, 453)
 
-[node name="BulletManager" type="Node2D" parent="." groups=["BulletManager"]]
-script = ExtResource("7_q4krf")
+[node name="BulletManager2" parent="." instance=ExtResource("8_nt0m4")]
 
 [node name="BorderWalls" type="Node" parent="."]
 

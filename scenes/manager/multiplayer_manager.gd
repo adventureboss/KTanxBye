@@ -19,7 +19,7 @@ func _ready():
 	multiplayer.connection_failed.connect(connection_failed)
 
 @rpc("any_peer")
-func send_player_information(id, player_name, color="Blue", score=0):
+func send_player_information(id, player_name, color="Blue", score={"kills": 0, "deaths": 0, "assists": 0}):
 	if !GameManager.players.has(id):
 		GameManager.players[id] = {
 			"id": id,
@@ -38,17 +38,25 @@ func update_player_color(id, color):
 	GameManager.players[id].color = color
 	update_player_in_lobby.emit(id, GameManager.players[id].name, color)
 	 
-	if multiplayer.is_server():
-		for i in GameManager.players:
-			update_player_color.rpc(i, color)
+	for i in GameManager.players:
+		update_player_color.rpc_id(i, id, color)
 
-@rpc("any_peer")
-func update_player_score(id, score):
-	GameManager.players[id]["score"] = score
+@rpc("authority")
+func update_player_score_by(id, score):
+	var current_score = GameManager.players[id].score
+	var new_score = {
+		"kills": current_score.kills + score.kills,
+		"deaths": current_score.deaths + score.deaths,
+		"assists": current_score.assists + score.assists
+	}
+	GameManager.players[id].score = new_score
 	
-	if multiplayer.is_server():
-		for i in GameManager.players:
-			update_player_color.rpc(i, score)
+	for i in GameManager.players:
+		update_player_score.rpc_id(i, id, new_score)
+
+@rpc("any_peer", "call_local")
+func update_player_score(id, score):
+	GameManager.players[id].score = score
 
 # a lot of these settings I got from this video
 # https://youtu.be/e0JLO_5UgQo?si=JCtArm_CeiQD4wBb
@@ -57,7 +65,7 @@ func _on_host_pressed():
 	peer = ENetMultiplayerPeer.new()
 	var error = peer.create_server(port, 4) # this second value is maximum number of peers
 	if error != OK:
-		print("error occured hosting" + error) # I don't think these errors are actually useful strings
+		print("error occured hosting" + str(error)) # I don't think these errors are actually useful strings
 	
 	peer.get_host().compress(ENetConnection.COMPRESS_RANGE_CODER)
 	multiplayer.set_multiplayer_peer(peer)
