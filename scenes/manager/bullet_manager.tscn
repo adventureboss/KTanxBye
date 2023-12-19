@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://bsqs1ftdnl6xb"]
+
+[ext_resource type="Script" path="res://scenes/manager/bullet_manager.gd" id="1_r8yt3"]
+
+[node name="BulletManager" type="Node2D" groups=["BulletManager"]]
+script = ExtResource("1_r8yt3")
+
+[node name="BulletAudioPlayer" type="AudioStreamPlayer" parent="."]

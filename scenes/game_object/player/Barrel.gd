@@ -58,9 +58,9 @@ func update_ammo(ability, id):
 	if id != multiplayer.get_unique_id():
 		return
 
-	if ability == "spread":
+	if ability.name == "spread":
 		current_ammo = preload("res://scenes/ability/standard_ammo_ability/standard_ammo.tscn")
 		ammo_name = "spread"
 		return
 	ammo_name = "standard"
-	current_ammo = load(ability)
+	current_ammo = load(ability.path)
