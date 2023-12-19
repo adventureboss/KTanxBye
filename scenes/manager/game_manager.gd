@@ -1,6 +1,17 @@
 extends Node
 
-var players = {}
+var players = {
+	10101010: {
+		"id": 10101010,
+		"name": "Environment",
+		"color": "chartreuse",
+		"score": {
+			"kills": 0,
+			"deaths": 0,
+			"assists": 0,
+		}
+	}
+}
 
 var abilities = {
 	0: {"name": "standard",

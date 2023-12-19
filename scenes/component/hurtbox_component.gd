@@ -11,6 +11,7 @@ func on_area_entered(other_area: Area2D):
 	if not other_area is HitboxComponent:
 		return
 	
+	# keeps you from killing yourself with your own bullets
 	if other_area.projectile_owner == owner:
 		return
 	
