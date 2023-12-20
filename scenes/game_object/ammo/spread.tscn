@@ -63,7 +63,7 @@ properties/2/replication_mode = 2
 
 [node name="Spread" type="CharacterBody2D"]
 collision_layer = 16
-collision_mask = 64
+collision_mask = 96
 script = ExtResource("1_yngda")
 fire_delay = 0.5
 bullet_name = "spread"

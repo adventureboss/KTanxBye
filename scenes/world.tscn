@@ -537,28 +537,28 @@ position = Vector2(661, 453)
 
 [node name="TopWall" type="StaticBody2D" parent="BorderWalls"]
 collision_layer = 32
-collision_mask = 6
+collision_mask = 150
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BorderWalls/TopWall"]
 shape = SubResource("WorldBoundaryShape2D_kfbov")
 
 [node name="LeftWall" type="StaticBody2D" parent="BorderWalls"]
 collision_layer = 32
-collision_mask = 6
+collision_mask = 150
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BorderWalls/LeftWall"]
 shape = SubResource("WorldBoundaryShape2D_em78a")
 
 [node name="BottomWall" type="StaticBody2D" parent="BorderWalls"]
 collision_layer = 32
-collision_mask = 6
+collision_mask = 150
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BorderWalls/BottomWall"]
 shape = SubResource("WorldBoundaryShape2D_qneiu")
 
 [node name="RightWall" type="StaticBody2D" parent="BorderWalls"]
 collision_layer = 32
-collision_mask = 6
+collision_mask = 150
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BorderWalls/RightWall"]
 shape = SubResource("WorldBoundaryShape2D_vh5um")
