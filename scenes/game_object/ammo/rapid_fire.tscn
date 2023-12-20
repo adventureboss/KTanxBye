@@ -61,15 +61,22 @@ properties/2/path = NodePath(".:rotation")
 properties/2/spawn = true
 properties/2/replication_mode = 2
 
-[node name="RapidFire" type="Node2D"]
+[node name="RapidFire" type="CharacterBody2D"]
+collision_layer = 16
+collision_mask = 64
 script = ExtResource("1_uhg4x")
 bullet_name = "rapid_fire"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_8e6nw")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 rotation = 1.5708
 texture = ExtResource("2_70uye")
 
 [node name="HitboxComponent" parent="." instance=ExtResource("2_vj7a4")]
+collision_mask = 70
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent"]
 rotation = 1.5708

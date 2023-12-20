@@ -61,11 +61,18 @@ properties/2/path = NodePath(".:rotation")
 properties/2/spawn = true
 properties/2/replication_mode = 2
 
-[node name="Laser" type="Node2D"]
+[node name="Laser" type="CharacterBody2D"]
+collision_layer = 16
+collision_mask = 0
 script = ExtResource("1_6gig5")
 speed = 800
 fire_delay = 0.5
 bullet_name = "laser"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(32, 0)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_k1oiq")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(22, -5.00222e-12)
