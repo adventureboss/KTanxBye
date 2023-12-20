@@ -78,6 +78,8 @@ func _process(_delta):
 			if data.message == Message.COLOR:
 				var updated_player = JSON.parse_string(data.player)
 				lobby.update_player(data.id, updated_player)
+				if lobby_scene != null:
+					lobby_scene.update_player_in_lobby(data.id, updated_player.name, updated_player.color, updated_player.index)
 			if data.message == Message.CANDIDATE:
 				if rtc_peer.has_peer(data.original_peer):
 					print("got candidate: original peer %s; my id %s" % [str(data.original_peer), str(id)])
@@ -229,36 +231,3 @@ func on_start_pressed():
 		return
 	multiplayer_manager.receive_players.rpc(lobby.players)
 	multiplayer_manager.start_game.rpc()
-
-# ------------------------------------------------
-# the following tests are for the webrtc test scene
-@rpc("any_peer")
-func ping():
-	print("ping from %s" % str(multiplayer.get_remote_sender_id()))
-
-func _on_test_button_down():
-	ping.rpc()
-
-func _on_start_client_button_down():
-	connect_to_server()
-
-func _on_lobby_button_down():
-	var message = {
-		"id": id,
-		"message": Message.LOBBY,
-		"lobby_id": $LobbyVal.text,
-		"name": ""
-	}
-	peer.put_packet(JSON.stringify(message).to_utf8_buffer())
-
-func _on_start_game_button_down():
-	if lobby_id == "":
-		return
-	var message = {
-		"id": id,
-		"message": Message.START,
-		"lobby_id": lobby_id,
-		"host_id": host_id
-	}
-	peer.put_packet(JSON.stringify(message).to_utf8_buffer())
-# ---------------------------------------

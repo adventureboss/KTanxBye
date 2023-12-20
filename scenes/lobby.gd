@@ -29,6 +29,10 @@ func load_players_into_lobby(players):
 				break
 
 func load_player_into_lobby(id, player_name, player_color, slot_index):
+	if slot_index <= 0:
+		# how? but
+		return
+	
 	if multiplayer.get_unique_id() == id:
 		for i in color_button.get_item_count():
 			if color_button.get_item_text(i) == player_color:
@@ -37,19 +41,15 @@ func load_player_into_lobby(id, player_name, player_color, slot_index):
 	
 	var slot = player_slots[slot_index-1]
 	if slot.text.begins_with("Waiting"):
-		# using edit_description to keep multiplayerSynchronizer configured
-		slot.editor_description = str(id)
 		slot.text = "%s : %s" % [player_name, player_color]
 
-func update_player_in_lobby(id, player_name, player_color):
-	if multiplayer.get_unique_id() != 1:
+func update_player_in_lobby(id, player_name, player_color, slot_index):
+	if slot_index <= 0:
+		# how? but
 		return
-
-	for slot in player_slots:
-		if slot.editor_description == str(id):
-			slot.text = "%s : %s" % [player_name, player_color]
-			print(slot.text)
-			break
+	
+	var slot = player_slots[slot_index-1]
+	slot.text = "%s : %s" % [player_name, player_color]
 
 func _on_start_pressed():
 	start_pressed.emit()

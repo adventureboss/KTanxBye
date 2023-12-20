@@ -1,8 +1,8 @@
 [gd_scene load_steps=5 format=3 uid="uid://b1ja334pp7vgj"]
 
 [ext_resource type="Script" path="res://scenes/lobby.gd" id="1_v3rvc"]
-[ext_resource type="Texture2D" uid="uid://clmr0ufqu7cky" path="res://assets/menu/Main_Menu2.png" id="2_wuriw"]
-[ext_resource type="Texture2D" uid="uid://b7o4oexf7m88c" path="res://assets/menu/logo.png" id="3_mcnqm"]
+[ext_resource type="Texture2D" uid="uid://dxlxnwgbdkk3d" path="res://assets/menu/Main_Menu2.png" id="2_wuriw"]
+[ext_resource type="Texture2D" uid="uid://cmwqrwqwbkkh5" path="res://assets/menu/logo.png" id="3_mcnqm"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_v6ptr"]
 properties/0/path = NodePath("Elements/1:text")
@@ -17,18 +17,6 @@ properties/2/replication_mode = 2
 properties/3/path = NodePath("Elements/4:text")
 properties/3/spawn = true
 properties/3/replication_mode = 2
-properties/4/path = NodePath("Elements/1:editor_description")
-properties/4/spawn = true
-properties/4/replication_mode = 2
-properties/5/path = NodePath("Elements/2:editor_description")
-properties/5/spawn = true
-properties/5/replication_mode = 2
-properties/6/path = NodePath("Elements/3:editor_description")
-properties/6/spawn = true
-properties/6/replication_mode = 2
-properties/7/path = NodePath("Elements/4:editor_description")
-properties/7/spawn = true
-properties/7/replication_mode = 2
 
 [node name="Lobby" type="Control" node_paths=PackedStringArray("color_field")]
 layout_mode = 3
