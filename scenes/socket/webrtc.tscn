@@ -71,10 +71,9 @@ offset_right = 141.0
 offset_bottom = 234.0
 text = "StartGame"
 
-[node name="MultiplayerManager" type="Node" parent="." node_paths=PackedStringArray("scene_manager", "name_field")]
+[node name="MultiplayerManager" type="Node" parent="." node_paths=PackedStringArray("scene_manager")]
 script = ExtResource("3_l04cw")
 scene_manager = NodePath("../SceneManager")
-name_field = NodePath("../Client/LobbyVal")
 
 [node name="SceneManager" type="Node2D" parent="." node_paths=PackedStringArray("multiplayer_manager")]
 script = ExtResource("4_ro6hp")

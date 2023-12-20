@@ -12,6 +12,7 @@ var default_color
 signal load_player_into_lobby(id, player_name, player_color)
 signal update_player_in_lobby(id, player_name, player_color)
 
+@rpc("any_peer", "call_local")
 func receive_players(players):
 	for p in players:
 		var p_as_int = int(p)
@@ -63,36 +64,6 @@ func update_player_score_by(id, score):
 func update_player_score(id, score):
 	GameManager.players[id].score = score
 
-func on_start_pressed():
-	start_game.rpc()
-
-@rpc("call_local")
-func on_color_changed(player_color):
-	print("on_color_changed" + player_color)
-	update_player_color.rpc(multiplayer.get_unique_id(), player_color)
-	if multiplayer.get_unique_id() == 1:
-		# long store here
-		update_player_color(multiplayer.get_unique_id(), player_color)
-	for p in GameManager.players:
-		if p == 10101010:
-			continue
-		if GameManager.players[p].id == multiplayer.get_unique_id():
-			update_player_in_lobby.emit(multiplayer.get_unique_id(),  GameManager.players[p].name, player_color)
-			break
-
 @rpc("any_peer", "call_local")
 func start_game():
 	scene_manager.load_world()
-
-func collect_player_name():
-	return name_field.text
-
-func choose_default_color():
-	var options = ["blue", "red", "green", "camo"]
-	for p in GameManager.players:
-		if p == 10101010:
-			continue
-		print(GameManager.players[p].color)
-		options.erase(GameManager.players[p].color)
-	
-	return options[0]

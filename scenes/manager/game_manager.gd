@@ -13,6 +13,8 @@ var players = {
 	}
 }
 
+var player_host = 0
+
 var abilities = {
 	0: {"name": "standard",
 	   "path": "res://scenes/ability/standard_ammo_ability/standard_ammo.tscn",

@@ -19,3 +19,23 @@ func add_player(id, name, color="Blue", score={"kills": 0, "deaths": 0, "assists
 		"index": players.size() + 1
 	}
 	return players[id]
+
+func update_player(id, player):
+	players[id] = {
+		"id": player.id,
+		"name": player.name,
+		"color": player.color,
+		"score": player.score,
+		"index": player.index
+	}
+	return players[id]
+
+func change_color(id, color):
+	players[id] = {
+		"id": id,
+		"name": players[id].name,
+		"color": color,
+		"score": players[id].score,
+		"index": players[id].index
+	}
+	return players[id]
