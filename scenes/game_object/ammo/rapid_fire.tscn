@@ -63,7 +63,7 @@ properties/2/replication_mode = 2
 
 [node name="RapidFire" type="CharacterBody2D"]
 collision_layer = 16
-collision_mask = 64
+collision_mask = 96
 script = ExtResource("1_uhg4x")
 bullet_name = "rapid_fire"
 
