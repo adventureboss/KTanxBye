@@ -4,6 +4,8 @@ extends Control
 @onready var entry: PackedScene = preload("res://scenes/game_object/ui/entry.tscn")
 @onready var refreshTimer: Timer = $RefreshTimer
 
+@export var world : Node2D
+
 func _ready():
 	hide_scoreboard()
 	

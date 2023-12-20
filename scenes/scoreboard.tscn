@@ -44,3 +44,12 @@ columns = 4
 wait_time = 0.5
 one_shot = true
 autostart = true
+
+[node name="play_again_btn" type="Button" parent="."]
+visible = false
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0
+text = "Play Again?"
+
+[connection signal="button_down" from="play_again_btn" to="." method="_on_play_again_btn_button_down"]

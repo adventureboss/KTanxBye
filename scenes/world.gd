@@ -26,9 +26,15 @@ func _ready():
 func _on_round_timer_timeout():
 	for player in get_tree().get_nodes_in_group("player"):
 		player.process_mode = Node.PROCESS_MODE_DISABLED
+		get_node("../../CanvasLayer/Scoreboard").show_scoreboard()
 		# ideas:
 		# - camera zoom out
 		# - trigger UI round over with scoreboard
+
+func _on_round_timer_reset():
+	for player in get_tree().get_nodes_in_group("player"):
+		player.process_mode = Node.PROCESS_MODE_INHERIT
+		get_node("../../CanvasLayer/Scoreboard").hide_scoreboard()
 
 func _on_player_died(id, enemy_id):
 	var current_score = GameManager.players[id].score

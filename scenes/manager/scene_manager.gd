@@ -28,6 +28,7 @@ func load_scene(scene_name: String):
 
 func load_world():
 	load_scene(world)
+	get_node("../CanvasLayer/Scoreboard/play_again_btn").pressed.connect(current._on_round_timer_reset)
 
 func load_lobby():
 	load_scene(lobby)
