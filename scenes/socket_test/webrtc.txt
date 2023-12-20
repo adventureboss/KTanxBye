@@ -1,8 +1,0 @@
-This WebRTC code is from the following tutorial:
-	
-Code: https://github.com/finepointcgi/WebRTC-with-Godot-Tutorial
-Youtube: https://youtu.be/ulfGNtiItnc?si=HdtLBqviB69JFiru
-
-The main package at the root is a Godot dedicated library found here:
-	
-	https://github.com/godotengine/webrtc-native/releases/tag/1.0.3-stable

@@ -100,8 +100,8 @@ func connected(peer_id):
 	multiplayer.multiplayer_peer = rtc_peer
 
 func connect_to_server():
-	#peer.create_client("ws://139.144.56.116:8915")
-	peer.create_client("ws://127.0.0.1:8915")
+	peer.create_client("ws://139.144.56.116:8915")
+	#peer.create_client("ws://127.0.0.1:8915")
 	print("started client")
 
 # WebRTC Connection
