@@ -12,6 +12,7 @@ var players = {
 		}
 	}
 }
+var player_host = 1
 
 var abilities = {
 	0: {"name": "standard",

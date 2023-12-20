@@ -9,7 +9,8 @@ enum Message {
 	CANDIDATE,
 	OFFER,
 	ANSWER,
-	CHECK_IN
+	CHECK_IN,
+	REMOVE_LOBBY
 }
 
 @export var host_port = 8915
@@ -20,8 +21,8 @@ var lobbies = {}
 var characters ="abcdefghijklmnopqrstuvwyzABCDEFGHIJKLMNPQRSTUVWXYZ123456789"
 
 func _ready():
-	if "--server" in OS.get_cmdline_args():
-		start_server(host_port)
+	#if "--server" in OS.get_cmdline_args():
+	start_server(host_port)
 	peer.connect("peer_connected", peer_connected)
 	peer.connect("peer_disconnected", peer_disconnected)
 
@@ -47,15 +48,20 @@ func _process(_delta):
 				if data.message == Message.ANSWER:
 					print("we are not alone!!!")
 				send_to_player(data.peer, data) # passes data to other peer
+			if data.message == Message.REMOVE_LOBBY:
+# TODO: add a lobby timer
+				if lobbies.has(data.lobby_id):
+					print("cleaning up lobby %s" % data.lobby_id)
+					lobbies.erase(data.lobby_id)
 
 func join_lobby(user_id, lobby_id, user_name):
 	if lobby_id == "":
 		lobby_id = generate_lobby_id()
 		lobbies[lobby_id] = Lobby.new(user_id)
 		print(lobby_id)
-	
-	if lobby_id not in lobbies:
+	elif lobby_id not in lobbies:
 		print("lobby not found")
+		print(lobby_id)
 		return
 	
 	var player = lobbies[lobby_id].add_player(user_id, user_name)

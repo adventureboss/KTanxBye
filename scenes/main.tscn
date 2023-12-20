@@ -1,12 +1,22 @@
-[gd_scene load_steps=5 format=3 uid="uid://cnoe7lwarfttu"]
+[gd_scene load_steps=7 format=3 uid="uid://cnoe7lwarfttu"]
 
 [ext_resource type="Script" path="res://scenes/manager/multiplayer_manager.gd" id="1_2jebv"]
 [ext_resource type="Script" path="res://scenes/manager/scene_manager.gd" id="1_22ckq"]
+[ext_resource type="PackedScene" uid="uid://bktdwfic3x84r" path="res://scenes/signal_server.tscn" id="1_hhlu6"]
+[ext_resource type="Script" path="res://scenes/socket/client.gd" id="2_a1nw8"]
 [ext_resource type="PackedScene" uid="uid://c7re7lky8g0bl" path="res://scenes/start.tscn" id="3_k5fwe"]
-[ext_resource type="PackedScene" uid="uid://cy38vh1bea4dy" path="res://scenes/scoreboard.tscn" id="4_cgdun"]
+[ext_resource type="PackedScene" path="res://scenes/scoreboard.tscn" id="4_cgdun"]
 
 [node name="Main" type="Node2D"]
 metadata/_edit_vertical_guides_ = [285.0, 40.0]
+
+[node name="SignalServer" parent="." instance=ExtResource("1_hhlu6")]
+
+[node name="Client" type="Node2D" parent="." node_paths=PackedStringArray("multiplayer_manager", "scene_manager", "name_field")]
+script = ExtResource("2_a1nw8")
+multiplayer_manager = NodePath("../MultiplayerManager")
+scene_manager = NodePath("../SceneManager")
+name_field = NodePath("../SceneManager/Start/NameField")
 
 [node name="StateManager" type="Node2D" parent="."]
 
@@ -41,6 +51,26 @@ offset_top = 222.0
 offset_right = 285.0
 offset_bottom = 253.0
 
+[node name="JoinCode" type="RichTextLabel" parent="SceneManager/Start"]
+layout_mode = 0
+offset_left = 41.0
+offset_top = 575.0
+offset_right = 159.0
+offset_bottom = 615.0
+theme_override_colors/default_color = Color(0.929412, 0.454902, 0.219608, 1)
+text = "Code:"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+
+[node name="JoinCodeField" type="LineEdit" parent="SceneManager/Start"]
+layout_mode = 0
+offset_left = 132.0
+offset_top = 571.0
+offset_right = 286.0
+offset_bottom = 602.0
+placeholder_text = "Join Code"
+
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="Scoreboard" parent="CanvasLayer" instance=ExtResource("4_cgdun")]
@@ -50,7 +80,7 @@ offset_top = 63.0
 offset_right = -310.0
 offset_bottom = -58.0
 
-[connection signal="pressed" from="SceneManager/Start/Join" to="MultiplayerManager" method="_on_join_pressed"]
-[connection signal="pressed" from="SceneManager/Start/Host" to="MultiplayerManager" method="_on_host_pressed"]
+[connection signal="pressed" from="SceneManager/Start/Join" to="Client" method="_on_join_pressed"]
+[connection signal="pressed" from="SceneManager/Start/Host" to="Client" method="_on_host_pressed"]
 
 [editable path="SceneManager/Start"]

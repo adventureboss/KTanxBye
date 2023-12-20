@@ -8,14 +8,14 @@ extends Node2D
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	var i = 0
+	var i = 1
 	for p in GameManager.players:
 		var current_player = PlayerScene.instantiate()
 		current_player.name = str(GameManager.players[p].id)
 		current_player.get_node("HealthComponent").died.connect(_on_player_died)
 		add_child(current_player)
 		for spawn in get_tree().get_nodes_in_group("PlayerSpawnPoints"):
-			if spawn.name == str(i):
+			if spawn.name == str(GameManager.players[i].index):
 				current_player.global_position = spawn.global_position
 		i += 1
 

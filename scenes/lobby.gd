@@ -14,7 +14,7 @@ func _ready():
 	# get multiplayer manager and subscribe it
 	start_pressed.connect(get_node("../../MultiplayerManager").on_start_pressed)
 	color_changed.connect(get_node("../../MultiplayerManager").on_color_changed)
-	if multiplayer.get_unique_id() != 1:
+	if multiplayer.get_unique_id() != GameManager.player_host:
 		start_button.visible = false
 	
 	player_slots = get_tree().get_nodes_in_group("PlayerSlots")
@@ -26,7 +26,7 @@ func load_player_into_lobby(id, player_name, player_color):
 				color_button.select(i)
 				break
 	
-	if multiplayer.get_unique_id() != 1:
+	if multiplayer.get_unique_id() != GameManager.player_host:
 		return
 	
 	for slot in player_slots:
@@ -37,7 +37,7 @@ func load_player_into_lobby(id, player_name, player_color):
 			break
 
 func update_player_in_lobby(id, player_name, player_color):
-	if multiplayer.get_unique_id() != 1:
+	if multiplayer.get_unique_id() != GameManager.player_host:
 		return
 
 	for slot in player_slots:

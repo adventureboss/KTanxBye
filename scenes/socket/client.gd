@@ -9,7 +9,8 @@ enum Message {
 	CANDIDATE,
 	OFFER,
 	ANSWER,
-	CHECK_IN
+	CHECK_IN,
+	REMOVE_LOBBY
 }
 
 # free stun server provided by google (temporary)
@@ -18,6 +19,11 @@ enum Message {
 @onready var peer = WebSocketMultiplayerPeer.new() # for connecting the users to each other
 @onready var rtc_peer: WebRTCMultiplayerPeer = WebRTCMultiplayerPeer.new() # for sending real data
 
+@export var multiplayer_manager: MultiplayerManager
+@export var scene_manager: Node2D
+@export var name_field: LineEdit
+
+@export var host: bool = false
 var id = 0
 var host_id: int
 var lobby_id = ""
@@ -48,14 +54,16 @@ func _process(_delta):
 			if data.message == Message.ID:
 				id = data.id
 				connected(id)
+				if host:
+					_is_host()
 			if data.message == Message.USER_CONNECTED:
 				create_peer(data.id)
 			if data.message == Message.LOBBY:
 				GameManager.players = JSON.parse_string(data.players)
+				multiplayer_manager.show
 				lobby_id = data.lobby_id
 				host_id = data.host
-				print("players:")
-				print(GameManager.players)
+				load_lobby()
 			if data.message == Message.CANDIDATE:
 				if rtc_peer.has_peer(data.original_peer):
 					print("got candidate: original peer %s; my id %s" % [str(data.original_peer), str(id)])
@@ -155,11 +163,41 @@ func _on_test_button_down():
 func _on_start_client_button_down():
 	connect_to_server()
 
-func _on_lobby_button_down():
+func _send_lobby_message():
 	var message = {
 		"id": id,
+		"lobby_id": "",
 		"message": Message.LOBBY,
-		"lobby_id": $LobbyVal.text,
-		"name": ""
+		"name": name_field.text
+	}
+	peer.put_packet(JSON.stringify(message).to_utf8_buffer())
+
+func _is_host():
+	GameManager.player_host = id
+	_send_lobby_message()
+
+func load_lobby():
+	scene_manager.load_lobby()
+	for p in GameManager.players:
+		scene_manager.get_node("Lobby").load_player_into_lobby(
+			GameManager.players[p].id, 
+			GameManager.players[p].name, 
+			GameManager.players[p].color
+		)
+
+func _on_join_pressed():
+	print("join_pressed")
+	connect_to_server()
+
+func _on_host_pressed():
+	print("host_pressed")
+	host = true
+	connect_to_server()
+	_send_lobby_message()
+
+func _on_start_pressed():
+	var message = {
+		"message": Message.REMOVE_LOBBY,
+		"lobby_id": lobby_id
 	}
 	peer.put_packet(JSON.stringify(message).to_utf8_buffer())

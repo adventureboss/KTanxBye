@@ -1,4 +1,4 @@
-class_name Lobby extends RefCounted
+extends RefCounted
 # this will make a smaller object than Node
 
 var host_id: int
