@@ -14,9 +14,10 @@ extends Marker2D
 var fire_wait : bool = false
 var bullets_fired = 0
 var tank_color
+var parent_id = null
 
 func _ready():
-	var parent_id = get_parent().name.to_int()
+	parent_id = get_parent().name.to_int()
 	set_multiplayer_authority(parent_id)
 	timer.timeout.connect(on_timer_timeout)
 	GameEvents.ability_pick_up.connect(update_ammo)
@@ -70,7 +71,10 @@ func on_timer_timeout():
 	fire_wait = false
 
 func update_ammo(ability, id, _position):
-	if id != multiplayer.get_unique_id():
-		return
+	ammo_change_broadcast.rpc(ability, id)
 	
-	current_ammo = ability
+@rpc("any_peer", "call_local")
+func ammo_change_broadcast(ammo, id):
+	if parent_id == id:
+		current_ammo = ammo
+	
