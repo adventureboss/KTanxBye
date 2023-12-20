@@ -1,12 +1,17 @@
-[gd_scene load_steps=11 format=3 uid="uid://bam04hog13mtt"]
+[gd_scene load_steps=17 format=3 uid="uid://bam04hog13mtt"]
 
 [ext_resource type="Script" path="res://scenes/game_object/player/player.gd" id="1_hkal2"]
 [ext_resource type="PackedScene" uid="uid://73lr8fqud4" path="res://scenes/component/health_component.tscn" id="2_gt4m0"]
 [ext_resource type="PackedScene" uid="uid://drybknwrows3o" path="res://scenes/game_object/player/tank_body.tscn" id="3_1e010"]
-[ext_resource type="Texture2D" uid="uid://cphdqa08uuq8a" path="res://scenes/game_object/player/tankGreen_barrel3_outline.png" id="3_vvwhs"]
+[ext_resource type="Texture2D" uid="uid://baryfpafcavs7" path="res://scenes/game_object/player/tankGreen_barrel3_outline.png" id="3_vvwhs"]
 [ext_resource type="Script" path="res://scenes/game_object/player/Barrel.gd" id="4_yiyg3"]
 [ext_resource type="PackedScene" uid="uid://dp7s6opobih82" path="res://scenes/component/hurtbox_component.tscn" id="5_fvhfs"]
 [ext_resource type="PackedScene" uid="uid://mbsht4dt5quk" path="res://scenes/game_object/player/health_bar.tscn" id="7_p6dmh"]
+[ext_resource type="Texture2D" uid="uid://cm3id5x6b7h4k" path="res://assets/sprites/Effects/Explosion1/explosion1.png" id="8_xuf46"]
+[ext_resource type="Texture2D" uid="uid://ddk4yo34ptq5y" path="res://assets/sprites/Effects/Explosion1/explosion2.png" id="9_n372a"]
+[ext_resource type="Texture2D" uid="uid://cbrtbbxa2hy66" path="res://assets/sprites/Effects/Explosion1/explosion3.png" id="10_ytrhg"]
+[ext_resource type="Texture2D" uid="uid://djabgqt7igtgr" path="res://assets/sprites/Effects/Explosion1/explosion4.png" id="11_cxpyl"]
+[ext_resource type="Texture2D" uid="uid://cuefrdjipks61" path="res://assets/sprites/Effects/Explosion1/explosion5.png" id="12_pogg6"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_e32xm"]
 radius = 16.0312
@@ -25,6 +30,32 @@ properties/2/path = NodePath("Barrel:rotation")
 properties/2/spawn = true
 properties/2/replication_mode = 2
 
+[sub_resource type="SpriteFrames" id="SpriteFrames_qctma"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("8_xuf46")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_n372a")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_ytrhg")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_cxpyl")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_pogg6")
+}, {
+"duration": 1.0,
+"texture": null
+}],
+"loop": false,
+"name": &"default",
+"speed": 5.0
+}]
+
 [node name="Player" type="CharacterBody2D" groups=["player"]]
 collision_layer = 2
 collision_mask = 62
@@ -39,6 +70,11 @@ position_smoothing_enabled = true
 
 [node name="HealthComponent" parent="." instance=ExtResource("2_gt4m0")]
 max_health = 50.0
+
+[node name="RespawnTimer" type="Timer" parent="HealthComponent"]
+process_mode = 3
+wait_time = 2.0
+one_shot = true
 
 [node name="TankBody" parent="." instance=ExtResource("3_1e010")]
 
@@ -95,9 +131,16 @@ shape = SubResource("RectangleShape2D_pm56w")
 replication_config = SubResource("SceneReplicationConfig_2jkiu")
 
 [node name="BoostTimer" type="Timer" parent="."]
+process_mode = 3
 wait_time = 4.0
 one_shot = true
 
 [node name="PanelContainer" parent="." instance=ExtResource("7_p6dmh")]
+
+[node name="Explosion" type="AnimatedSprite2D" parent="."]
+process_mode = 3
+visible = false
+sprite_frames = SubResource("SpriteFrames_qctma")
+frame_progress = 0.217273
 
 [editable path="TankBody"]
