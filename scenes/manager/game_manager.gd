@@ -27,6 +27,9 @@ var abilities = {
 		"path": "res://scenes/game_object/ammo/spread.tscn",
 		"audio": "res://assets/audio/sfx/weapon_sounds/shotgun_fire.wav",
 	   },
+	3: {"name": "laser",
+		"path": "res://scenes/game_object/ammo/laser.tscn",
+		"audio": "res://assets/audio/sfx/weapon_sounds/bfc_laser_fire.mp3"}
 }
 
 var color_dict = {

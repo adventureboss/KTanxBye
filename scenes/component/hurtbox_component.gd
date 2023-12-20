@@ -26,4 +26,5 @@ func on_area_entered(other_area: Area2D):
 	
 	# this here will get called in all peers
 	health_component.damage.rpc(player_hit, player_hit_by, hitbox_component.get_parent().damage)
-	hitbox_component.get_parent().dead.rpc(player_hit)
+	if !hitbox_component.hitbox_type == "Laser":
+		hitbox_component.get_parent().dead.rpc(player_hit)
