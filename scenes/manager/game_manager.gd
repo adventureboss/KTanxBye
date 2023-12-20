@@ -16,15 +16,15 @@ var player_host = 0
 
 var abilities = {
 	0: {"name": "standard",
-	   "path": "res://scenes/ability/standard_ammo_ability/standard_ammo.tscn",
+	   "path": "res://scenes/game_object/ammo/standard.tscn",
 	   "audio": "res://assets/audio/sfx/weapon_sounds/normal_cannon_fire.mp3"
 	   },
 	1: {"name": "rapid_fire",
-		"path": "res://scenes/ability/rapid_fire_ability/rapid_fire_ammo.tscn",
+		"path": "res://scenes/game_object/ammo/rapid_fire.tscn",
 		"audio": "res://assets/audio/sfx/weapon_sounds/normal_cannon_fire.mp3",
 	   },
 	2: {"name": "spread",
-		"path": "res://scenes/ability/spread_ability/spread_ammo.tscn",
+		"path": "res://scenes/game_object/ammo/spread.tscn",
 		"audio": "res://assets/audio/sfx/weapon_sounds/shotgun_fire.wav",
 	   },
 }

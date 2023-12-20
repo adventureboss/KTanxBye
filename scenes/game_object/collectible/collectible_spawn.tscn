@@ -1,6 +1,7 @@
-[gd_scene load_steps=8 format=3 uid="uid://dk6yy6rldr2s1"]
+[gd_scene load_steps=9 format=3 uid="uid://dk6yy6rldr2s1"]
 
 [ext_resource type="Texture2D" uid="uid://ih8cb8lgmbix" path="res://assets/sprites/Collectibles/crateWood.png" id="1_017e1"]
+[ext_resource type="Script" path="res://scenes/component/environmental_component.gd" id="1_c6unr"]
 [ext_resource type="Script" path="res://scenes/component/hitbox_component.gd" id="2_upva3"]
 [ext_resource type="Texture2D" uid="uid://cygpqknfr176m" path="res://assets/sprites/Effects/Explosion2/explosionSmoke5.png" id="3_itkbg"]
 
@@ -443,6 +444,8 @@ _data = {
 radius = 68.1836
 
 [node name="10101010" type="Node2D"]
+script = ExtResource("1_c6unr")
+damage = 50
 
 [node name="CrateShadow" type="Sprite2D" parent="."]
 modulate = Color(0.00392157, 0.00392157, 0.00392157, 1)
@@ -460,23 +463,17 @@ libraries = {
 }
 autoplay = "RESET"
 
+[node name="ExplosionSmoke5" type="Sprite2D" parent="."]
+position = Vector2(0, -1)
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("3_itkbg")
+
 [node name="HitboxComponent" type="Area2D" parent="."]
 collision_layer = 16
 collision_mask = 6
 monitoring = false
 monitorable = false
 script = ExtResource("2_upva3")
-speed = 0
-damage = 80
-max_range = 0
-fire_delay = 0.0
-direction = Vector2(0, 0)
-bullet_name = "environment"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent"]
 shape = SubResource("CircleShape2D_ea6hw")
-
-[node name="ExplosionSmoke5" type="Sprite2D" parent="."]
-position = Vector2(0, -1)
-scale = Vector2(0.2, 0.2)
-texture = ExtResource("3_itkbg")
