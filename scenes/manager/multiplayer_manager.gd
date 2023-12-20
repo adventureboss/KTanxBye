@@ -31,6 +31,8 @@ func send_player_information(id, player_name, color="Blue", score={"kills": 0, "
 	
 	if multiplayer.is_server():
 		for i in GameManager.players:
+			if i == 10101010:
+				continue
 			send_player_information.rpc(i, player_name, color, score)
 
 @rpc("any_peer")
@@ -39,6 +41,8 @@ func update_player_color(id, color):
 	update_player_in_lobby.emit(id, GameManager.players[id].name, color)
 	 
 	for i in GameManager.players:
+		if i == 10101010:
+			continue
 		update_player_color.rpc_id(i, id, color)
 
 @rpc("authority")
@@ -52,6 +56,8 @@ func update_player_score_by(id, score):
 	GameManager.players[id].score = new_score
 	
 	for i in GameManager.players:
+		if i == 10101010:
+			continue
 		update_player_score.rpc_id(i, id, new_score)
 
 @rpc("any_peer", "call_local")
@@ -96,6 +102,8 @@ func on_color_changed(player_color):
 		# long store here
 		update_player_color(multiplayer.get_unique_id(), player_color)
 	for p in GameManager.players:
+		if p == 10101010:
+			continue
 		if GameManager.players[p].id == multiplayer.get_unique_id():
 			update_player_in_lobby.emit(multiplayer.get_unique_id(),  GameManager.players[p].name, player_color)
 			break
@@ -129,6 +137,8 @@ func collect_player_name():
 func choose_default_color():
 	var options = ["blue", "red", "green", "camo"]
 	for p in GameManager.players:
+		if p == 10101010:
+			continue
 		print(GameManager.players[p].color)
 		options.erase(GameManager.players[p].color)
 	

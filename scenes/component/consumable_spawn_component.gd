@@ -53,7 +53,9 @@ func spawn_new_consumables():
 		var drop = animated_drop.instantiate()
 		add_child(drop)
 		box_tracker[marker.global_position] = 1
+		var drop_hitbox = drop.find_child("HitboxComponent")
 		drop.global_position = marker.global_position
+		drop_hitbox.projectile_owner = owner # this is why the spawn node is 10101010. Stupid. FIX IT
 		var anim_player : AnimationPlayer = drop.find_child("AnimationPlayer")
 		anim_player.play("drop")
 		anim_player.animation_finished.connect(on_animation_finished.bind(marker.global_position))
