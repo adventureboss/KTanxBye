@@ -20,6 +20,7 @@ scale = Vector2(0.999879, 0.999879)
 texture = ExtResource("2_ph0ct")
 
 [node name="logo" type="Sprite2D" parent="."]
+visible = false
 position = Vector2(159.625, 121)
 scale = Vector2(1.125, 1.125)
 texture = ExtResource("3_4lw7v")
@@ -64,3 +65,8 @@ offset_right = 281.0
 offset_bottom = 268.0
 text = "Fury"
 placeholder_text = "Fury"
+
+[node name="logo2" type="Sprite2D" parent="."]
+position = Vector2(159.625, 107)
+scale = Vector2(1.125, 1.125)
+texture = ExtResource("3_4lw7v")
