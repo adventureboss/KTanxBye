@@ -61,10 +61,16 @@ properties/2/path = NodePath(".:scale")
 properties/2/spawn = true
 properties/2/replication_mode = 2
 
-[node name="Spread" type="Node2D"]
+[node name="Spread" type="CharacterBody2D"]
+collision_layer = 16
+collision_mask = 64
 script = ExtResource("1_yngda")
 fire_delay = 0.5
 bullet_name = "spread"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_4dww8")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 rotation = 1.5708
@@ -72,6 +78,7 @@ scale = Vector2(0.5, 0.5)
 texture = ExtResource("2_q7feo")
 
 [node name="HitboxComponent" parent="." instance=ExtResource("2_4h6s1")]
+collision_mask = 70
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent"]
 rotation = 1.5708

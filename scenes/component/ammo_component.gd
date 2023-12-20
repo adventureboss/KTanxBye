@@ -1,4 +1,4 @@
-extends Node2D
+extends CharacterBody2D
 class_name Ammo
 
 @export var speed : int = 500
@@ -22,7 +22,10 @@ func _ready():
 		bullet_manager.play()
 
 func _physics_process(delta):
-	position += transform.x * speed * delta
+	velocity = transform.x * speed * delta
+	var collision = move_and_collide(velocity)
+	if collision != null:
+		dead(GameManager.ENVIRONMENT)
 
 @rpc("any_peer", "call_local")
 func dead(id):
