@@ -10,6 +10,8 @@ extends Node2D
 func _ready():
 	var i = 0
 	for p in GameManager.players:
+		if p == GameManager.ENVIRONMENT:
+			continue
 		var current_player = PlayerScene.instantiate()
 		current_player.name = str(GameManager.players[p].id)
 		current_player.get_node("HealthComponent").died.connect(_on_player_died)

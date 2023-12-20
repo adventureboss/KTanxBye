@@ -1,8 +1,8 @@
 extends Node
-
+const ENVIRONMENT = 10101010
 var players = {
-	10101010: {
-		"id": 10101010,
+	ENVIRONMENT: {
+		"id": ENVIRONMENT,
 		"name": "Environment",
 		"color": "chartreuse",
 		"score": {
@@ -12,7 +12,6 @@ var players = {
 		}
 	}
 }
-
 var player_host = 0
 
 var abilities = {
