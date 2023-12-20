@@ -6,11 +6,18 @@ enum Message {
 	USER_CONNECTED,
 	USER_DISCONNECTED,
 	LOBBY,
+	COLOR,
 	CANDIDATE,
 	OFFER,
 	ANSWER,
 	CHECK_IN
 }
+
+@export var multiplayer_manager: MultiplayerManager
+@export var scene_manager: Node2D
+@export var name_field : LineEdit
+@export var join_field : LineEdit
+var lobby_scene: Control
 
 # free stun server provided by google (temporary)
 @export var stun_server: String = "stun:stun1.l.google.com:19302"
@@ -18,10 +25,13 @@ enum Message {
 @onready var peer = WebSocketMultiplayerPeer.new() # for connecting the users to each other
 @onready var rtc_peer: WebRTCMultiplayerPeer = WebRTCMultiplayerPeer.new() # for sending real data
 
-var id = 0
+var host: bool = false
+var in_lobby: bool = false
+
+var id: int = 0
 var host_id: int
 var lobby_id = ""
-var lobby_info = {}
+var lobby = {}
 
 func _ready():
 	multiplayer.connected_to_server.connect(rtc_server_connnected)
@@ -48,14 +58,28 @@ func _process(_delta):
 			if data.message == Message.ID:
 				id = data.id
 				connected(id)
+				if host:
+					_send_lobby_message()
+				else:
+					# text field checked for empty on clicking button
+					_send_lobby_message(join_field.text)
 			if data.message == Message.USER_CONNECTED:
 				create_peer(data.id)
 			if data.message == Message.LOBBY:
-				GameManager.players = JSON.parse_string(data.players)
 				lobby_id = data.lobby_id
 				host_id = data.host
-				print("players:")
-				print(GameManager.players)
+				GameManager.player_host = host_id
+				lobby = Lobby.new(host_id)
+				lobby.players = JSON.parse_string(data.players)
+				if !in_lobby:
+					_load_lobby()
+				# now, each time players is updated
+				load_players_into_lobby(lobby.players)
+			if data.message == Message.COLOR:
+				var updated_player = JSON.parse_string(data.player)
+				lobby.update_player(data.id, updated_player)
+				if lobby_scene != null:
+					lobby_scene.update_player_in_lobby(data.id, updated_player.name, updated_player.color, updated_player.index)
 			if data.message == Message.CANDIDATE:
 				if rtc_peer.has_peer(data.original_peer):
 					print("got candidate: original peer %s; my id %s" % [str(data.original_peer), str(id)])
@@ -145,21 +169,65 @@ func ice_candidate_created(midName, indexName, sdpName, id):
 	peer.put_packet(JSON.stringify(message).to_utf8_buffer())
 	pass
 
-@rpc("any_peer")
-func ping():
-	print("ping from %s" % str(multiplayer.get_remote_sender_id()))
-
-func _on_test_button_down():
-	ping.rpc()
-
-func _on_start_client_button_down():
+func _on_join_pressed():
+	if !_check_name_field():
+		# should signal something here.
+		return
+	if join_field.text == "":
+		# should signal something here.
+		print("empty join field")
+		return
 	connect_to_server()
 
-func _on_lobby_button_down():
+func _on_host_pressed():
+	if !_check_name_field():
+		print("empty name field")
+		# should signal something here.
+		return
+	host = true
+	connect_to_server()
+	
+func _check_name_field():
+	if name_field == null:
+		print("set the name_field dummy")
+		return false
+	var tag = name_field.text
+	if tag == "":
+		# let's not let it be empty, don't want any weird bugs
+		print("denying blank battle tag")
+		return false
+	return true
+
+func _send_lobby_message(lobby_id=""):
 	var message = {
 		"id": id,
+		"lobby_id": lobby_id,
 		"message": Message.LOBBY,
-		"lobby_id": $LobbyVal.text,
-		"name": ""
+		"name": name_field.text
 	}
 	peer.put_packet(JSON.stringify(message).to_utf8_buffer())
+
+func _load_lobby():
+	scene_manager.load_lobby()
+	in_lobby = true
+
+func load_players_into_lobby(players):
+	if lobby_scene == null:
+		lobby_scene = scene_manager.get_node("Lobby")
+	lobby_scene.load_players_into_lobby(players)
+
+func on_color_changed(player_color):
+	print("on_color_changed" + player_color)
+	var message = {
+		"id": id,
+		"message": Message.COLOR,
+		"lobby_id": lobby_id,
+		"color": player_color,
+	}
+	peer.put_packet(JSON.stringify(message).to_utf8_buffer())
+
+func on_start_pressed():
+	if lobby_id == "":
+		return
+	multiplayer_manager.receive_players.rpc(lobby.players)
+	multiplayer_manager.start_game.rpc()

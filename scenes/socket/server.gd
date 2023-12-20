@@ -6,12 +6,14 @@ enum Message {
 	USER_CONNECTED,
 	USER_DISCONNECTED,
 	LOBBY,
+	COLOR,
 	CANDIDATE,
 	OFFER,
 	ANSWER,
 	CHECK_IN
 }
 
+@export var active = true
 @export var host_port = 8915
 var peer = WebSocketMultiplayerPeer.new()
 var users = {}
@@ -20,7 +22,7 @@ var lobbies = {}
 var characters ="abcdefghijklmnopqrstuvwyzABCDEFGHIJKLMNPQRSTUVWXYZ123456789"
 
 func _ready():
-	if "--server" in OS.get_cmdline_args():
+	if "--server" in OS.get_cmdline_args() or active:
 		start_server(host_port)
 	peer.connect("peer_connected", peer_connected)
 	peer.connect("peer_disconnected", peer_disconnected)
@@ -42,6 +44,8 @@ func _process(_delta):
 			
 			if data.message == Message.LOBBY:
 				join_lobby(data.id, data.lobby_id, data.name)
+			if data.message == Message.COLOR:
+				change_character_color(data.id, data.lobby_id, data.color)
 			if data.message == Message.OFFER || data.message == Message.ANSWER || data.message == Message.CANDIDATE:
 				print("original peer id %s" % data.original_peer)
 				if data.message == Message.ANSWER:
@@ -102,6 +106,20 @@ func generate_lobby_id():
 		result += characters[index]
 	return result
 
+func change_character_color(user_id, lobby_id, color):
+	if lobby_id in lobbies:
+		lobbies[lobby_id].change_color(user_id, color)
+	
+	for p in lobbies[lobby_id].players:
+		var player_info = {
+			"id": user_id,
+			"message": Message.COLOR,
+			"lobby_id": lobby_id,
+			"player": JSON.stringify(lobbies[lobby_id].players[user_id]),
+			"host": lobbies[lobby_id].host_id
+		}
+		send_to_player(p, player_info)
+
 func peer_connected(id):
 	print("peer connected: %s" % str(id))
 	users[id] = {
@@ -114,3 +132,17 @@ func peer_disconnected(id):
 	users.erase(id)
 	print("peer disconnected: %s" % str(id))
 	pass
+
+# ----------------------------------
+# These are for the test WebRTC scene
+func _on_start_server_button_down():
+	start_server(host_port)
+
+func _on_test_2_button_down():
+	var message = {
+		"message": Message.JOIN,
+		"data": 'test'
+	}
+	var messageBytes = JSON.stringify(message).to_utf8_buffer()
+	peer.put_packet(messageBytes)
+# -------------------------------------

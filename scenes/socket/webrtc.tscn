@@ -1,4 +1,4 @@
-[gd_scene load_steps=3 format=3 uid="uid://bdvld7vxjon5j"]
+[gd_scene load_steps=3 format=3 uid="uid://bmqr25q7ux3is"]
 
 [ext_resource type="Script" path="res://scenes/socket/client.gd" id="1_s3oqh"]
 [ext_resource type="Script" path="res://scenes/socket/server.gd" id="2_lrdah"]
@@ -9,8 +9,9 @@ anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="Client" type="Node" parent="."]
+[node name="Client" type="Node" parent="." node_paths=PackedStringArray("multiplayer_manager")]
 script = ExtResource("1_s3oqh")
+multiplayer_manager = NodePath("")
 
 [node name="LobbyVal" type="LineEdit" parent="Client"]
 offset_left = 157.0
