@@ -21,6 +21,9 @@ func get_health_percent():
 	if max_health <= 0:
 		return 0
 	return min(current_health / max_health, 1)
+	
+func get_health_value():
+	return current_health
 
 func check_death(id, enemy_id):
 	if current_health == 0:

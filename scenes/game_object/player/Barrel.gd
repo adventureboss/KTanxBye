@@ -1,6 +1,6 @@
 extends Marker2D
 
-@export var current_ammo : PackedScene = preload("res://scenes/ability/standard_ammo_ability/standard_ammo.tscn")
+@export var current_ammo : Dictionary = GameManager.abilities[0]
 @onready var ammo_name : String = "standard"
 @onready var ray_cast : RayCast2D = $RayCast2D
 @onready var fire_direction : Marker2D = $FireDirection
@@ -36,36 +36,38 @@ func _process(delta):
 @rpc("authority", "call_local")
 func _fire():
 	fire_wait = true
-	if ammo_name == "spread":
+	var bullet_name = current_ammo.name
+	if bullet_name == "spread":
 		for n in spread_arch.get_children():
-			var new_bullet = current_ammo.instantiate()
+			var new_bullet = load(current_ammo.path).instantiate()
+			var bullet_sprite = new_bullet.find_child("Sprite2D")
+			bullet_sprite.scale = Vector2(0.35, 0.35)
+			bullet_sprite.texture = load(bullet_manager.bullet_sprites[tank_color][new_bullet.bullet_name])
 			new_bullet.projectile_owner = owner
 			timer.wait_time = new_bullet.fire_delay
 			bullet_manager.add_child(new_bullet)
 			new_bullet.global_position = fire_direction.global_position
 			new_bullet.global_transform = n.global_transform
 	else:
-		var new_bullet = current_ammo.instantiate()
+		var new_bullet = load(current_ammo.path).instantiate()
 		var bullet_sprite = new_bullet.find_child("Sprite2D")
 		bullet_sprite.texture = load(bullet_manager.bullet_sprites[tank_color][new_bullet.bullet_name])
-		new_bullet.name = "%s-%s" % [str(multiplayer_synchronizer.get_multiplayer_authority()), bullets_fired]
+		if bullet_name == "rapid_fire":
+			bullet_sprite.scale = Vector2(0.35, 0.35)
 		new_bullet.projectile_owner = owner
 		timer.wait_time = new_bullet.fire_delay
 		bullet_manager.add_child(new_bullet)
 		new_bullet.global_transform = fire_direction.global_transform
+		
 	timer.start()
 	bullets_fired += 1
+
 
 func on_timer_timeout():
 	fire_wait = false
 
-func update_ammo(ability, id):
+func update_ammo(ability, id, _position):
 	if id != multiplayer.get_unique_id():
 		return
-
-	if ability.name == "spread":
-		current_ammo = preload("res://scenes/ability/standard_ammo_ability/standard_ammo.tscn")
-		ammo_name = "spread"
-		return
-	ammo_name = "standard"
-	current_ammo = load(ability.path)
+	
+	current_ammo = ability

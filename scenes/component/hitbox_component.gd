@@ -13,14 +13,13 @@ class_name HitboxComponent
 
 var projectile_owner
 
-
 func _ready():
 	var bullet_manager = get_tree().get_first_node_in_group("BulletManager")
 	if find_child("AnimationPlayer"):
 		animation_player = $AnimationPlayer
 		animation_player.animation_finished.connect(_on_animation_finished)
 
-	bullet_manager.play()
+		bullet_manager.play()
 
 func _physics_process(delta):
 	position += transform.x * speed * delta
