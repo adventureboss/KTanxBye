@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://scenes/world.gd" id="1_2r7ig"]
 [ext_resource type="Texture2D" uid="uid://bee43w1v6ob6t" path="res://assets/environment/terrainTiles_default.png" id="1_jft5n"]
 [ext_resource type="PackedScene" uid="uid://bam04hog13mtt" path="res://scenes/game_object/player/player.tscn" id="2_kcqh6"]
-[ext_resource type="AudioStream" uid="uid://djf04umoxsx8s" path="res://assets/audio/music/KTANKBYE_MAP_TRACK.mp3" id="3_ecdtc"]
+[ext_resource type="AudioStream" uid="uid://hh6feddnwr4j" path="res://assets/audio/music/KTANKBYE_MAP_TRACK.mp3" id="3_ecdtc"]
 [ext_resource type="PackedScene" uid="uid://b7ukeajhup4b5" path="res://scenes/component/consumable_spawn_component.tscn" id="4_68m35"]
 [ext_resource type="Texture2D" uid="uid://o3jfx650hwjl" path="res://assets/environment/onlyObjects_default.png" id="5_0cr42"]
 [ext_resource type="PackedScene" uid="uid://b1oeve68we6sd" path="res://scenes/game_object/collectible/rapid_fire_pickup.tscn" id="5_26hcn"]
@@ -431,6 +431,16 @@ PlayerScene = ExtResource("2_kcqh6")
 [node name="RoundTimer" type="Timer" parent="."]
 wait_time = 300.0
 one_shot = true
+
+[node name="RoundTimerUI" type="CanvasLayer" parent="."]
+
+[node name="Time" type="RichTextLabel" parent="RoundTimerUI"]
+offset_left = 1186.0
+offset_top = 15.0
+offset_right = 1226.0
+offset_bottom = 55.0
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+text = "TIME"
 
 [node name="TileMap" type="TileMap" parent="."]
 position = Vector2(2, 1)

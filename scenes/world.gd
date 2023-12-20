@@ -4,7 +4,7 @@ extends Node2D
 
 @onready var multiplayer_manager : MultiplayerManager = get_tree().get_first_node_in_group("MultiplayerManager")
 @onready var round_timer = $RoundTimer
-
+@onready var round_timer_ui = $RoundTimerUI/Time 
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -22,6 +22,16 @@ func _ready():
 		i += 1
 
 	round_timer.start()
+
+func _process(delta):
+	if round_timer and round_timer_ui:
+		var time_elapsed = round_timer.time_left
+		round_timer_ui.text = format_seconds_to_string(time_elapsed)
+
+func format_seconds_to_string(seconds: float):
+	var minutes = floor(seconds / 60)
+	var remaining_seconds = seconds - (minutes * 60)
+	return str(minutes) + ":" + ("%02d" % floor(remaining_seconds))
 
 func _on_round_timer_timeout():
 	for player in get_tree().get_nodes_in_group("player"):
