@@ -31,7 +31,15 @@ func _on_round_timer_timeout():
 		# - trigger UI round over with scoreboard
 
 func _on_player_died(id, enemy_id):
-	multiplayer_manager.update_player_score_by.rpc(id, {"kills": 0, "deaths": 1, "assists": 0})
-	multiplayer_manager.update_player_score_by.rpc(enemy_id, {"kills": 1, "deaths": 0, "assists": 0})
-
+	var current_score = GameManager.players[id].score
+	multiplayer_manager.update_player_score.rpc_id(GameManager.player_host, id, {
+		"kills": current_score.kills, 
+		"deaths": current_score.deaths + 1, 
+		"assists": current_score.assists
+	})
+	multiplayer_manager.update_player_score.rpc_id(GameManager.player_host, enemy_id, {
+		"kills": current_score.kills + 1, 
+		"deaths": current_score.deaths,
+		"assists": current_score.assists
+	})
 	# trigger UI screen, respawn, etc.

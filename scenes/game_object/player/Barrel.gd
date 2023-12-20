@@ -16,11 +16,13 @@ var bullets_fired = 0
 var tank_color
 
 func _ready():
+	var parent_id = get_parent().name.to_int()
+	set_multiplayer_authority(parent_id)
 	timer.timeout.connect(on_timer_timeout)
 	GameEvents.ability_pick_up.connect(update_ammo)
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	
-	tank_color = GameManager.players[multiplayer.get_unique_id()].color
+	tank_color = GameManager.players[parent_id].color
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -36,6 +38,7 @@ func _process(delta):
 
 @rpc("authority", "call_local")
 func _fire():
+	var auth = get_multiplayer_authority()
 	fire_wait = true
 	var bullet_name = current_ammo.name
 	if bullet_name == "spread":
@@ -62,7 +65,6 @@ func _fire():
 		
 	timer.start()
 	bullets_fired += 1
-
 
 func on_timer_timeout():
 	fire_wait = false

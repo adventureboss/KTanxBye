@@ -14,6 +14,7 @@ signal update_player_in_lobby(id, player_name, player_color)
 
 @rpc("any_peer", "call_local")
 func receive_players(players):
+	set_multiplayer_authority(GameManager.player_host)
 	for p in players:
 		var p_as_int = int(p)
 		GameManager.players[p_as_int] = players[p]
@@ -44,21 +45,6 @@ func update_player_color(id, color):
 		if i == 10101010:
 			continue
 		update_player_color.rpc_id(i, id, color)
-
-@rpc("authority")
-func update_player_score_by(id, score):
-	var current_score = GameManager.players[id].score
-	var new_score = {
-		"kills": current_score.kills + score.kills,
-		"deaths": current_score.deaths + score.deaths,
-		"assists": current_score.assists + score.assists
-	}
-	GameManager.players[id].score = new_score
-	
-	for i in GameManager.players:
-		if i == 10101010:
-			continue
-		update_player_score.rpc_id(i, id, new_score)
 
 @rpc("any_peer", "call_local")
 func update_player_score(id, score):
