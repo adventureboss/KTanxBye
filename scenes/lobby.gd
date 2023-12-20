@@ -4,8 +4,10 @@ extends Control
 
 @onready var start_button: Button = $Start
 @onready var color_button: OptionButton = $Elements/ColorButton
+@onready var copy_button: Button = $Elements/CopyButton
 
 var player_slots: Array[Node]
+var lobby_id_text = ""
 
 signal start_pressed()
 signal color_changed(color)
@@ -19,8 +21,10 @@ func _ready():
 	
 	player_slots = get_tree().get_nodes_in_group("PlayerSlots")
 
-func load_players_into_lobby(players):
+func load_players_into_lobby(lobby_id, players):
 	# find new players
+	lobby_id_text = lobby_id
+	$Elements/lobby_id.set_text(lobby_id_text)
 	for p in players:
 		for slot in player_slots:
 			if str(players[p].index) == slot.name and slot.text.begins_with("Waiting"):
@@ -68,3 +72,6 @@ func _collect_preferences(index):
 		color = color_field.get_item_text(index)
 	
 	color_changed.emit(color)
+
+func _on_copy_button_pressed():
+	DisplayServer.clipboard_set(lobby_id_text)

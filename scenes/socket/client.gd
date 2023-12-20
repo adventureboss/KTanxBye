@@ -214,7 +214,7 @@ func _load_lobby():
 func load_players_into_lobby(players):
 	if lobby_scene == null:
 		lobby_scene = scene_manager.get_node("Lobby")
-	lobby_scene.load_players_into_lobby(players)
+	lobby_scene.load_players_into_lobby(lobby_id, players)
 
 func on_color_changed(player_color):
 	print("on_color_changed" + player_color)

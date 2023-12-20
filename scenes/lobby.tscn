@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://b1ja334pp7vgj"]
+[gd_scene load_steps=6 format=3 uid="uid://b1ja334pp7vgj"]
 
 [ext_resource type="Script" path="res://scenes/lobby.gd" id="1_v3rvc"]
-[ext_resource type="Texture2D" uid="uid://dxlxnwgbdkk3d" path="res://assets/menu/Main_Menu2.png" id="2_wuriw"]
-[ext_resource type="Texture2D" uid="uid://cmwqrwqwbkkh5" path="res://assets/menu/logo.png" id="3_mcnqm"]
+[ext_resource type="Texture2D" uid="uid://clmr0ufqu7cky" path="res://assets/menu/Main_Menu2.png" id="2_wuriw"]
+[ext_resource type="Texture2D" uid="uid://6800rchara03" path="res://assets/sprites/Mouse/copy-icon.png" id="3_kv05i"]
+[ext_resource type="Texture2D" uid="uid://b7o4oexf7m88c" path="res://assets/menu/logo.png" id="3_mcnqm"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_v6ptr"]
 properties/0/path = NodePath("Elements/1:text")
@@ -27,8 +28,8 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_v3rvc")
 color_field = NodePath("Elements/ColorButton")
-metadata/_edit_vertical_guides_ = [23.0, 58.0, 283.0]
-metadata/_edit_horizontal_guides_ = [264.0, 308.0, 352.0, 396.0, 503.0, 523.0]
+metadata/_edit_vertical_guides_ = [23.0, 58.0, 297.0]
+metadata/_edit_horizontal_guides_ = [264.0, 308.0, 352.0, 396.0, 503.0, 523.0, 89.0, 217.0, 200.0]
 
 [node name="bg_image" type="Sprite2D" parent="."]
 position = Vector2(640, 360)
@@ -37,22 +38,22 @@ texture = ExtResource("2_wuriw")
 [node name="Start" type="Button" parent="."]
 layout_mode = 0
 offset_left = 24.0
-offset_top = 536.0
-offset_right = 250.0
-offset_bottom = 567.0
+offset_top = 597.0
+offset_right = 262.0
+offset_bottom = 628.0
 scale = Vector2(1.14231, 1.2292)
 theme_override_colors/font_color = Color(0.929412, 0.454902, 0.219608, 1)
 text = "Start!"
 
 [node name="Elements" type="Node2D" parent="."]
-position = Vector2(277, -15)
+position = Vector2(277, 28)
 scale = Vector2(2, 2)
 
 [node name="Players Title" type="RichTextLabel" parent="Elements"]
 offset_left = -126.5
-offset_top = 102.0
+offset_top = 115.5
 offset_right = -65.5
-offset_bottom = 125.0
+offset_bottom = 138.5
 scale = Vector2(0.75, 0.75)
 theme_override_colors/default_color = Color(0.929412, 0.454902, 0.219608, 1)
 text = "Players:"
@@ -62,9 +63,9 @@ autowrap_mode = 0
 
 [node name="1" type="RichTextLabel" parent="Elements" groups=["PlayerSlots"]]
 offset_left = -109.0
-offset_top = 126.0
+offset_top = 139.5
 offset_right = 13.0
-offset_bottom = 166.0
+offset_bottom = 179.5
 scale = Vector2(0.55, 0.55)
 text = "Waiting for P1..."
 fit_content = true
@@ -73,9 +74,9 @@ autowrap_mode = 0
 
 [node name="2" type="RichTextLabel" parent="Elements" groups=["PlayerSlots"]]
 offset_left = -109.5
-offset_top = 148.0
+offset_top = 161.5
 offset_right = 12.5
-offset_bottom = 188.0
+offset_bottom = 201.5
 scale = Vector2(0.55, 0.55)
 text = "Waiting for P2..."
 fit_content = true
@@ -84,9 +85,9 @@ autowrap_mode = 0
 
 [node name="3" type="RichTextLabel" parent="Elements" groups=["PlayerSlots"]]
 offset_left = -109.0
-offset_top = 170.0
+offset_top = 183.5
 offset_right = 13.0
-offset_bottom = 210.0
+offset_bottom = 223.5
 scale = Vector2(0.55, 0.55)
 text = "Waiting for P3..."
 fit_content = true
@@ -95,9 +96,9 @@ autowrap_mode = 0
 
 [node name="4" type="RichTextLabel" parent="Elements" groups=["PlayerSlots"]]
 offset_left = -109.0
-offset_top = 192.0
+offset_top = 205.5
 offset_right = 13.0
-offset_bottom = 232.0
+offset_bottom = 245.5
 scale = Vector2(0.55, 0.55)
 text = "Waiting for P4..."
 fit_content = true
@@ -106,9 +107,9 @@ autowrap_mode = 0
 
 [node name="Color" type="RichTextLabel" parent="Elements"]
 offset_left = -126.5
-offset_top = 234.5
-offset_right = -8.50001
-offset_bottom = 274.5
+offset_top = 243.5
+offset_right = -8.50002
+offset_bottom = 283.5
 scale = Vector2(0.75, 0.75)
 theme_override_colors/default_color = Color(0.929412, 0.454902, 0.219608, 1)
 text = "Color:
@@ -118,10 +119,10 @@ scroll_active = false
 autowrap_mode = 0
 
 [node name="ColorButton" type="OptionButton" parent="Elements"]
-offset_left = -85.5
-offset_top = 236.5
-offset_right = 75.5
-offset_bottom = 267.5
+offset_left = -85.0
+offset_top = 246.0
+offset_right = 87.0
+offset_bottom = 277.0
 scale = Vector2(0.55, 0.505)
 item_count = 4
 popup/item_0/text = "Blue"
@@ -133,13 +134,50 @@ popup/item_2/id = 2
 popup/item_3/text = "Pink"
 popup/item_3/id = 3
 
+[node name="Current Lobby" type="RichTextLabel" parent="Elements"]
+offset_left = -126.5
+offset_top = 81.5
+offset_right = -53.5
+offset_bottom = 104.5
+scale = Vector2(0.75, 0.75)
+theme_override_colors/default_color = Color(0.929412, 0.454902, 0.219608, 1)
+text = "Lobby ID:"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+
+[node name="lobby_id" type="RichTextLabel" parent="Elements"]
+offset_left = -63.5
+offset_top = 84.0
+offset_right = 15.5
+offset_bottom = 104.0
+scale = Vector2(0.6, 0.6)
+text = "lobby_id"
+scroll_active = false
+
+[node name="CopyButton" type="Button" parent="Elements"]
+offset_left = 2.5
+offset_top = 84.0
+offset_right = 266.5
+offset_bottom = 347.0
+scale = Vector2(0.05, 0.05)
+tooltip_text = "Copy Lobby ID to clipboard"
+action_mode = 0
+shortcut_feedback = false
+shortcut_in_tooltip = false
+icon = ExtResource("3_kv05i")
+flat = true
+icon_alignment = 1
+expand_icon = true
+
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_v6ptr")
 
 [node name="logo" type="Sprite2D" parent="."]
-position = Vector2(159.625, 121)
+position = Vector2(159.625, 107)
 scale = Vector2(1.125, 1.125)
 texture = ExtResource("3_mcnqm")
 
 [connection signal="pressed" from="Start" to="." method="_on_start_pressed"]
 [connection signal="item_selected" from="Elements/ColorButton" to="." method="_on_color_button_item_selected"]
+[connection signal="pressed" from="Elements/CopyButton" to="." method="_on_copy_button_pressed"]
