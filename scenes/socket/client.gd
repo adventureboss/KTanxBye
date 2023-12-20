@@ -9,8 +9,11 @@ enum Message {
 	CANDIDATE,
 	OFFER,
 	ANSWER,
-	CHECK_IN
+	CHECK_IN,
+	START
 }
+
+@export var multiplayer_manager: MultiplayerManager
 
 # free stun server provided by google (temporary)
 @export var stun_server: String = "stun:stun1.l.google.com:19302"
@@ -18,10 +21,10 @@ enum Message {
 @onready var peer = WebSocketMultiplayerPeer.new() # for connecting the users to each other
 @onready var rtc_peer: WebRTCMultiplayerPeer = WebRTCMultiplayerPeer.new() # for sending real data
 
-var id = 0
+var id: int = 0
 var host_id: int
 var lobby_id = ""
-var lobby_info = {}
+var lobby = {}
 
 func _ready():
 	multiplayer.connected_to_server.connect(rtc_server_connnected)
@@ -51,11 +54,10 @@ func _process(_delta):
 			if data.message == Message.USER_CONNECTED:
 				create_peer(data.id)
 			if data.message == Message.LOBBY:
-				GameManager.players = JSON.parse_string(data.players)
 				lobby_id = data.lobby_id
 				host_id = data.host
-				print("players:")
-				print(GameManager.players)
+				lobby = Lobby.new(host_id)
+				lobby.players = JSON.parse_string(data.players)
 			if data.message == Message.CANDIDATE:
 				if rtc_peer.has_peer(data.original_peer):
 					print("got candidate: original peer %s; my id %s" % [str(data.original_peer), str(id)])
@@ -68,6 +70,10 @@ func _process(_delta):
 				print("answer; original peer %d" % data.original_peer)
 				if rtc_peer.has_peer(data.original_peer):
 					rtc_peer.get_peer(data.original_peer).connection.set_remote_description("answer", data.data)
+			if data.message == Message.START:
+				# command for starting the game. I want to update the GameManager.players all at once.
+				multiplayer_manager.receive_players(JSON.parse_string(data.players))
+				multiplayer_manager.start_game.rpc()
 			# good lord
 
 # hooks up rpc calls
@@ -161,5 +167,16 @@ func _on_lobby_button_down():
 		"message": Message.LOBBY,
 		"lobby_id": $LobbyVal.text,
 		"name": ""
+	}
+	peer.put_packet(JSON.stringify(message).to_utf8_buffer())
+
+func _on_start_game_button_down():
+	if lobby_id == "":
+		return
+	var message = {
+		"id": id,
+		"message": Message.START,
+		"lobby_id": lobby_id,
+		"host_id": host_id
 	}
 	peer.put_packet(JSON.stringify(message).to_utf8_buffer())

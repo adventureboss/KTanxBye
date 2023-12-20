@@ -9,7 +9,8 @@ enum Message {
 	CANDIDATE,
 	OFFER,
 	ANSWER,
-	CHECK_IN
+	CHECK_IN,
+	START
 }
 
 @export var host_port = 8915
@@ -47,6 +48,19 @@ func _process(_delta):
 				if data.message == Message.ANSWER:
 					print("we are not alone!!!")
 				send_to_player(data.peer, data) # passes data to other peer
+			if data.message == Message.START:
+				print("start message received")
+				if data.host_id != lobbies[data.lobby_id].host_id:
+					print("started by non host")
+					return
+				var message = {
+					"id": data.id,
+					"message": Message.START,
+					"lobby_id": data.lobby_id,
+					"host_id": data.host_id,
+					"players": JSON.stringify(lobbies[data.lobby_id].players),
+				}
+				send_to_player(data.id, message)
 
 func join_lobby(user_id, lobby_id, user_name):
 	if lobby_id == "":
@@ -86,7 +100,7 @@ func join_lobby(user_id, lobby_id, user_name):
 		"message": Message.USER_CONNECTED,
 		"id": user_id,
 		"host": lobbies[lobby_id].host_id,
-		"player": lobbies[lobby_id].players[user_id],
+		"player": lobbies[lobby_id].players[int(user_id)],
 		"lobby_id": lobby_id
 	}
 	send_to_player(user_id, player_data)
@@ -114,3 +128,14 @@ func peer_disconnected(id):
 	users.erase(id)
 	print("peer disconnected: %s" % str(id))
 	pass
+
+func _on_start_server_button_down():
+	start_server(host_port)
+
+func _on_test_2_button_down():
+	var message = {
+		"message": Message.JOIN,
+		"data": 'test'
+	}
+	var messageBytes = JSON.stringify(message).to_utf8_buffer()
+	peer.put_packet(messageBytes)

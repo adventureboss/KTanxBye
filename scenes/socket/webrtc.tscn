@@ -1,7 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://bdvld7vxjon5j"]
+[gd_scene load_steps=5 format=3 uid="uid://bdvld7vxjon5j"]
 
 [ext_resource type="Script" path="res://scenes/socket/client.gd" id="1_s3oqh"]
 [ext_resource type="Script" path="res://scenes/socket/server.gd" id="2_lrdah"]
+[ext_resource type="Script" path="res://scenes/manager/multiplayer_manager.gd" id="3_l04cw"]
+[ext_resource type="Script" path="res://scenes/manager/scene_manager.gd" id="4_ro6hp"]
 
 [node name="WebRTC" type="Control"]
 layout_mode = 3
@@ -9,8 +11,9 @@ anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="Client" type="Node" parent="."]
+[node name="Client" type="Node" parent="." node_paths=PackedStringArray("multiplayer_manager")]
 script = ExtResource("1_s3oqh")
+multiplayer_manager = NodePath("../MultiplayerManager")
 
 [node name="LobbyVal" type="LineEdit" parent="Client"]
 offset_left = 157.0
@@ -61,8 +64,25 @@ offset_right = 133.0
 offset_bottom = 160.0
 text = "Join Lobby"
 
+[node name="StartGame" type="Button" parent="."]
+offset_left = 50.0
+offset_top = 203.0
+offset_right = 141.0
+offset_bottom = 234.0
+text = "StartGame"
+
+[node name="MultiplayerManager" type="Node" parent="." node_paths=PackedStringArray("scene_manager", "name_field")]
+script = ExtResource("3_l04cw")
+scene_manager = NodePath("../SceneManager")
+name_field = NodePath("../Client/LobbyVal")
+
+[node name="SceneManager" type="Node2D" parent="." node_paths=PackedStringArray("multiplayer_manager")]
+script = ExtResource("4_ro6hp")
+multiplayer_manager = NodePath("../MultiplayerManager")
+
 [connection signal="button_down" from="StartServer" to="Server" method="_on_start_server_button_down"]
 [connection signal="button_down" from="StartClient" to="Client" method="_on_start_client_button_down"]
 [connection signal="button_down" from="test" to="Client" method="_on_test_button_down"]
 [connection signal="button_down" from="test2" to="Server" method="_on_test_2_button_down"]
 [connection signal="button_down" from="lobby" to="Client" method="_on_lobby_button_down"]
+[connection signal="button_down" from="StartGame" to="Client" method="_on_start_game_button_down"]

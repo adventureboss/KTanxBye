@@ -12,11 +12,10 @@ var default_color
 signal load_player_into_lobby(id, player_name, player_color)
 signal update_player_in_lobby(id, player_name, player_color)
 
-func _ready():
-	multiplayer.peer_connected.connect(peer_connected)
-	multiplayer.peer_disconnected.connect(peer_disconnected)
-	multiplayer.connected_to_server.connect(connected_to_server)
-	multiplayer.connection_failed.connect(connection_failed)
+func receive_players(players):
+	for p in players:
+		var p_as_int = int(p)
+		GameManager.players[p_as_int] = players[p]
 
 @rpc("any_peer")
 func send_player_information(id, player_name, color="Blue", score={"kills": 0, "deaths": 0, "assists": 0}):
@@ -64,33 +63,6 @@ func update_player_score_by(id, score):
 func update_player_score(id, score):
 	GameManager.players[id].score = score
 
-# a lot of these settings I got from this video
-# https://youtu.be/e0JLO_5UgQo?si=JCtArm_CeiQD4wBb
-func _on_host_pressed():
-	print("host_pressed")
-	peer = ENetMultiplayerPeer.new()
-	var error = peer.create_server(port, 4) # this second value is maximum number of peers
-	if error != OK:
-		print("error occured hosting" + str(error)) # I don't think these errors are actually useful strings
-	
-	peer.get_host().compress(ENetConnection.COMPRESS_RANGE_CODER)
-	multiplayer.set_multiplayer_peer(peer)
-	
-	selected_name = collect_player_name()
-	scene_manager.load_lobby()
-	
-	send_player_information(multiplayer.get_unique_id(), selected_name)
-
-func _on_join_pressed():
-	print("join_pressed")
-	peer = ENetMultiplayerPeer.new()
-	peer.create_client(address, port)
-	peer.get_host().compress(ENetConnection.COMPRESS_RANGE_CODER)
-	
-	multiplayer.set_multiplayer_peer(peer)
-	selected_name = collect_player_name()
-	scene_manager.load_lobby()
-	
 func on_start_pressed():
 	start_game.rpc()
 
@@ -111,25 +83,6 @@ func on_color_changed(player_color):
 @rpc("any_peer", "call_local")
 func start_game():
 	scene_manager.load_world()
-
-# called on server and all clients
-func peer_connected(id = 1):
-	print("peer connected: " + str(id))
-
-# same as connnected
-func peer_disconnected(id):
-	print("peer disconnected: " + str(id))
-
-# called only from clients
-func connected_to_server():
-	var id = multiplayer.get_unique_id()
-	print("player connected to server: " + str(id))
-	send_player_information.rpc(id, selected_name)
-
-# called only from clients
-func connection_failed():
-	var id = multiplayer.get_unique_id()
-	print("player failed to connect: " + str(id))
 
 func collect_player_name():
 	return name_field.text
