@@ -9,15 +9,19 @@ extends Node
 
 # preload the boxes we want
 @onready var rapid_fire_pickup = preload("res://scenes/game_object/collectible/rapid_fire_pickup.tscn")
-@onready var spread_pick = preload("res://scenes/game_object/collectible/spread_pickup.tscn")
+@onready var spread_pickup = preload("res://scenes/game_object/collectible/spread_pickup.tscn")
 @onready var animated_drop = preload("res://scenes/game_object/collectible/collectible_spawn.tscn")
 
 @export var max_buffs : int = 5
 @export var max_ammo : int = 10
 
 @onready var consumable_spawn_points : Array[Node]
-
+@onready var ammo_list : Array[PackedScene] = [
+	rapid_fire_pickup,
+	spread_pickup
+]
 var box_tracker = {}
+
 
 func _ready():
 	GameEvents.ability_pick_up.connect(on_ability_pickup)
@@ -25,7 +29,9 @@ func _ready():
 	randomize()
 	consumable_spawn_points.shuffle()
 	for marker in consumable_spawn_points:
-		var pickup = rapid_fire_pickup.instantiate()
+		ammo_list.shuffle()
+		var ammo_to_spawn = ammo_list[0]
+		var pickup = ammo_to_spawn.instantiate()
 		add_child(pickup)
 		box_tracker[marker.global_position] = 1 # tracking that this position has a box
 		pickup.global_position = marker.global_position
@@ -72,7 +78,10 @@ func on_ability_pickup(_ability, _id, position):
 		
 	
 func on_animation_finished(anim_name, position):
-	var pickup = rapid_fire_pickup.instantiate()
+	randomize()
+	ammo_list.shuffle()
+	var ammo_to_spawn = ammo_list[0]
+	var pickup = ammo_to_spawn.instantiate()
 	add_child(pickup)
 	pickup.global_position = position
 		
