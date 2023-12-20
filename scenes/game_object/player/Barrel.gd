@@ -9,6 +9,7 @@ extends Marker2D
 @onready var spread_arch : Node2D = $SpreadArch
 @onready var multiplayer_synchronizer : MultiplayerSynchronizer = get_parent().find_child("MultiplayerSynchronizer")
 @onready var bullet_manager : BulletManager = get_tree().get_first_node_in_group("BulletManager")
+@onready var world = get_tree().get_first_node_in_group("world")
 
 var fire_wait : bool = false
 var bullets_fired = 0
@@ -45,7 +46,7 @@ func _fire():
 			bullet_sprite.texture = load(bullet_manager.bullet_sprites[tank_color][new_bullet.bullet_name])
 			new_bullet.projectile_owner = owner
 			timer.wait_time = new_bullet.fire_delay
-			bullet_manager.add_child(new_bullet)
+			world.add_child(new_bullet)
 			new_bullet.global_position = fire_direction.global_position
 			new_bullet.global_transform = n.global_transform
 	else:
@@ -56,7 +57,7 @@ func _fire():
 			bullet_sprite.scale = Vector2(0.35, 0.35)
 		new_bullet.projectile_owner = owner
 		timer.wait_time = new_bullet.fire_delay
-		bullet_manager.add_child(new_bullet)
+		world.add_child(new_bullet)
 		new_bullet.global_transform = fire_direction.global_transform
 		
 	timer.start()
