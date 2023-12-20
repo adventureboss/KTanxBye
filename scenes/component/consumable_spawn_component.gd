@@ -10,6 +10,7 @@ extends Node
 # preload the boxes we want
 @onready var rapid_fire_pickup = preload("res://scenes/game_object/collectible/rapid_fire_pickup.tscn")
 @onready var spread_pickup = preload("res://scenes/game_object/collectible/spread_pickup.tscn")
+@onready var laser_pickup = preload("res://scenes/game_object/collectible/laser_pickup.tscn")
 @onready var animated_drop = preload("res://scenes/game_object/collectible/collectible_spawn.tscn")
 
 @export var max_buffs : int = 5
@@ -18,7 +19,8 @@ extends Node
 @onready var consumable_spawn_points : Array[Node]
 @onready var ammo_list : Array[PackedScene] = [
 	rapid_fire_pickup,
-	spread_pickup
+	spread_pickup,
+	laser_pickup
 ]
 var box_tracker = {}
 
@@ -61,7 +63,7 @@ func spawn_new_consumables():
 		box_tracker[marker.global_position] = 1
 		var drop_hitbox = drop.find_child("HitboxComponent")
 		drop.global_position = marker.global_position
-		drop_hitbox.projectile_owner = owner # this is why the spawn node is 10101010. Stupid. FIX IT
+		drop_hitbox.get_parent().projectile_owner = owner # this is why the spawn node is 10101010. Stupid. FIX IT
 		var anim_player : AnimationPlayer = drop.find_child("AnimationPlayer")
 		anim_player.play("drop")
 		anim_player.animation_finished.connect(on_animation_finished.bind(marker.global_position))

@@ -9,17 +9,21 @@ extends Marker2D
 @onready var spread_arch : Node2D = $SpreadArch
 @onready var multiplayer_synchronizer : MultiplayerSynchronizer = get_parent().find_child("MultiplayerSynchronizer")
 @onready var bullet_manager : BulletManager = get_tree().get_first_node_in_group("BulletManager")
+@onready var world = get_tree().get_first_node_in_group("world")
 
 var fire_wait : bool = false
 var bullets_fired = 0
 var tank_color
+var parent_id = null
 
 func _ready():
+	parent_id = get_parent().name.to_int()
+	set_multiplayer_authority(parent_id)
 	timer.timeout.connect(on_timer_timeout)
 	GameEvents.ability_pick_up.connect(update_ammo)
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	
-	tank_color = GameManager.players[multiplayer.get_unique_id()].color
+	tank_color = GameManager.players[parent_id].color
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -35,6 +39,7 @@ func _process(delta):
 
 @rpc("authority", "call_local")
 func _fire():
+	var auth = get_multiplayer_authority()
 	fire_wait = true
 	var bullet_name = current_ammo.name
 	if bullet_name == "spread":
@@ -45,7 +50,7 @@ func _fire():
 			bullet_sprite.texture = load(bullet_manager.bullet_sprites[tank_color][new_bullet.bullet_name])
 			new_bullet.projectile_owner = owner
 			timer.wait_time = new_bullet.fire_delay
-			bullet_manager.add_child(new_bullet)
+			world.add_child(new_bullet)
 			new_bullet.global_position = fire_direction.global_position
 			new_bullet.global_transform = n.global_transform
 	else:
@@ -56,18 +61,20 @@ func _fire():
 			bullet_sprite.scale = Vector2(0.35, 0.35)
 		new_bullet.projectile_owner = owner
 		timer.wait_time = new_bullet.fire_delay
-		bullet_manager.add_child(new_bullet)
+		world.add_child(new_bullet)
 		new_bullet.global_transform = fire_direction.global_transform
 		
 	timer.start()
 	bullets_fired += 1
 
-
 func on_timer_timeout():
 	fire_wait = false
 
 func update_ammo(ability, id, _position):
-	if id != multiplayer.get_unique_id():
-		return
+	ammo_change_broadcast.rpc(ability, id)
 	
-	current_ammo = ability
+@rpc("any_peer", "call_local")
+func ammo_change_broadcast(ammo, id):
+	if parent_id == id:
+		current_ammo = ammo
+	

@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bul2sv8ulafxd"]
+
+[ext_resource type="Script" path="res://scenes/component/ammo_component.gd" id="1_e5nl7"]
+
+[node name="AmmoComponent" type="Node2D"]
+script = ExtResource("1_e5nl7")
