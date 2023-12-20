@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://bsqs1ftdnl6xb"]
 
 [ext_resource type="Script" path="res://scenes/manager/bullet_manager.gd" id="1_r8yt3"]
-[ext_resource type="AudioStream" uid="uid://bwiageclksl88" path="res://assets/audio/sfx/weapon_sounds/weapon_pick_up.mp3" id="2_ctblf"]
+[ext_resource type="AudioStream" uid="uid://cd5ich16buddg" path="res://assets/audio/sfx/weapon_sounds/weapon_pick_up.mp3" id="2_ctblf"]
 
 [node name="BulletManager" type="Node2D" groups=["BulletManager"]]
 script = ExtResource("1_r8yt3")
