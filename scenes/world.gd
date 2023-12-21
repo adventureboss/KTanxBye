@@ -63,15 +63,16 @@ func quit_all():
 	scene_manager.load_scene("start")
 
 func _on_player_died(id, enemy_id):
-	var current_score = GameManager.players[id].score
+	var currently_dead_score = GameManager.players[id].score
 	multiplayer_manager.update_player_score.rpc_id(GameManager.player_host, id, {
-		"kills": current_score.kills, 
-		"deaths": current_score.deaths + 1, 
-		"assists": current_score.assists
+		"kills": currently_dead_score.kills, 
+		"deaths": currently_dead_score.deaths + 1, 
+		"assists": currently_dead_score.assists
 	})
+	var currently_active_score = GameManager.players[enemy_id].score
 	multiplayer_manager.update_player_score.rpc_id(GameManager.player_host, enemy_id, {
-		"kills": current_score.kills + 1, 
-		"deaths": current_score.deaths,
-		"assists": current_score.assists
+		"kills": currently_active_score.kills + 1, 
+		"deaths": currently_active_score.deaths,
+		"assists": currently_active_score.assists
 	})
 	# trigger UI screen, respawn, etc.
