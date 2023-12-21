@@ -22,8 +22,14 @@ func on_area_entered(other_area: Area2D):
 	
 	var hitbox_component = other_area as HitboxComponent
 	var player_hit = owner.name.to_int()
-	var player_hit_by = hitbox_component.get_parent().projectile_owner.name.to_int()
+	var player_hit_by = null
+	# this feels really dumb but for some reason the parent of the crates is resolving to "World"
+	if hitbox_component.get_parent().projectile_owner.name == "World":
+		player_hit_by = GameManager.ENVIRONMENT
+	else:
+		player_hit_by = hitbox_component.get_parent().projectile_owner.name.to_int()
 	
+	print(player_hit_by)
 	# this here will get called in all peers
 	health_component.damage.rpc(player_hit, player_hit_by, hitbox_component.get_parent().damage)
 	if !hitbox_component.hitbox_type == "Laser":
