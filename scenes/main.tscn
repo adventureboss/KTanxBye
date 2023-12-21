@@ -1,12 +1,12 @@
 [gd_scene load_steps=8 format=3 uid="uid://cnoe7lwarfttu"]
 
-[ext_resource type="PackedScene" uid="uid://bktdwfic3x84r" path="res://scenes/signal_server.tscn" id="1_1os64"]
+[ext_resource type="PackedScene" path="res://scenes/signal_server.tscn" id="1_1os64"]
 [ext_resource type="Script" path="res://scenes/manager/multiplayer_manager.gd" id="1_2jebv"]
 [ext_resource type="Script" path="res://scenes/manager/scene_manager.gd" id="1_22ckq"]
 [ext_resource type="Script" path="res://scenes/socket/client.gd" id="2_j1by0"]
 [ext_resource type="PackedScene" uid="uid://c7re7lky8g0bl" path="res://scenes/start.tscn" id="3_k5fwe"]
-[ext_resource type="PackedScene" uid="uid://cy38vh1bea4dy" path="res://scenes/scoreboard.tscn" id="4_cgdun"]
-[ext_resource type="Texture2D" uid="uid://c10c0g2hov108" path="res://assets/menu/logo.png" id="7_la3mv"]
+[ext_resource type="PackedScene" uid="uid://dttuc30vkk7yh" path="res://scenes/scoreboard.tscn" id="4_cgdun"]
+[ext_resource type="Texture2D" uid="uid://cmwqrwqwbkkh5" path="res://assets/menu/logo.png" id="7_la3mv"]
 
 [node name="Main" type="Node2D"]
 metadata/_edit_vertical_guides_ = [299.0, 21.0, 131.0]

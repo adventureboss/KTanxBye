@@ -11,7 +11,6 @@ func _ready():
 	
 func _process(_delta):
 	if Input.is_action_just_pressed("scoreboard"):
-		update_scoreboard()
 		show_scoreboard()
 		print("show")
 	elif Input.is_action_just_released("scoreboard"):
