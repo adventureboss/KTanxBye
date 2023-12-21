@@ -5,7 +5,7 @@ const ACCELERATION_SMOOTHING = 25
 var can_boost = true
 
 @onready var health_component : HealthComponent = $HealthComponent
-@onready var health_bar : ProgressBar = $PanelContainer/ProgressBar
+@onready var health_bar : ProgressBar = $HealthBar/ProgressBar
 @onready var barrel_tip: Marker2D = $Barrel
 @onready var tank_body: Sprite2D = $TankBody/Sprite2D
 @onready var barrel_color: Sprite2D = $Barrel/Sprite2D
@@ -84,6 +84,11 @@ func apply_boost(direction: Vector2):
 @rpc("any_peer", "call_local")
 func update_health_display():
 	health_bar.value = health_component.get_health_value()
+	if health_bar.value <= 0:
+		health_bar.visible = false
+		return
+	elif !health_bar.visible:
+		health_bar.visible = true
 
 func on_health_changed():
 	update_health_display.rpc()
