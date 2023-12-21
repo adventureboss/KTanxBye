@@ -14,8 +14,8 @@ signal color_changed(color)
 
 func _ready():
 	# get multiplayer manager and subscribe it
-	start_pressed.connect(get_node("../../Client").on_start_pressed)
-	color_changed.connect(get_node("../../Client").on_color_changed)
+	start_pressed.connect(get_node("/root/Main").on_start_pressed)
+	color_changed.connect(get_node("/root/Main").on_color_changed)
 	if multiplayer.get_unique_id() != GameManager.player_host:
 		start_button.visible = false
 	
