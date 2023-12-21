@@ -1,0 +1,23 @@
+[gd_scene load_steps=3 format=3 uid="uid://cqxs0jej1q5jn"]
+
+[ext_resource type="Script" path="res://scenes/game_object/ui/player_marker.gd" id="1_7q3vp"]
+[ext_resource type="Texture2D" uid="uid://b03swukpu7v84" path="res://assets/menu/player_marker.png" id="2_pf83w"]
+
+[node name="PlayerMarker" type="Node2D"]
+position = Vector2(-1, 1)
+script = ExtResource("1_7q3vp")
+
+[node name="Pointer" type="Sprite2D" parent="."]
+texture = ExtResource("2_pf83w")
+offset = Vector2(-21.16, 0)
+
+[node name="NameMarker" type="RichTextLabel" parent="Pointer"]
+offset_left = -107.0
+offset_top = -13.0
+offset_right = -60.0
+offset_bottom = 27.0
+pivot_offset = Vector2(20.8, 12.37)
+text = "NAME"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0

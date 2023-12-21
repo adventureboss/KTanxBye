@@ -11,7 +11,8 @@ var can_boost = true
 @onready var barrel_color: Sprite2D = $Barrel/Sprite2D
 @onready var boost_timer: Timer = $BoostTimer
 @export var boost_icons: Array[TextureRect]
-@onready var player_name : Label = $PlayerName
+@onready var player_name: Label = $PlayerName
+@onready var player_marker: Node2D = %PlayerMarker
 
 @onready var previous_movement: Vector2 = Vector2.ZERO
 
@@ -22,9 +23,12 @@ func _ready():
 	if $MultiplayerSynchronizer.get_multiplayer_authority() == player_id:
 		$Camera2D.make_current()
 		health_component.health_changed.connect(on_health_changed)
+		player_marker.disable()
 		var tank_color = GameManager.players[player_id].color
 		set_tank_texture.rpc(player_id, tank_color)
 		set_player_name.rpc(player_id)
+	else:
+		player_marker.enable(player_id, GameManager.players[player_id].name)
 		
 @rpc("any_peer", "call_local")
 func set_player_name(player_id):
