@@ -28,7 +28,7 @@ var box_tracker = {}
 
 
 func _ready():
-	var ammo_index : Array = [0, 1, 2]
+	var ammo_index : Array = [0, 1, 2, 3]
 	var consumable_positions = []
 	GameEvents.ability_pick_up.connect(on_ability_pickup)
 	if multiplayer.get_unique_id() == GameManager.player_host:
