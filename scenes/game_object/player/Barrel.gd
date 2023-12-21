@@ -36,15 +36,17 @@ func _process(delta):
 	if Input.is_action_pressed("fire_primary") and get_parent().process_mode == Node.PROCESS_MODE_INHERIT:
 		if !fire_wait:
 			_fire.rpc()
+			
 
 @rpc("authority", "call_local")
 func _fire():
 	var auth = get_multiplayer_authority()
 	fire_wait = true
 	var bullet_name = current_ammo.name
+	var new_bullet
 	if bullet_name == "spread":
 		for n in spread_arch.get_children():
-			var new_bullet = load(current_ammo.path).instantiate()
+			new_bullet = load(current_ammo.path).instantiate()
 			var bullet_sprite = new_bullet.find_child("Sprite2D")
 			bullet_sprite.scale = Vector2(0.35, 0.35)
 			bullet_sprite.texture = load(bullet_manager.bullet_sprites[tank_color][new_bullet.bullet_name])
@@ -54,7 +56,7 @@ func _fire():
 			new_bullet.global_position = fire_direction.global_position
 			new_bullet.global_transform = n.global_transform
 	else:
-		var new_bullet = load(current_ammo.path).instantiate()
+		new_bullet = load(current_ammo.path).instantiate()
 		var bullet_sprite = new_bullet.find_child("Sprite2D")
 		bullet_sprite.texture = load(bullet_manager.bullet_sprites[tank_color][new_bullet.bullet_name])
 		if bullet_name == "rapid_fire":
@@ -66,6 +68,8 @@ func _fire():
 		
 	timer.start()
 	bullets_fired += 1
+	if bullets_fired >= new_bullet.max_shots:
+		update_ammo(GameManager.abilities[0], parent_id, null )
 
 func on_timer_timeout():
 	fire_wait = false
