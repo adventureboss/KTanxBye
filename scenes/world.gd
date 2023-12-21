@@ -44,13 +44,21 @@ func _on_round_timer_timeout():
 		# - trigger UI round over with scoreboard
 
 func _on_continue_pressed():
+	continue_round.rpc()
+	multiplayer_manager.reset_game.rpc()
+
+@rpc("any_peer", "call_local")
+func continue_round():
 	for player in get_tree().get_nodes_in_group("player"):
 		player.process_mode = Node.PROCESS_MODE_INHERIT
-		scoreboard.hide_scoreboard()
-		multiplayer_manager.reset_game.rpc()
-		round_timer.start()
+	scoreboard.hide_scoreboard()
+	round_timer.start()
 
 func _on_return_to_menu_pressed():
+	quit_all.rpc()
+
+@rpc("any_peer", "call_local")
+func quit_all():
 	scene_manager.load_scene("start")
 
 func _on_player_died(id, enemy_id):
