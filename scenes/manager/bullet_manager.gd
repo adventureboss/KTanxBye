@@ -9,24 +9,28 @@ var bullet_sprites = {
 		"rapid_fire": "res://assets/sprites/Bullets/bullet_sprites/16.png",
 		"spread": "res://assets/sprites/Bullets/bullet_sprites/66.png",
 		"laser": "res://assets/sprites/Bullets/bullet_sprites/26.png",
+		"bazooka": "res://assets/sprites/Bullets/bullet_sprites/44.png",
 		},
 	"Red": {
 		"standard": "res://assets/sprites/Bullets/bullet_sprites/02.png",
 		"rapid_fire": "res://assets/sprites/Bullets/bullet_sprites/14.png",
 		"spread": "res://assets/sprites/Bullets/bullet_sprites/64.png",
 		"laser": "res://assets/sprites/Bullets/bullet_sprites/24.png",
+		"bazooka": "res://assets/sprites/Bullets/bullet_sprites/42.png",
 		},
 	"Blue": {
 		"standard": "res://assets/sprites/Bullets/bullet_sprites/06.png",
 		"rapid_fire": "res://assets/sprites/Bullets/bullet_sprites/11.png",
 		"spread": "res://assets/sprites/Bullets/bullet_sprites/55.png",
 		"laser": "res://assets/sprites/Bullets/bullet_sprites/23.png",
+		"bazooka": "res://assets/sprites/Bullets/bullet_sprites/43.png",
 		},
 	"Pink": {
 		"standard": "res://assets/sprites/Bullets/bullet_sprites/03.png",
 		"rapid_fire": "res://assets/sprites/Bullets/bullet_sprites/13.png",
 		"spread": "res://assets/sprites/Bullets/bullet_sprites/58.png",
-		"laser": "res://assets/sprites/Bullets/bullet_sprites/22.png"
+		"laser": "res://assets/sprites/Bullets/bullet_sprites/22.png",
+		"bazooka": "res://assets/sprites/Bullets/bullet_sprites/41.png",
 		}
 	}
 
