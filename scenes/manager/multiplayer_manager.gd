@@ -32,7 +32,7 @@ func send_player_information(id, player_name, color="Blue", score={"kills": 0, "
 	
 	if multiplayer.is_server():
 		for i in GameManager.players:
-			if i == 10101010:
+			if id == GameManager.ENVIRONMENT:
 				continue
 			send_player_information.rpc(i, player_name, color, score)
 
@@ -42,7 +42,7 @@ func update_player_color(id, color):
 	update_player_in_lobby.emit(id, GameManager.players[id].name, color)
 	 
 	for i in GameManager.players:
-		if i == 10101010:
+		if id == GameManager.ENVIRONMENT:
 			continue
 		update_player_color.rpc_id(i, id, color)
 
@@ -53,3 +53,11 @@ func update_player_score(id, score):
 @rpc("any_peer", "call_local")
 func start_game():
 	scene_manager.load_world()
+
+@rpc("any_peer", "call_local")
+func reset_game():
+	# currently, just resets score board
+	for p in GameManager.players:
+		if p == GameManager.ENVIRONMENT:
+			continue
+		GameManager.players[p].score = {"kills": 0, "deaths": 0, "assists": 0}

@@ -3,13 +3,16 @@ extends Control
 @onready var grid: GridContainer = $ScrollContainer/GridContainer
 @onready var entry: PackedScene = preload("res://scenes/game_object/ui/entry.tscn")
 @onready var refreshTimer: Timer = $RefreshTimer
+@onready var continue_button: Button = $Continue
+@onready var return_to_menu_button: Button = $ReturnToMenu
+
+@export var world : Node2D
 
 func _ready():
 	hide_scoreboard()
 	
 func _process(_delta):
 	if Input.is_action_just_pressed("scoreboard"):
-		update_scoreboard()
 		show_scoreboard()
 		print("show")
 	elif Input.is_action_just_released("scoreboard"):
@@ -38,8 +41,14 @@ func update_scoreboard():
 
 # This could be smarter,
 # i.e. searching, updating dynamically, sorting
-func show_scoreboard():
+func show_scoreboard(buttons=false):
+	update_scoreboard()
 	set_visible(true)
+	if buttons:
+		continue_button.visible = true
+		return_to_menu_button.visible = true
 
 func hide_scoreboard():
 	set_visible(false)
+	continue_button.visible = false
+	return_to_menu_button.visible = false
