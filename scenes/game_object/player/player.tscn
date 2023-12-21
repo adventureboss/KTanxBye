@@ -1,11 +1,12 @@
-[gd_scene load_steps=20 format=3 uid="uid://bam04hog13mtt"]
+[gd_scene load_steps=21 format=3 uid="uid://bam04hog13mtt"]
 
 [ext_resource type="Script" path="res://scenes/game_object/player/player.gd" id="1_hkal2"]
 [ext_resource type="PackedScene" uid="uid://73lr8fqud4" path="res://scenes/component/health_component.tscn" id="2_gt4m0"]
-[ext_resource type="Texture2D" path="res://assets/menu/boost.png" id="2_mn8cc"]
+[ext_resource type="Texture2D" uid="uid://bev0i3hblaggj" path="res://assets/menu/boost.png" id="2_mn8cc"]
 [ext_resource type="PackedScene" uid="uid://drybknwrows3o" path="res://scenes/game_object/player/tank_body.tscn" id="3_1e010"]
-[ext_resource type="Texture2D" path="res://assets/menu/boost_dark.png" id="3_ciky0"]
+[ext_resource type="Texture2D" uid="uid://cjgsa7jtfnoms" path="res://assets/menu/boost_dark.png" id="3_ciky0"]
 [ext_resource type="Texture2D" uid="uid://8ip3d3virahl" path="res://scenes/game_object/player/tankGreen_barrel3_outline.png" id="3_vvwhs"]
+[ext_resource type="PackedScene" uid="uid://dbb83yj4h1nw2" path="res://scenes/game_object/ui/emote_wheel.tscn" id="4_vw4ar"]
 [ext_resource type="Script" path="res://scenes/game_object/player/Barrel.gd" id="4_yiyg3"]
 [ext_resource type="PackedScene" uid="uid://dp7s6opobih82" path="res://scenes/component/hurtbox_component.tscn" id="5_fvhfs"]
 [ext_resource type="PackedScene" uid="uid://dubcod0jv5c7t" path="res://scenes/game_object/player/health_bar.tscn" id="7_p6dmh"]
@@ -33,6 +34,9 @@ properties/1/replication_mode = 2
 properties/2/path = NodePath("Barrel:rotation")
 properties/2/spawn = true
 properties/2/replication_mode = 2
+properties/3/path = NodePath("Emote:visible")
+properties/3/spawn = true
+properties/3/replication_mode = 2
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_qctma"]
 animations = [{
@@ -60,11 +64,13 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("boost_icons") groups=["player"]]
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("boost_available", "boost_unavailable", "emote_wheel") groups=["player"]]
 collision_layer = 2
 collision_mask = 126
 script = ExtResource("1_hkal2")
-boost_icons = [NodePath("HUD/PanelContainer/MarginContainer/BoostAvailableIcon"), NodePath("HUD/PanelContainer/MarginContainer/BoostUnavailableIcon")]
+boost_available = NodePath("HUD/PanelContainer/MarginContainer/BoostAvailableIcon")
+boost_unavailable = NodePath("HUD/PanelContainer/MarginContainer/BoostUnavailableIcon")
+emote_wheel = NodePath("HUD/PanelContainer2/EmoteWheel")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 limit_left = 0
@@ -104,6 +110,21 @@ visible = false
 layout_mode = 2
 texture = ExtResource("3_ciky0")
 stretch_mode = 2
+
+[node name="PanelContainer2" type="PanelContainer" parent="HUD"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="EmoteWheel" parent="HUD/PanelContainer2" instance=ExtResource("4_vw4ar")]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
 
 [node name="HealthComponent" parent="." instance=ExtResource("2_gt4m0")]
 max_health = 50.0
@@ -189,4 +210,5 @@ frame_progress = 0.217273
 
 [connection signal="timeout" from="BoostTimer" to="." method="_on_boost_timer_timeout"]
 
+[editable path="HUD/PanelContainer2/EmoteWheel"]
 [editable path="TankBody"]

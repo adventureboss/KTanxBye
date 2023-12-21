@@ -6,10 +6,11 @@ extends Node2D
 @onready var scene_manager: Node2D = get_tree().get_first_node_in_group("SceneManager")
 @export var scoreboard: Control
 @onready var round_timer = $RoundTimer
-@onready var round_timer_ui = %Time 
+@onready var round_timer_ui = %Time
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	set_multiplayer_authority(scene_manager.get_multiplayer_authority())
 	var i = 0
 	for p in GameManager.players:
 		if p == GameManager.ENVIRONMENT:
@@ -62,15 +63,16 @@ func quit_all():
 	scene_manager.load_scene("start")
 
 func _on_player_died(id, enemy_id):
-	var current_score = GameManager.players[id].score
+	var currently_dead_score = GameManager.players[id].score
 	multiplayer_manager.update_player_score.rpc_id(GameManager.player_host, id, {
-		"kills": current_score.kills, 
-		"deaths": current_score.deaths + 1, 
-		"assists": current_score.assists
+		"kills": currently_dead_score.kills, 
+		"deaths": currently_dead_score.deaths + 1, 
+		"assists": currently_dead_score.assists
 	})
+	var currently_active_score = GameManager.players[enemy_id].score
 	multiplayer_manager.update_player_score.rpc_id(GameManager.player_host, enemy_id, {
-		"kills": current_score.kills + 1, 
-		"deaths": current_score.deaths,
-		"assists": current_score.assists
+		"kills": currently_active_score.kills + 1, 
+		"deaths": currently_active_score.deaths,
+		"assists": currently_active_score.assists
 	})
 	# trigger UI screen, respawn, etc.

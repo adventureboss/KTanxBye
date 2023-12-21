@@ -69,6 +69,7 @@ func _process(_delta):
 				lobby_id = data.lobby_id
 				host_id = data.host
 				GameManager.player_host = host_id
+				set_multiplayer_authority(host_id)
 				lobby = Lobby.new(host_id)
 				lobby.players = JSON.parse_string(data.players)
 				if !in_lobby:
