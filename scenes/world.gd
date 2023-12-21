@@ -1,8 +1,10 @@
 extends Node2D
 
-@export var PlayerScene : PackedScene
+@export var PlayerScene: PackedScene
 
-@onready var multiplayer_manager : MultiplayerManager = get_tree().get_first_node_in_group("MultiplayerManager")
+@onready var multiplayer_manager: MultiplayerManager = get_tree().get_first_node_in_group("MultiplayerManager")
+@onready var scene_manager: Node2D = get_tree().get_first_node_in_group("SceneManager")
+@export var scoreboard: Control
 @onready var round_timer = $RoundTimer
 @onready var round_timer_ui = %Time 
 
@@ -36,15 +38,20 @@ func format_seconds_to_string(seconds: float):
 func _on_round_timer_timeout():
 	for player in get_tree().get_nodes_in_group("player"):
 		player.process_mode = Node.PROCESS_MODE_DISABLED
-		get_node("../../CanvasLayer/Scoreboard").show_scoreboard()
+		scoreboard.show_scoreboard(true)
 		# ideas:
 		# - camera zoom out
 		# - trigger UI round over with scoreboard
 
-func _on_round_timer_reset():
+func _on_continue_pressed():
 	for player in get_tree().get_nodes_in_group("player"):
 		player.process_mode = Node.PROCESS_MODE_INHERIT
-		get_node("../../CanvasLayer/Scoreboard").hide_scoreboard()
+		scoreboard.hide_scoreboard()
+		multiplayer_manager.reset_game.rpc()
+		round_timer.start()
+
+func _on_return_to_menu_pressed():
+	scene_manager.load_scene("start")
 
 func _on_player_died(id, enemy_id):
 	var current_score = GameManager.players[id].score

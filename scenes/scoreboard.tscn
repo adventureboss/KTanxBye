@@ -1,9 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://cy38vh1bea4dy"]
+[gd_scene load_steps=2 format=3 uid="uid://dttuc30vkk7yh"]
 
 [ext_resource type="Script" path="res://scenes/scoreboard.gd" id="1_6f6am"]
 
 [node name="Scoreboard" type="Control" groups=["Scoreboard"]]
-visible = false
 z_index = 5
 layout_mode = 3
 anchors_preset = 15
@@ -45,11 +44,20 @@ wait_time = 0.5
 one_shot = true
 autostart = true
 
-[node name="play_again_btn" type="Button" parent="."]
+[node name="Continue" type="Button" parent="."]
 visible = false
 layout_mode = 0
-offset_right = 8.0
-offset_bottom = 8.0
-text = "Play Again?"
+offset_left = 109.0
+offset_top = 543.0
+offset_right = 195.0
+offset_bottom = 574.0
+text = "Continue?"
 
-[connection signal="button_down" from="play_again_btn" to="." method="_on_play_again_btn_button_down"]
+[node name="ReturnToMenu" type="Button" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 395.0
+offset_top = 542.0
+offset_right = 491.0
+offset_bottom = 573.0
+text = "Main Menu"

@@ -426,14 +426,15 @@ distance = -4481.0
 normal = Vector2(-1, -0.000223914)
 distance = -4482.04
 
-[node name="World" type="Node2D" groups=["world"]]
+[node name="World" type="Node2D" node_paths=PackedStringArray("scoreboard") groups=["world"]]
 script = ExtResource("1_2r7ig")
 PlayerScene = ExtResource("2_kcqh6")
+scoreboard = NodePath("ScoreboardLayer/Scoreboard")
 
 [node name="BulletManager" parent="." instance=ExtResource("8_nt0m4")]
 
 [node name="RoundTimer" type="Timer" parent="."]
-wait_time = 15.0
+wait_time = 1.4
 one_shot = true
 
 [node name="RoundTimerUI" type="CanvasLayer" parent="."]
@@ -601,3 +602,7 @@ collision_mask = 150
 shape = SubResource("WorldBoundaryShape2D_vh5um")
 
 [connection signal="timeout" from="RoundTimer" to="." method="_on_round_timer_timeout"]
+[connection signal="pressed" from="ScoreboardLayer/Scoreboard/Continue" to="." method="_on_continue_pressed"]
+[connection signal="pressed" from="ScoreboardLayer/Scoreboard/ReturnToMenu" to="." method="_on_return_to_menu_pressed"]
+
+[editable path="ScoreboardLayer/Scoreboard"]
