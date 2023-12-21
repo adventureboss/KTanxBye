@@ -5,13 +5,8 @@ extends Node2D
 
 var player_id
 
-func _enter_tree():
-	set_multiplayer_authority(player_id)
-
-@rpc("any_peer", "call_local")
-func start_emote(path):
-	if get_multiplayer_authority() != multiplayer.get_unique_id():
-		print("did not equal auth; %d, %d" % [get_multiplayer_authority(), multiplayer.get_unique_id()])
+func start_emote(id, path):
+	if id != player_id:
 		return
 	sprite.texture = load(path)
 	visible = true

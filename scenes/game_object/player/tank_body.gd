@@ -7,8 +7,10 @@ extends Marker2D
 @onready var parent: Node = get_parent()
 var current_rotation = 0
 
+var player_id
+
 func _ready():
-	$MultiplayerSynchronizer.set_multiplayer_authority(get_parent().name.to_int())
+	player_id = get_parent().player_id
 
 func _process(_delta):
 	if $MultiplayerSynchronizer.get_multiplayer_authority() != multiplayer.get_unique_id():

@@ -6,10 +6,11 @@ extends Node2D
 @onready var scene_manager: Node2D = get_tree().get_first_node_in_group("SceneManager")
 @export var scoreboard: Control
 @onready var round_timer = $RoundTimer
-@onready var round_timer_ui = %Time 
+@onready var round_timer_ui = %Time
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	set_multiplayer_authority(scene_manager.get_multiplayer_authority())
 	var i = 0
 	for p in GameManager.players:
 		if p == GameManager.ENVIRONMENT:

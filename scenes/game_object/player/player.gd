@@ -10,18 +10,23 @@ var can_boost = true
 @onready var tank_body: Sprite2D = $TankBody/Sprite2D
 @onready var barrel_color: Sprite2D = $Barrel/Sprite2D
 @onready var boost_timer: Timer = $BoostTimer
-@export var boost_icons: Array[TextureRect]
+@export var boost_available: TextureRect
+@export var boost_unavailable: TextureRect
 @onready var player_name: Label = $PlayerName
 @onready var emote = load("res://scenes/game_object/player/emote.tscn")
+@export var emote_wheel: Control
 
 @onready var previous_movement: Vector2 = Vector2.ZERO
 
-var player_id
+var player_id: int
 
 func _ready():
-	$MultiplayerSynchronizer.set_multiplayer_authority(str(name).to_int())
 	player_id = str(name).to_int()
-	if $MultiplayerSynchronizer.get_multiplayer_authority() == multiplayer.get_unique_id():
+	print("setting player_id %d" % player_id)
+	# although the player is not in control of most things now,
+	# I think it is an easy approach for position, etc.
+	$MultiplayerSynchronizer.set_multiplayer_authority(player_id)
+	if multiplayer.get_unique_id() == player_id:
 		$Camera2D.make_current()
 		health_component.health_changed.connect(on_health_changed)
 		var tank_color = GameManager.players[player_id].color
@@ -30,7 +35,11 @@ func _ready():
 	emote = emote.instantiate()
 	emote.player_id = player_id
 	add_child(emote)
-		
+	emote_wheel.player_id_what = player_id
+
+func get_player_id():
+	return player_id
+
 @rpc("any_peer", "call_local")
 func set_player_name(player_id):
 	if $MultiplayerSynchronizer.get_multiplayer_authority() == player_id:
@@ -42,7 +51,7 @@ func set_player_name(player_id):
 func set_tank_texture(id, tank_color):
 	var body
 	var barrel
-	if $MultiplayerSynchronizer.get_multiplayer_authority() == id:
+	if multiplayer.get_unique_id() == id:
 		body = tank_body
 		barrel = barrel_color
 	else:
@@ -53,9 +62,8 @@ func set_tank_texture(id, tank_color):
 	barrel.texture = load(GameManager.color_dict[tank_color]["Barrel"])
 	barrel.scale = Vector2(0.5, 0.5)
 
-
 func _process(delta):
-	if $MultiplayerSynchronizer.get_multiplayer_authority() != multiplayer.get_unique_id():
+	if multiplayer.get_unique_id() != player_id:
 		return
 	
 	var movement_vector = get_movement_vector()
@@ -68,8 +76,8 @@ func _process(delta):
 		apply_boost(direction)
 		can_boost = false
 		boost_timer.start()
-		boost_icons[0].visible = false # available icon
-		boost_icons[1].visible = true # unavailable icon
+		boost_available.visible = false
+		boost_unavailable.visible = true
 	
 	move_and_slide()
 
@@ -98,10 +106,9 @@ func on_health_changed():
 func _on_boost_timer_timeout():
 	if can_boost == false:
 		can_boost = true
-		boost_icons[0].visible = true
-		boost_icons[1].visible = false
+		boost_available.visible = true
+		boost_unavailable.visible = false
 
 @rpc("any_peer", "call_local")
-func show_emote_sprite(path):
-	print("any_peer, call local should call everybody %d" % multiplayer.get_unique_id())
-	emote.start_emote(path)
+func show_emote_sprite(id, path):
+	emote.start_emote(id, path)

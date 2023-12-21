@@ -18,7 +18,6 @@ var parent_id = null
 
 func _ready():
 	parent_id = get_parent().name.to_int()
-	set_multiplayer_authority(parent_id)
 	timer.timeout.connect(on_timer_timeout)
 	GameEvents.ability_pick_up.connect(update_ammo)
 	process_mode = Node.PROCESS_MODE_ALWAYS
@@ -27,7 +26,7 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	if multiplayer_synchronizer.get_multiplayer_authority() != multiplayer.get_unique_id():
+	if multiplayer.get_unique_id() != parent_id:
 		return
 
 	var mouse_position = get_global_mouse_position()
@@ -37,9 +36,8 @@ func _process(delta):
 		if !fire_wait:
 			_fire.rpc()
 
-@rpc("authority", "call_local")
+@rpc("any_peer", "call_local")
 func _fire():
-	var auth = get_multiplayer_authority()
 	fire_wait = true
 	var bullet_name = current_ammo.name
 	if bullet_name == "spread":
