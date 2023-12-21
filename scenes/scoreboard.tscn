@@ -40,7 +40,6 @@ theme_override_constants/h_separation = 20
 columns = 4
 
 [node name="RefreshTimer" type="Timer" parent="."]
-wait_time = 0.5
 one_shot = true
 autostart = true
 

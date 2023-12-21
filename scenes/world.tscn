@@ -434,7 +434,7 @@ scoreboard = NodePath("ScoreboardLayer/Scoreboard")
 [node name="BulletManager" parent="." instance=ExtResource("8_nt0m4")]
 
 [node name="RoundTimer" type="Timer" parent="."]
-wait_time = 1.4
+wait_time = 300.0
 one_shot = true
 
 [node name="RoundTimerUI" type="CanvasLayer" parent="."]
