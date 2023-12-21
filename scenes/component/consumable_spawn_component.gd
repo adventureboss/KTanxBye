@@ -75,7 +75,7 @@ func on_timer_timeout():
 	count_consumables()
 	count_consumable_drop()
 	
-	var ammo_index : Array = [0, 1, 2]
+	var ammo_index : Array = [0, 1, 2, 3]
 	var consumable_positions = []
 	randomize()
 	consumable_spawn_points.shuffle()
