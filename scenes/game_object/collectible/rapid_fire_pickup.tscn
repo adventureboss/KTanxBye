@@ -1,8 +1,8 @@
 [gd_scene load_steps=5 format=3 uid="uid://b1oeve68we6sd"]
 
 [ext_resource type="Script" path="res://scenes/component/collectible_component.gd" id="1_yno0p"]
-[ext_resource type="Texture2D" uid="uid://ih8cb8lgmbix" path="res://assets/sprites/Collectibles/crateWood.png" id="2_yaorj"]
-[ext_resource type="AudioStream" uid="uid://bwiageclksl88" path="res://assets/audio/sfx/weapon_sounds/weapon_pick_up.mp3" id="3_jtn45"]
+[ext_resource type="Texture2D" uid="uid://bb0lmns1kgnih" path="res://assets/sprites/Collectibles/rapidcrate.png" id="2_tanif"]
+[ext_resource type="AudioStream" uid="uid://cd5ich16buddg" path="res://assets/audio/sfx/weapon_sounds/weapon_pick_up.mp3" id="3_jtn45"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_likel"]
 size = Vector2(28, 28)
@@ -14,7 +14,7 @@ script = ExtResource("1_yno0p")
 ability_id = 1
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("2_yaorj")
+texture = ExtResource("2_tanif")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_likel")

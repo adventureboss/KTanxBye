@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bktdwfic3x84r"]
+
+[ext_resource type="Script" path="res://scenes/socket/server.gd" id="1_xuapb"]
+
+[node name="SignalServer" type="Node2D"]
+script = ExtResource("1_xuapb")

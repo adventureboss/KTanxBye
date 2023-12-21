@@ -65,7 +65,6 @@ top_level = true
 collision_layer = 16
 collision_mask = 6
 script = ExtResource("1_j6n15")
-fire_delay = 0.5
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 rotation = 1.5708

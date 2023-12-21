@@ -1,0 +1,24 @@
+[gd_scene load_steps=5 format=3 uid="uid://cacnunoylf5c0"]
+
+[ext_resource type="Script" path="res://scenes/component/collectible_component.gd" id="1_1cktv"]
+[ext_resource type="Texture2D" uid="uid://d1tgeweyxlldr" path="res://assets/sprites/Collectibles/lasercrate.png" id="2_78uir"]
+[ext_resource type="AudioStream" uid="uid://cd5ich16buddg" path="res://assets/audio/sfx/weapon_sounds/weapon_pick_up.mp3" id="3_oh8n6"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_likel"]
+size = Vector2(28, 28)
+
+[node name="LaserPickup" type="Area2D" groups=["ammo", "consumables"]]
+collision_layer = 8
+collision_mask = 2
+script = ExtResource("1_1cktv")
+ability_id = 3
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_78uir")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_likel")
+
+[node name="weapon_pick_up" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_oh8n6")
+volume_db = -20.0

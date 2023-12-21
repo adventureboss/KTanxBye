@@ -13,6 +13,16 @@ func _ready():
 		"color": "Pink"
 	},
 	{
+		"id": 23453463456,
+		"name": "Flightless",
+		"color": "Red"
+	},
+	{
+		"id": 34563456345,
+		"name": "BulletHealer",
+		"color": "Blue"
+	},
+	{
 		"id": 1,
 		"name": "History",
 		"color": "Green"
