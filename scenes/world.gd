@@ -54,7 +54,7 @@ func continue_round():
 	for player in get_tree().get_nodes_in_group("player"):
 		player.process_mode = Node.PROCESS_MODE_INHERIT
 	scoreboard.hide_scoreboard()
-	music.start()
+	music.play()
 	round_timer.start()
 
 func _on_return_to_menu_pressed():
