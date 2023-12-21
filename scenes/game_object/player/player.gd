@@ -10,6 +10,7 @@ var can_boost = true
 @onready var tank_body: Sprite2D = $TankBody/Sprite2D
 @onready var barrel_color: Sprite2D = $Barrel/Sprite2D
 @onready var boost_timer: Timer = $BoostTimer
+@export var boost_icons: Array[TextureRect]
 
 @onready var previous_movement: Vector2 = Vector2.ZERO
 
@@ -54,9 +55,8 @@ func _process(delta):
 		apply_boost(direction)
 		can_boost = false
 		boost_timer.start()
-		
-	if boost_timer.is_stopped() and can_boost == false:
-		can_boost = true
+		boost_icons[0].visible = false # available icon
+		boost_icons[1].visible = true # unavailable icon
 	
 	move_and_slide()
 
@@ -79,3 +79,9 @@ func update_health_display():
 
 func on_health_changed():
 	update_health_display.rpc()
+
+func _on_boost_timer_timeout():
+	if can_boost == false:
+		can_boost = true
+		boost_icons[0].visible = true
+		boost_icons[1].visible = false
