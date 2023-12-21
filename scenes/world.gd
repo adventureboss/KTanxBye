@@ -4,6 +4,7 @@ extends Node2D
 
 @onready var multiplayer_manager: MultiplayerManager = get_tree().get_first_node_in_group("MultiplayerManager")
 @onready var scene_manager: Node2D = get_tree().get_first_node_in_group("SceneManager")
+@onready var music: AudioStreamPlayer = get_node("AudioStreamPlayer")
 @export var scoreboard: Control
 @onready var round_timer = $RoundTimer
 @onready var round_timer_ui = %Time
@@ -53,6 +54,7 @@ func continue_round():
 	for player in get_tree().get_nodes_in_group("player"):
 		player.process_mode = Node.PROCESS_MODE_INHERIT
 	scoreboard.hide_scoreboard()
+	music.start()
 	round_timer.start()
 
 func _on_return_to_menu_pressed():
