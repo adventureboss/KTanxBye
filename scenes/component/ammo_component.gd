@@ -5,6 +5,7 @@ class_name Ammo
 @export var damage : int = 10
 @export var max_range : int = 150 # need to just remove the projectiles when they go off camera
 @export var fire_delay : float = 0.1
+@export var max_shots : int = 999999 # 999999 equals infinite ammo
 @export var direction : Vector2 = Vector2.RIGHT
 @export var bullet_name : String = "standard"
 
