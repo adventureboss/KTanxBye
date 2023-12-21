@@ -1,9 +1,9 @@
 [gd_scene load_steps=6 format=3 uid="uid://b1ja334pp7vgj"]
 
 [ext_resource type="Script" path="res://scenes/lobby.gd" id="1_v3rvc"]
-[ext_resource type="Texture2D" uid="uid://clmr0ufqu7cky" path="res://assets/menu/Main_Menu2.png" id="2_wuriw"]
-[ext_resource type="Texture2D" uid="uid://6800rchara03" path="res://assets/sprites/Mouse/copy-icon.png" id="3_kv05i"]
-[ext_resource type="Texture2D" uid="uid://b7o4oexf7m88c" path="res://assets/menu/logo.png" id="3_mcnqm"]
+[ext_resource type="Texture2D" uid="uid://rux8k6gn6rwc" path="res://assets/menu/Main_Menu2.png" id="2_wuriw"]
+[ext_resource type="Texture2D" uid="uid://g41d1gjm0k5e" path="res://assets/sprites/Mouse/copy-icon.png" id="3_kv05i"]
+[ext_resource type="Texture2D" uid="uid://c10c0g2hov108" path="res://assets/menu/logo.png" id="3_mcnqm"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_v6ptr"]
 properties/0/path = NodePath("Elements/1:text")

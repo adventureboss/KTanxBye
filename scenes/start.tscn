@@ -1,10 +1,10 @@
 [gd_scene load_steps=6 format=3 uid="uid://c7re7lky8g0bl"]
 
 [ext_resource type="Script" path="res://scenes/start.gd" id="1_hjjl0"]
-[ext_resource type="Texture2D" uid="uid://clmr0ufqu7cky" path="res://assets/menu/Main_Menu2.png" id="2_ph0ct"]
-[ext_resource type="Texture2D" uid="uid://dgqtaps5wqrqs" path="res://assets/menu/join_button.png" id="3_1qmlj"]
-[ext_resource type="Texture2D" uid="uid://b7o4oexf7m88c" path="res://assets/menu/logo.png" id="3_4lw7v"]
-[ext_resource type="Texture2D" uid="uid://bvh8qen2axgag" path="res://assets/menu/host_button.png" id="4_amibf"]
+[ext_resource type="Texture2D" uid="uid://rux8k6gn6rwc" path="res://assets/menu/Main_Menu2.png" id="2_ph0ct"]
+[ext_resource type="Texture2D" uid="uid://bm8jb2dj04i6w" path="res://assets/menu/join_button.png" id="3_1qmlj"]
+[ext_resource type="Texture2D" uid="uid://c10c0g2hov108" path="res://assets/menu/logo.png" id="3_4lw7v"]
+[ext_resource type="Texture2D" uid="uid://38our83n1y78" path="res://assets/menu/host_button.png" id="4_amibf"]
 
 [node name="Start" type="Control"]
 layout_mode = 3
