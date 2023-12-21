@@ -42,3 +42,32 @@ var color_dict = {
 	"Pink": {"Barrel": "res://assets/sprites/Tanks/barrelPink_outline.png",
 			 "Body": "res://assets/sprites/Tanks/tankPink_outline.png"},
 }
+
+var emotes: Array = [{
+	"name": "money",
+	"asset": "emote_cash.png"
+},
+{
+	"name": "money",
+	"asset": "emote_cash.png"
+},
+{
+	"name": "sweat",
+	"asset": "emote_drops.png"
+},
+{
+	"name": "heart",
+	"asset": "emote_heart.png"
+},
+{
+	"name": "exclamation",
+	"asset": "emote_exclamation.png"
+},
+{
+	"name": "smile",
+	"asset": "emote_faceHappy.png"
+},
+{
+	"name": "music",
+	"asset": "emote_music.png"
+}]

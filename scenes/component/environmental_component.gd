@@ -1,9 +1,10 @@
 extends Node2D
 class_name EnvironmentalComponent
 
-@onready var projectile_owner = 10101010
+@onready var projectile_owner = self
 @onready var animation_player : AnimationPlayer = $AnimationPlayer
 @export var damage = 10
+
 
 @rpc("any_peer", "call_local")
 func dead(id):

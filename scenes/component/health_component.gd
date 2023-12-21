@@ -5,6 +5,7 @@ signal died(id, enemy_id)
 signal health_changed
 
 @onready var respawn_timer: Timer = $RespawnTimer
+@onready var spawn_points: Array[Node] = get_tree().get_nodes_in_group("PlayerRespawnPoints")
 @onready var explosion_animation: AnimatedSprite2D = get_parent().find_child("Explosion")
 @onready var tank_body: Marker2D = get_parent().find_child("TankBody")
 @onready var tank_barrel: Marker2D = get_parent().find_child("Barrel")
@@ -50,13 +51,16 @@ func check_death(id, enemy_id):
 		respawn_timer.start()
 
 func respawn():
-	var spawn_points = get_tree().get_nodes_in_group("PlayerRespawnPoints")
 	randomize()
 	spawn_points.shuffle()
+	respawn_cont.rpc(spawn_points[0].global_position)
 	ensure_correct_health.rpc()
+
+@rpc("any_peer", "call_local")
+func respawn_cont(spawn_position):
 	if get_parent().find_child("Barrel"):
 		get_parent().find_child("Barrel").update_ammo(GameManager.abilities[0], owner.multiplayer.get_unique_id(), null)
-	owner.global_position = spawn_points[0].global_position
+	owner.global_position = spawn_position
 	
 	owner.process_mode = Node.PROCESS_MODE_INHERIT
 	explosion_animation.visible = false

@@ -13,12 +13,12 @@ extends Marker2D
 
 var fire_wait : bool = false
 var bullets_fired = 0
+var current_ammo_bullets_fired = 0
 var tank_color
 var parent_id = null
 
 func _ready():
 	parent_id = get_parent().name.to_int()
-	set_multiplayer_authority(parent_id)
 	timer.timeout.connect(on_timer_timeout)
 	GameEvents.ability_pick_up.connect(update_ammo)
 	process_mode = Node.PROCESS_MODE_ALWAYS
@@ -27,7 +27,7 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	if multiplayer_synchronizer.get_multiplayer_authority() != multiplayer.get_unique_id():
+	if multiplayer.get_unique_id() != parent_id:
 		return
 
 	var mouse_position = get_global_mouse_position()
@@ -36,15 +36,16 @@ func _process(delta):
 	if Input.is_action_pressed("fire_primary") and get_parent().process_mode == Node.PROCESS_MODE_INHERIT:
 		if !fire_wait:
 			_fire.rpc()
+			
 
-@rpc("authority", "call_local")
+@rpc("any_peer", "call_local")
 func _fire():
-	var auth = get_multiplayer_authority()
 	fire_wait = true
 	var bullet_name = current_ammo.name
+	var new_bullet
 	if bullet_name == "spread":
 		for n in spread_arch.get_children():
-			var new_bullet = load(current_ammo.path).instantiate()
+			new_bullet = load(current_ammo.path).instantiate()
 			var bullet_sprite = new_bullet.find_child("Sprite2D")
 			bullet_sprite.scale = Vector2(0.35, 0.35)
 			bullet_sprite.texture = load(bullet_manager.bullet_sprites[tank_color][new_bullet.bullet_name])
@@ -54,7 +55,7 @@ func _fire():
 			new_bullet.global_position = fire_direction.global_position
 			new_bullet.global_transform = n.global_transform
 	else:
-		var new_bullet = load(current_ammo.path).instantiate()
+		new_bullet = load(current_ammo.path).instantiate()
 		var bullet_sprite = new_bullet.find_child("Sprite2D")
 		bullet_sprite.texture = load(bullet_manager.bullet_sprites[tank_color][new_bullet.bullet_name])
 		if bullet_name == "rapid_fire":
@@ -66,11 +67,15 @@ func _fire():
 		
 	timer.start()
 	bullets_fired += 1
+	current_ammo_bullets_fired += 1
+	if  current_ammo_bullets_fired >= new_bullet.max_shots:
+		update_ammo(GameManager.abilities[0], parent_id, null )
 
 func on_timer_timeout():
 	fire_wait = false
 
 func update_ammo(ability, id, _position):
+	current_ammo_bullets_fired = 0
 	ammo_change_broadcast.rpc(ability, id)
 	
 @rpc("any_peer", "call_local")
