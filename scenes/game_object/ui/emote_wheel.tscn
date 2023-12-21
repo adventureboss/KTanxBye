@@ -1,0 +1,147 @@
+[gd_scene load_steps=10 format=3 uid="uid://dbb83yj4h1nw2"]
+
+[ext_resource type="Texture2D" uid="uid://blkwjpxko3djq" path="res://assets/sprites/Emotes/blank_wheel.png" id="1_0s23w"]
+[ext_resource type="Script" path="res://scenes/game_object/ui/emote_wheel.gd" id="1_u0yvy"]
+[ext_resource type="Texture2D" uid="uid://8x0lx47pegpb" path="res://assets/sprites/Emotes/selected_slot.png" id="2_xfg6b"]
+[ext_resource type="Texture2D" uid="uid://b05eblrxxessm" path="res://assets/sprites/Emotes/emote_cash.png" id="3_hjocw"]
+[ext_resource type="Texture2D" uid="uid://tnavb5yqxmt0" path="res://assets/sprites/Emotes/emote_drops.png" id="4_ivrvp"]
+[ext_resource type="Texture2D" uid="uid://ciojtk5cld7vp" path="res://assets/sprites/Emotes/emote_heart.png" id="5_f7its"]
+[ext_resource type="Texture2D" uid="uid://d0npxsfiejesr" path="res://assets/sprites/Emotes/emote_exclamation.png" id="6_gc282"]
+[ext_resource type="Texture2D" uid="uid://3nn4ibbdink6" path="res://assets/sprites/Emotes/emote_faceHappy.png" id="7_imolu"]
+[ext_resource type="Texture2D" uid="uid://b8us55rdy7nbd" path="res://assets/sprites/Emotes/emote_music.png" id="8_vogfe"]
+
+[node name="EmoteWheel" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
+script = ExtResource("1_u0yvy")
+
+[node name="BlankWheel" type="Sprite2D" parent="."]
+texture = ExtResource("1_0s23w")
+
+[node name="MiddleWheel" type="Sprite2D" parent="."]
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("1_0s23w")
+
+[node name="Slots" type="Node2D" parent="."]
+
+[node name="1" type="TextureButton" parent="Slots"]
+offset_right = 40.0
+offset_bottom = 40.0
+scale = Vector2(1.055, 1.055)
+pivot_offset = Vector2(0.56, 0)
+texture_hover = ExtResource("2_xfg6b")
+flip_h = true
+
+[node name="2" type="TextureButton" parent="Slots"]
+offset_right = 40.0
+offset_bottom = 40.0
+rotation = -1.0472
+scale = Vector2(1.055, 1.055)
+pivot_offset = Vector2(0.56, 0)
+texture_hover = ExtResource("2_xfg6b")
+flip_h = true
+
+[node name="3" type="TextureButton" parent="Slots"]
+offset_right = 40.0
+offset_bottom = 40.0
+rotation = -2.0944
+scale = Vector2(1.055, 1.055)
+pivot_offset = Vector2(0.56, 0)
+texture_hover = ExtResource("2_xfg6b")
+flip_h = true
+
+[node name="4" type="TextureButton" parent="Slots"]
+offset_right = 40.0
+offset_bottom = 40.0
+rotation = -3.14159
+scale = Vector2(1.055, 1.055)
+pivot_offset = Vector2(0.56, 0)
+texture_hover = ExtResource("2_xfg6b")
+flip_h = true
+
+[node name="5" type="TextureButton" parent="Slots"]
+offset_right = 40.0
+offset_bottom = 40.0
+rotation = -4.18879
+scale = Vector2(1.055, 1.055)
+pivot_offset = Vector2(0.56, 0)
+texture_hover = ExtResource("2_xfg6b")
+flip_h = true
+
+[node name="6" type="TextureButton" parent="Slots"]
+offset_right = 40.0
+offset_bottom = 40.0
+rotation = -5.23599
+scale = Vector2(1.055, 1.055)
+pivot_offset = Vector2(0.56, 0)
+texture_hover = ExtResource("2_xfg6b")
+flip_h = true
+
+[node name="Emotes" type="Node2D" parent="."]
+
+[node name="1" type="TextureRect" parent="Emotes"]
+offset_left = 26.0
+offset_top = 65.0
+offset_right = 66.0
+offset_bottom = 105.0
+scale = Vector2(2, 2)
+texture = ExtResource("3_hjocw")
+stretch_mode = 2
+
+[node name="2" type="TextureRect" parent="Emotes"]
+offset_left = 81.0
+offset_top = -15.0
+offset_right = 121.0
+offset_bottom = 25.0
+scale = Vector2(2, 2)
+texture = ExtResource("4_ivrvp")
+stretch_mode = 2
+
+[node name="3" type="TextureRect" parent="Emotes"]
+offset_left = 29.0
+offset_top = -98.0
+offset_right = 69.0
+offset_bottom = -58.0
+scale = Vector2(2, 2)
+texture = ExtResource("5_f7its")
+stretch_mode = 2
+
+[node name="4" type="TextureRect" parent="Emotes"]
+offset_left = -60.0
+offset_top = -100.0
+offset_right = -20.0
+offset_bottom = -60.0
+scale = Vector2(2, 2)
+texture = ExtResource("6_gc282")
+stretch_mode = 2
+
+[node name="5" type="TextureRect" parent="Emotes"]
+offset_left = -116.0
+offset_top = -15.0
+offset_right = -76.0
+offset_bottom = 25.0
+scale = Vector2(2, 2)
+texture = ExtResource("7_imolu")
+stretch_mode = 2
+
+[node name="6" type="TextureRect" parent="Emotes"]
+offset_left = -61.0
+offset_top = 63.0
+offset_right = -21.0
+offset_bottom = 103.0
+scale = Vector2(2, 2)
+texture = ExtResource("8_vogfe")
+stretch_mode = 2
+
+[connection signal="pressed" from="Slots/1" to="." method="_on_pressed" binds= [1]]
+[connection signal="pressed" from="Slots/2" to="." method="_on_pressed" binds= [2]]
+[connection signal="pressed" from="Slots/3" to="." method="_on_pressed" binds= [3]]
+[connection signal="pressed" from="Slots/4" to="." method="_on_pressed" binds= [4]]
+[connection signal="pressed" from="Slots/5" to="." method="_on_pressed" binds= [5]]
+[connection signal="pressed" from="Slots/6" to="." method="_on_pressed" binds= [6]]

@@ -11,20 +11,25 @@ var can_boost = true
 @onready var barrel_color: Sprite2D = $Barrel/Sprite2D
 @onready var boost_timer: Timer = $BoostTimer
 @export var boost_icons: Array[TextureRect]
-@onready var player_name : Label = $PlayerName
+@onready var player_name: Label = $PlayerName
+@onready var emote = load("res://scenes/game_object/player/emote.tscn")
 
 @onready var previous_movement: Vector2 = Vector2.ZERO
 
 var player_id
 
 func _ready():
-	player_id = multiplayer.get_unique_id()
-	if $MultiplayerSynchronizer.get_multiplayer_authority() == player_id:
+	$MultiplayerSynchronizer.set_multiplayer_authority(str(name).to_int())
+	player_id = str(name).to_int()
+	if $MultiplayerSynchronizer.get_multiplayer_authority() == multiplayer.get_unique_id():
 		$Camera2D.make_current()
 		health_component.health_changed.connect(on_health_changed)
 		var tank_color = GameManager.players[player_id].color
 		set_tank_texture.rpc(player_id, tank_color)
 		set_player_name.rpc(player_id)
+	emote = emote.instantiate()
+	emote.player_id = player_id
+	add_child(emote)
 		
 @rpc("any_peer", "call_local")
 func set_player_name(player_id):
@@ -74,9 +79,6 @@ func get_movement_vector():
 	
 	return Vector2(x_movement, y_movement)
 
-func _enter_tree():
-	$MultiplayerSynchronizer.set_multiplayer_authority(name.to_int())
-
 func apply_boost(direction: Vector2):
 	var boost_strength = 2500.0
 	velocity += direction * boost_strength
@@ -98,3 +100,8 @@ func _on_boost_timer_timeout():
 		can_boost = true
 		boost_icons[0].visible = true
 		boost_icons[1].visible = false
+
+@rpc("any_peer", "call_local")
+func show_emote_sprite(path):
+	print("any_peer, call local should call everybody %d" % multiplayer.get_unique_id())
+	emote.start_emote(path)
