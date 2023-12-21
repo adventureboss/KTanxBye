@@ -8,13 +8,13 @@ signal health_changed
 @onready var explosion_animation: AnimatedSprite2D = get_parent().find_child("Explosion")
 @onready var tank_body: Marker2D = get_parent().find_child("TankBody")
 @onready var tank_barrel: Marker2D = get_parent().find_child("Barrel")
-@onready var health_bar: PanelContainer = get_parent().find_child("PanelContainer")
+@onready var health_bar: PanelContainer = get_parent().find_child("HealthBar")
+@onready var player_name: Label = get_parent().find_child("PlayerName")
 @onready var collision: CollisionShape2D = get_parent().find_child("CollisionShape2D")
 @onready var hit_collision: CollisionShape2D = get_parent().find_child("HurtboxComponent").find_child("CollisionShape2D2")
 
 @export var max_health: float = 100
 var current_health
-
 
 func _ready():
 	current_health = max_health
@@ -43,6 +43,7 @@ func check_death(id, enemy_id):
 		tank_body.visible = false
 		tank_barrel.visible = false
 		health_bar.visible = false
+		player_name.visible = false
 		collision.disabled = true
 		hit_collision.disabled = true
 		explosion_animation.play()
@@ -63,6 +64,7 @@ func respawn():
 	tank_body.visible = true
 	tank_barrel.visible = true
 	health_bar.visible = true
+	player_name.visible = true
 	collision.disabled = false
 	hit_collision.disabled = false
 	
