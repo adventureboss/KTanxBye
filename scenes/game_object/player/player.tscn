@@ -8,7 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://8ip3d3virahl" path="res://scenes/game_object/player/tankGreen_barrel3_outline.png" id="3_vvwhs"]
 [ext_resource type="Script" path="res://scenes/game_object/player/Barrel.gd" id="4_yiyg3"]
 [ext_resource type="PackedScene" uid="uid://dp7s6opobih82" path="res://scenes/component/hurtbox_component.tscn" id="5_fvhfs"]
-[ext_resource type="PackedScene" uid="uid://mbsht4dt5quk" path="res://scenes/game_object/player/health_bar.tscn" id="7_p6dmh"]
+[ext_resource type="PackedScene" uid="uid://dubcod0jv5c7t" path="res://scenes/game_object/player/health_bar.tscn" id="7_p6dmh"]
 [ext_resource type="Texture2D" uid="uid://qy1axfax8jfx" path="res://assets/sprites/Effects/Explosion1/explosion1.png" id="8_xuf46"]
 [ext_resource type="Texture2D" uid="uid://ct43tpf4bhlam" path="res://assets/sprites/Effects/Explosion1/explosion2.png" id="9_n372a"]
 [ext_resource type="Texture2D" uid="uid://1bj57cp5m24g" path="res://assets/sprites/Effects/Explosion1/explosion3.png" id="10_ytrhg"]
@@ -172,7 +172,14 @@ process_mode = 3
 wait_time = 4.0
 one_shot = true
 
-[node name="PanelContainer" parent="." instance=ExtResource("7_p6dmh")]
+[node name="PlayerName" type="Label" parent="."]
+offset_left = -21.0
+offset_top = -54.0
+offset_right = 23.0
+offset_bottom = -31.0
+horizontal_alignment = 1
+
+[node name="HealthBar" parent="." instance=ExtResource("7_p6dmh")]
 
 [node name="Explosion" type="AnimatedSprite2D" parent="."]
 process_mode = 3
