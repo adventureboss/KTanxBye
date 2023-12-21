@@ -36,7 +36,7 @@ func _ready():
 		set_tank_texture.rpc(player_id, tank_color)
 		set_player_name.rpc(player_id)
 	else:
-		player_marker.enable(player_id, GameManager.players[player_id].name)
+		player_marker.enable(GameManager.players[player_id].name)
 		
 		boost_available.visible = false
 		boost_unavailable.visible = false

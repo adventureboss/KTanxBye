@@ -6,13 +6,9 @@ extends Node2D
 @onready var player_name = $Pointer/NameMarker
 var disabled = false
 
-func _ready():
-	#if player_id == GameManager.ENVIRONMENT:
-		#disable()
-	pass
-
-func enable(id, name):
-	player_name.text = name
+func enable(name=""):
+	if name != "":
+		player_name.text = name
 	
 func disable():
 	disabled = false
@@ -21,14 +17,16 @@ func disable():
 
 # base from this tutorial
 # https://youtu.be/Sw9Iiejkae4?si=VPpL7UNA6UTAvfOl
-func _physics_process(delta):
-	if disabled:
-		return
+func _process(delta):
 	var canvas = get_canvas_transform()
 	# canvas.get_scale() for adjusting these for camera zoom
-	var top_left = -camera.get_screen_center_position() / canvas.get_scale()
+	var top_left = -canvas.origin / canvas.get_scale()
 	var size = get_viewport_rect().size / canvas.get_scale()
 	
+	print("canvas")
+	print(canvas)
+	print("top_left")
+	print(top_left)
 	set_marker_position(Rect2(top_left, size))
 	set_marker_rotation()
 

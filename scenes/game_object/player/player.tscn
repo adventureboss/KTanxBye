@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://bam04hog13mtt"]
+[gd_scene load_steps=22 format=3 uid="uid://bam04hog13mtt"]
 
 [ext_resource type="Script" path="res://scenes/game_object/player/player.gd" id="1_hkal2"]
 [ext_resource type="PackedScene" uid="uid://73lr8fqud4" path="res://scenes/component/health_component.tscn" id="2_gt4m0"]
@@ -114,9 +114,9 @@ stretch_mode = 2
 
 [node name="PlayerMarker" parent="HUD" node_paths=PackedStringArray("player", "camera") instance=ExtResource("4_m3oq3")]
 unique_name_in_owner = true
-visible = false
 player = NodePath("../..")
 camera = NodePath("../../Camera2D")
+
 [node name="PanelContainer2" type="PanelContainer" parent="HUD"]
 anchors_preset = 8
 anchor_left = 0.5

@@ -4,7 +4,6 @@
 [ext_resource type="Texture2D" uid="uid://b03swukpu7v84" path="res://assets/menu/player_marker.png" id="2_pf83w"]
 
 [node name="PlayerMarker" type="Node2D"]
-position = Vector2(-1, 1)
 script = ExtResource("1_7q3vp")
 
 [node name="Pointer" type="Sprite2D" parent="."]
