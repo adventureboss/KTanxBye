@@ -32,6 +32,9 @@ func _ready():
 		var tank_color = GameManager.players[player_id].color
 		set_tank_texture.rpc(player_id, tank_color)
 		set_player_name.rpc(player_id)
+	else:
+		boost_available.visible = false
+		boost_unavailable.visible = false
 	emote = emote.instantiate()
 	emote.player_id = player_id
 	add_child(emote)
