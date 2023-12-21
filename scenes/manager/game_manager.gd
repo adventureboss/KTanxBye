@@ -29,7 +29,12 @@ var abilities = {
 	   },
 	3: {"name": "laser",
 		"path": "res://scenes/game_object/ammo/laser.tscn",
-		"audio": "res://assets/audio/sfx/weapon_sounds/bfc_laser_fire.mp3"}
+		"audio": "res://assets/audio/sfx/weapon_sounds/bfc_laser_fire.mp3",
+		},
+	4: {"name": "bazooka",
+		"path": "res://scenes/game_object/ammo/bazooka.tscn",
+		"audio": "res://assets/audio/sfx/weapon_sounds/normal_cannon_fire.mp3",
+		},
 }
 
 var color_dict = {

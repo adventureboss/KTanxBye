@@ -1,0 +1,24 @@
+[gd_scene load_steps=5 format=3 uid="uid://dd8yanifxn1r8"]
+
+[ext_resource type="Script" path="res://scenes/component/collectible_component.gd" id="1_lbi8e"]
+[ext_resource type="Texture2D" uid="uid://b62lwpohflfja" path="res://assets/sprites/Collectibles/bazookacrate.png" id="2_yr5wm"]
+[ext_resource type="AudioStream" uid="uid://cd5ich16buddg" path="res://assets/audio/sfx/weapon_sounds/weapon_pick_up.mp3" id="3_jmv2r"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_likel"]
+size = Vector2(28, 28)
+
+[node name="BazookaPickup" type="Area2D" groups=["ammo", "consumables"]]
+collision_layer = 8
+collision_mask = 2
+script = ExtResource("1_lbi8e")
+ability_id = 4
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_yr5wm")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_likel")
+
+[node name="weapon_pick_up" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_jmv2r")
+volume_db = -20.0
