@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://bhytfpsxfusrt"]
+[gd_scene load_steps=14 format=3 uid="uid://bhytfpsxfusrt"]
 
 [ext_resource type="Script" path="res://scenes/component/ammo_component.gd" id="1_ov247"]
 [ext_resource type="Texture2D" uid="uid://dm24g88jsj7i2" path="res://assets/sprites/Bullets/bullet_sprites/44.png" id="2_0pwi8"]
@@ -102,90 +102,6 @@ tracks/6/keys = {
 "update": 1,
 "values": [ExtResource("2_0pwi8")]
 }
-tracks/7/type = "value"
-tracks/7/imported = false
-tracks/7/enabled = true
-tracks/7/path = NodePath("ExplosionEffect:monitoring")
-tracks/7/interp = 1
-tracks/7/loop_wrap = true
-tracks/7/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
-tracks/8/type = "value"
-tracks/8/imported = false
-tracks/8/enabled = true
-tracks/8/path = NodePath("ExplosionEffect:monitorable")
-tracks/8/interp = 1
-tracks/8/loop_wrap = true
-tracks/8/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
-tracks/9/type = "value"
-tracks/9/imported = false
-tracks/9/enabled = true
-tracks/9/path = NodePath("ExplosionEffect:position")
-tracks/9/interp = 1
-tracks/9/loop_wrap = true
-tracks/9/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(83, 0)]
-}
-tracks/10/type = "value"
-tracks/10/imported = false
-tracks/10/enabled = true
-tracks/10/path = NodePath("ExplosionEffect:scale")
-tracks/10/interp = 1
-tracks/10/loop_wrap = true
-tracks/10/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(1, 1)]
-}
-tracks/11/type = "value"
-tracks/11/imported = false
-tracks/11/enabled = true
-tracks/11/path = NodePath("ExplosionEffect:rotation")
-tracks/11/interp = 1
-tracks/11/loop_wrap = true
-tracks/11/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [0.0]
-}
-tracks/12/type = "value"
-tracks/12/imported = false
-tracks/12/enabled = true
-tracks/12/path = NodePath("ExplosionEffect:visible")
-tracks/12/interp = 1
-tracks/12/loop_wrap = true
-tracks/12/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
-}
-tracks/13/type = "value"
-tracks/13/imported = false
-tracks/13/enabled = true
-tracks/13/path = NodePath("ExplosionEffect:modulate")
-tracks/13/interp = 1
-tracks/13/loop_wrap = true
-tracks/13/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1, 1, 0.027451, 1)]
-}
 
 [sub_resource type="Animation" id="Animation_kfb4j"]
 resource_name = "aoe"
@@ -274,90 +190,6 @@ tracks/6/keys = {
 "update": 0,
 "values": [ExtResource("2_0pwi8"), ExtResource("4_2y53a"), ExtResource("5_7cvwn"), ExtResource("6_kwusc"), ExtResource("7_mavx0"), ExtResource("8_8rxoa")]
 }
-tracks/7/type = "value"
-tracks/7/imported = false
-tracks/7/enabled = true
-tracks/7/path = NodePath("ExplosionEffect:monitoring")
-tracks/7/interp = 1
-tracks/7/loop_wrap = true
-tracks/7/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
-tracks/8/type = "value"
-tracks/8/imported = false
-tracks/8/enabled = true
-tracks/8/path = NodePath("ExplosionEffect:monitorable")
-tracks/8/interp = 1
-tracks/8/loop_wrap = true
-tracks/8/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
-tracks/9/type = "value"
-tracks/9/imported = false
-tracks/9/enabled = true
-tracks/9/path = NodePath("ExplosionEffect:position")
-tracks/9/interp = 1
-tracks/9/loop_wrap = true
-tracks/9/keys = {
-"times": PackedFloat32Array(0, 0.6),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector2(83, 0), Vector2(83, 0)]
-}
-tracks/10/type = "value"
-tracks/10/imported = false
-tracks/10/enabled = true
-tracks/10/path = NodePath("ExplosionEffect:scale")
-tracks/10/interp = 1
-tracks/10/loop_wrap = true
-tracks/10/keys = {
-"times": PackedFloat32Array(0, 0.6),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector2(1, 1), Vector2(15.525, 15.525)]
-}
-tracks/11/type = "value"
-tracks/11/imported = false
-tracks/11/enabled = true
-tracks/11/path = NodePath("ExplosionEffect:rotation")
-tracks/11/interp = 1
-tracks/11/loop_wrap = true
-tracks/11/keys = {
-"times": PackedFloat32Array(0, 0.6),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [0.0, 0.0]
-}
-tracks/12/type = "value"
-tracks/12/imported = false
-tracks/12/enabled = true
-tracks/12/path = NodePath("ExplosionEffect:visible")
-tracks/12/interp = 1
-tracks/12/loop_wrap = true
-tracks/12/keys = {
-"times": PackedFloat32Array(0.0556156),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
-}
-tracks/13/type = "value"
-tracks/13/imported = false
-tracks/13/enabled = true
-tracks/13/path = NodePath("ExplosionEffect:modulate")
-tracks/13/interp = 1
-tracks/13/loop_wrap = true
-tracks/13/keys = {
-"times": PackedFloat32Array(0.0556156, 0.0952675, 0.136207, 0.185643, 0.241259, 0.300221, 0.369741, 0.449045, 0.517534, 0.6),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
-"update": 0,
-"values": [Color(1, 1, 0.027451, 1), Color(1, 0.0117647, 0.027451, 1), Color(1, 1, 0.027451, 1), Color(1, 0, 0.027451, 1), Color(1, 1, 0.027451, 1), Color(1, 0, 0.027451, 1), Color(1, 1, 0.027451, 1), Color(1, 0, 0.027451, 1), Color(1, 1, 0.027451, 1), Color(1, 0, 0.027451, 1)]
-}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_7a4o0"]
 _data = {
@@ -365,15 +197,12 @@ _data = {
 "explode": SubResource("Animation_kfb4j")
 }
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_xsojk"]
-radius = 11.4018
-
 [node name="Bazooka" type="CharacterBody2D"]
 collision_layer = 16
-collision_mask = 96
+collision_mask = 102
 script = ExtResource("1_ov247")
 speed = 700
-damage = 50
+damage = 60
 fire_delay = 1.3
 max_shots = 2
 bullet_name = "bazooka"
@@ -384,8 +213,7 @@ rotation = 1.5708
 texture = ExtResource("2_0pwi8")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-visible = false
-position = Vector2(81.975, 0)
+position = Vector2(43, 0)
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_gwmvp")
 
@@ -394,7 +222,6 @@ collision_mask = 70
 script = ExtResource("3_8uhxs")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent"]
-visible = false
 position = Vector2(87.91, 0)
 shape = SubResource("CircleShape2D_m48we")
 
@@ -402,12 +229,3 @@ shape = SubResource("CircleShape2D_m48we")
 libraries = {
 "": SubResource("AnimationLibrary_7a4o0")
 }
-
-[node name="ExplosionEffect" type="Area2D" parent="."]
-modulate = Color(1, 1, 0.027451, 1)
-position = Vector2(83, 0)
-monitoring = false
-monitorable = false
-
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="ExplosionEffect"]
-shape = SubResource("CircleShape2D_xsojk")
