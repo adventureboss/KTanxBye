@@ -13,6 +13,7 @@ extends Marker2D
 
 var fire_wait : bool = false
 var bullets_fired = 0
+var current_ammo_bullets_fired = 0
 var tank_color
 var parent_id = null
 
@@ -66,13 +67,15 @@ func _fire():
 		
 	timer.start()
 	bullets_fired += 1
-	if bullets_fired >= new_bullet.max_shots:
+	current_ammo_bullets_fired += 1
+	if  current_ammo_bullets_fired >= new_bullet.max_shots:
 		update_ammo(GameManager.abilities[0], parent_id, null )
 
 func on_timer_timeout():
 	fire_wait = false
 
 func update_ammo(ability, id, _position):
+	current_ammo_bullets_fired = 0
 	ammo_change_broadcast.rpc(ability, id)
 	
 @rpc("any_peer", "call_local")
