@@ -53,8 +53,7 @@ func respawn():
 	var spawn_points = get_tree().get_nodes_in_group("PlayerRespawnPoints")
 	randomize()
 	spawn_points.shuffle()
-	current_health = 50
-	health_changed.emit()
+	ensure_correct_health.rpc()
 	if get_parent().find_child("Barrel"):
 		get_parent().find_child("Barrel").update_ammo(GameManager.abilities[0], owner.multiplayer.get_unique_id(), null)
 	owner.global_position = spawn_points[0].global_position
@@ -67,4 +66,8 @@ func respawn():
 	player_name.visible = true
 	collision.disabled = false
 	hit_collision.disabled = false
-	
+
+@rpc("any_peer", "call_local")
+func ensure_correct_health():
+	current_health = 50
+	health_changed.emit()
