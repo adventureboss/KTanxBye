@@ -1,11 +1,11 @@
-[gd_scene load_steps=20 format=3 uid="uid://bi7arw5jp0g26"]
+[gd_scene load_steps=23 format=3 uid="uid://bi7arw5jp0g26"]
 
 [ext_resource type="Script" path="res://scenes/world.gd" id="1_2r7ig"]
 [ext_resource type="Texture2D" uid="uid://bee43w1v6ob6t" path="res://assets/environment/terrainTiles_default.png" id="1_jft5n"]
 [ext_resource type="PackedScene" uid="uid://bam04hog13mtt" path="res://scenes/game_object/player/player.tscn" id="2_kcqh6"]
-[ext_resource type="AudioStream" uid="uid://hh6feddnwr4j" path="res://assets/audio/music/KTANKBYE_MAP_TRACK.mp3" id="3_ecdtc"]
+[ext_resource type="AudioStream" uid="uid://djf04umoxsx8s" path="res://assets/audio/music/KTANKBYE_MAP_TRACK.mp3" id="3_ecdtc"]
 [ext_resource type="PackedScene" uid="uid://b7ukeajhup4b5" path="res://scenes/component/consumable_spawn_component.tscn" id="4_68m35"]
-[ext_resource type="FontFile" uid="uid://dtr5vh3k1algs" path="res://resources/DIGITALDREAMFAT.ttf" id="4_u7bnn"]
+[ext_resource type="FontFile" uid="uid://djtfqcs4ix7x7" path="res://resources/DIGITALDREAMFAT.ttf" id="4_u7bnn"]
 [ext_resource type="Texture2D" uid="uid://o3jfx650hwjl" path="res://assets/environment/onlyObjects_default.png" id="5_0cr42"]
 [ext_resource type="PackedScene" uid="uid://b1oeve68we6sd" path="res://scenes/game_object/collectible/rapid_fire_pickup.tscn" id="5_26hcn"]
 [ext_resource type="PackedScene" uid="uid://dttuc30vkk7yh" path="res://scenes/scoreboard.tscn" id="5_golko"]
@@ -13,6 +13,42 @@
 [ext_resource type="PackedScene" uid="uid://bsqs1ftdnl6xb" path="res://scenes/manager/bullet_manager.tscn" id="8_nt0m4"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_37lqh"]
+
+[sub_resource type="Animation" id="Animation_texd7"]
+resource_name = "bounce_timer"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("%Time:theme_override_font_sizes/normal_font_size")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [30, 60, 30]
+}
+
+[sub_resource type="Animation" id="Animation_4kmlg"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("%Time:theme_override_font_sizes/normal_font_size")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [30]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_0p2ye"]
+_data = {
+"RESET": SubResource("Animation_4kmlg"),
+"bounce_timer": SubResource("Animation_texd7")
+}
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_wvwmn"]
 resource_name = "terrainTiles"
@@ -434,7 +470,7 @@ scoreboard = NodePath("ScoreboardLayer/Scoreboard")
 [node name="BulletManager" parent="." instance=ExtResource("8_nt0m4")]
 
 [node name="RoundTimer" type="Timer" parent="."]
-wait_time = 300.0
+wait_time = 60.0
 one_shot = true
 
 [node name="RoundTimerUI" type="CanvasLayer" parent="."]
@@ -469,6 +505,11 @@ text = "[center]TIME[/center]"
 fit_content = true
 scroll_active = false
 autowrap_mode = 0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="RoundTimerUI"]
+libraries = {
+"": SubResource("AnimationLibrary_0p2ye")
+}
 
 [node name="ScoreboardLayer" type="CanvasLayer" parent="."]
 

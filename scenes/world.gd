@@ -88,4 +88,7 @@ func _on_player_died(id, enemy_id):
 	# trigger UI screen, respawn, etc.
 
 func on_one_minute_left():
+	var animation_player = $RoundTimerUI/AnimationPlayer
 	round_timer_ui.add_theme_color_override("default_color", Color8(208, 0, 0, 255))
+	animation_player.play("bounce_timer")
+
