@@ -9,8 +9,11 @@ extends Node2D
 @onready var round_timer = $RoundTimer
 @onready var round_timer_ui = %Time
 
+signal one_minute_left
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	one_minute_left.connect(on_one_minute_left)
 	set_multiplayer_authority(scene_manager.get_multiplayer_authority())
 	var i = 0
 	for p in GameManager.players:
@@ -31,6 +34,11 @@ func _process(delta):
 	if round_timer and round_timer_ui:
 		var time_elapsed = round_timer.time_left
 		round_timer_ui.text = format_seconds_to_string(time_elapsed)
+		# change the timer to red. This feels weird but it shouldn't continue
+		# to change the color every frame, so a one time signal seems like a decent
+		# method
+		if round_timer.time_left < 60 && round_timer.time_left > 59:
+			one_minute_left.emit()
 
 func format_seconds_to_string(seconds: float):
 	var minutes = floor(seconds / 60)
@@ -78,3 +86,6 @@ func _on_player_died(id, enemy_id):
 		"assists": currently_active_score.assists
 	})
 	# trigger UI screen, respawn, etc.
+
+func on_one_minute_left():
+	round_timer_ui.add_theme_color_override("default_color", Color8(208, 0, 0, 255))
