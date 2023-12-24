@@ -12,6 +12,15 @@ var scene_manager = null
 func _ready():
 	scene_manager = get_node(".")
 	current = get_child(0)
+	# not sure of a better spot for this, making the mouse unable to leave
+	Input.set_mouse_mode(Input.MOUSE_MODE_CONFINED)
+
+func _process(_delta):
+	if Input.is_action_just_pressed("escape"):
+		# sets the mouse free
+		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+	elif Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT) and Input.mouse_mode != Input.MOUSE_MODE_CONFINED:
+		Input.set_mouse_mode(Input.MOUSE_MODE_CONFINED)
 
 func unload_scene():
 	if is_instance_valid(current):

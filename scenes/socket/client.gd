@@ -232,3 +232,9 @@ func on_start_pressed():
 		return
 	multiplayer_manager.receive_players.rpc(lobby.players)
 	multiplayer_manager.start_game.rpc()
+
+func on_quit_pressed():
+	if lobby:
+		# clean up the lobby
+	# clean up the player
+	
