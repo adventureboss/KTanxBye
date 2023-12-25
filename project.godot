@@ -20,6 +20,7 @@ config/icon="res://icon.svg"
 
 GameManager="*res://scenes/manager/game_manager.gd"
 GameEvents="*res://scenes/autoload/game_events.gd"
+CameraTransitions="*res://scenes/autoload/camera_transitions.tscn"
 
 [display]
 
