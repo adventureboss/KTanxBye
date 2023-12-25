@@ -1,17 +1,29 @@
-[gd_scene load_steps=24 format=3 uid="uid://bi7arw5jp0g26"]
+[gd_scene load_steps=23 format=3 uid="uid://bi7arw5jp0g26"]
 
 [ext_resource type="Script" path="res://scenes/world.gd" id="1_2r7ig"]
 [ext_resource type="Texture2D" uid="uid://bee43w1v6ob6t" path="res://assets/environment/terrainTiles_default.png" id="1_jft5n"]
 [ext_resource type="PackedScene" uid="uid://bam04hog13mtt" path="res://scenes/game_object/player/player.tscn" id="2_kcqh6"]
-[ext_resource type="AudioStream" uid="uid://hh6feddnwr4j" path="res://assets/audio/music/KTANKBYE_MAP_TRACK.mp3" id="3_ecdtc"]
+[ext_resource type="AudioStream" uid="uid://djf04umoxsx8s" path="res://assets/audio/music/KTANKBYE_MAP_TRACK.mp3" id="3_ecdtc"]
+[ext_resource type="PackedScene" uid="uid://cea666crrjd5o" path="res://scenes/manager/arena_time_manager.tscn" id="4_1ujn2"]
 [ext_resource type="PackedScene" uid="uid://b7ukeajhup4b5" path="res://scenes/component/consumable_spawn_component.tscn" id="4_68m35"]
-[ext_resource type="FontFile" uid="uid://dtr5vh3k1algs" path="res://resources/DIGITALDREAMFAT.ttf" id="4_u7bnn"]
+[ext_resource type="FontFile" uid="uid://djtfqcs4ix7x7" path="res://resources/fonts/DIGITALDREAMFAT.ttf" id="4_u7bnn"]
 [ext_resource type="Texture2D" uid="uid://o3jfx650hwjl" path="res://assets/environment/onlyObjects_default.png" id="5_0cr42"]
-[ext_resource type="PackedScene" uid="uid://b1oeve68we6sd" path="res://scenes/game_object/collectible/rapid_fire_pickup.tscn" id="5_26hcn"]
 [ext_resource type="PackedScene" uid="uid://dttuc30vkk7yh" path="res://scenes/scoreboard.tscn" id="5_golko"]
-[ext_resource type="PackedScene" uid="uid://dipeb45bdcrl6" path="res://scenes/game_object/collectible/spread_pickup.tscn" id="6_vok50"]
 [ext_resource type="PackedScene" uid="uid://fgs0mnvodc23" path="res://scenes/game_object/transitions/countdown.tscn" id="8_0ursr"]
 [ext_resource type="PackedScene" uid="uid://bsqs1ftdnl6xb" path="res://scenes/manager/bullet_manager.tscn" id="8_nt0m4"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_kfbov"]
+normal = Vector2(0, 1)
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_em78a"]
+normal = Vector2(1, 0)
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_qneiu"]
+distance = -4481.0
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_vh5um"]
+normal = Vector2(-1, -0.000223914)
+distance = -4482.04
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_37lqh"]
 
@@ -450,28 +462,121 @@ physics_layer_1/collision_mask = 22
 sources/0 = SubResource("TileSetAtlasSource_wvwmn")
 sources/1 = SubResource("TileSetAtlasSource_m8ciw")
 
-[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_kfbov"]
-normal = Vector2(0, 1)
-
-[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_em78a"]
-normal = Vector2(1, 0)
-
-[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_qneiu"]
-distance = -4481.0
-
-[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_vh5um"]
-normal = Vector2(-1, -0.000223914)
-distance = -4482.04
-
 [node name="World" type="Node2D" groups=["world"]]
 script = ExtResource("1_2r7ig")
 PlayerScene = ExtResource("2_kcqh6")
 
+[node name="BorderWalls" type="Node" parent="."]
+
+[node name="TopWall" type="StaticBody2D" parent="BorderWalls"]
+collision_layer = 32
+collision_mask = 150
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BorderWalls/TopWall"]
+shape = SubResource("WorldBoundaryShape2D_kfbov")
+
+[node name="LeftWall" type="StaticBody2D" parent="BorderWalls"]
+collision_layer = 32
+collision_mask = 150
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BorderWalls/LeftWall"]
+shape = SubResource("WorldBoundaryShape2D_em78a")
+
+[node name="BottomWall" type="StaticBody2D" parent="BorderWalls"]
+collision_layer = 32
+collision_mask = 150
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BorderWalls/BottomWall"]
+shape = SubResource("WorldBoundaryShape2D_qneiu")
+
+[node name="RightWall" type="StaticBody2D" parent="BorderWalls"]
+collision_layer = 32
+collision_mask = 150
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BorderWalls/RightWall"]
+shape = SubResource("WorldBoundaryShape2D_vh5um")
+
 [node name="BulletManager" parent="." instance=ExtResource("8_nt0m4")]
 
-[node name="RoundTimer" type="Timer" parent="."]
-wait_time = 60.0
-one_shot = true
+[node name="ArenaTimeManager" parent="." groups=["ArenaTimeManager"] instance=ExtResource("4_1ujn2")]
+
+[node name="ConsumableSpawnComponent" parent="." instance=ExtResource("4_68m35")]
+
+[node name="ConsumableSpawnPoints" type="Node" parent="."]
+
+[node name="ConsumableSpawn" type="Marker2D" parent="ConsumableSpawnPoints" groups=["ConsumableSpawnPoints"]]
+position = Vector2(2262, 638)
+
+[node name="ConsumableSpawn2" type="Marker2D" parent="ConsumableSpawnPoints" groups=["ConsumableSpawnPoints"]]
+position = Vector2(3838, 2267)
+
+[node name="ConsumableSpawn3" type="Marker2D" parent="ConsumableSpawnPoints" groups=["ConsumableSpawnPoints"]]
+position = Vector2(2129, 2064)
+
+[node name="ConsumableSpawn4" type="Marker2D" parent="ConsumableSpawnPoints" groups=["ConsumableSpawnPoints"]]
+position = Vector2(2187, 2427)
+
+[node name="ConsumableSpawn5" type="Marker2D" parent="ConsumableSpawnPoints" groups=["ConsumableSpawnPoints"]]
+position = Vector2(2390, 2069)
+
+[node name="ConsumableSpawn6" type="Marker2D" parent="ConsumableSpawnPoints" groups=["ConsumableSpawnPoints"]]
+position = Vector2(708, 1289)
+
+[node name="ConsumableSpawn7" type="Marker2D" parent="ConsumableSpawnPoints" groups=["ConsumableSpawnPoints"]]
+position = Vector2(671, 3831)
+
+[node name="ConsumableSpawn8" type="Marker2D" parent="ConsumableSpawnPoints" groups=["ConsumableSpawnPoints"]]
+position = Vector2(3875, 3794)
+
+[node name="ConsumableSpawn9" type="Marker2D" parent="ConsumableSpawnPoints" groups=["ConsumableSpawnPoints"]]
+position = Vector2(676, 2234)
+
+[node name="ConsumableSpawn10" type="Marker2D" parent="ConsumableSpawnPoints" groups=["ConsumableSpawnPoints"]]
+position = Vector2(3821, 633)
+
+[node name="RespawnPoints" type="Node" parent="."]
+
+[node name="0" type="Marker2D" parent="RespawnPoints" groups=["PlayerRespawnPoints"]]
+position = Vector2(415, 394)
+
+[node name="1" type="Marker2D" parent="RespawnPoints" groups=["PlayerRespawnPoints"]]
+position = Vector2(297, 2235)
+
+[node name="2" type="Marker2D" parent="RespawnPoints" groups=["PlayerRespawnPoints"]]
+position = Vector2(420, 4062)
+
+[node name="3" type="Marker2D" parent="RespawnPoints" groups=["PlayerRespawnPoints"]]
+position = Vector2(2225, 3943)
+
+[node name="4" type="Marker2D" parent="RespawnPoints" groups=["PlayerRespawnPoints"]]
+position = Vector2(4060, 4075)
+
+[node name="5" type="Marker2D" parent="RespawnPoints" groups=["PlayerRespawnPoints"]]
+position = Vector2(4226, 2274)
+
+[node name="6" type="Marker2D" parent="RespawnPoints" groups=["PlayerRespawnPoints"]]
+position = Vector2(4077, 443)
+
+[node name="7" type="Marker2D" parent="RespawnPoints" groups=["PlayerRespawnPoints"]]
+position = Vector2(2242, 328)
+
+[node name="SpawnPoints" type="Node" parent="."]
+
+[node name="0" type="Marker2D" parent="SpawnPoints" groups=["PlayerSpawnPoints"]]
+position = Vector2(1680, 1672)
+scale = Vector2(2.21118, 1.49838)
+
+[node name="1" type="Marker2D" parent="SpawnPoints" groups=["PlayerSpawnPoints"]]
+position = Vector2(2831, 1668)
+scale = Vector2(2.21118, 1.49838)
+
+[node name="2" type="Marker2D" parent="SpawnPoints" groups=["PlayerSpawnPoints"]]
+position = Vector2(1695, 2840)
+scale = Vector2(2.21118, 1.49838)
+
+[node name="3" type="Marker2D" parent="SpawnPoints" groups=["PlayerSpawnPoints"]]
+position = Vector2(2828, 2808)
+scale = Vector2(2.21118, 1.49838)
 
 [node name="RoundTimerUI" type="CanvasLayer" parent="."]
 
@@ -533,126 +638,11 @@ layer_2/tile_data = PackedInt32Array(983055, 1, 0, 983059, 1, 0, 1245203, 1, 0, 
 
 [node name="Countdown" parent="." instance=ExtResource("8_0ursr")]
 
-[node name="RespawnPoints" type="Node" parent="."]
-
-[node name="0" type="Marker2D" parent="RespawnPoints" groups=["PlayerRespawnPoints"]]
-position = Vector2(415, 394)
-
-[node name="1" type="Marker2D" parent="RespawnPoints" groups=["PlayerRespawnPoints"]]
-position = Vector2(297, 2235)
-
-[node name="2" type="Marker2D" parent="RespawnPoints" groups=["PlayerRespawnPoints"]]
-position = Vector2(420, 4062)
-
-[node name="3" type="Marker2D" parent="RespawnPoints" groups=["PlayerRespawnPoints"]]
-position = Vector2(2225, 3943)
-
-[node name="4" type="Marker2D" parent="RespawnPoints" groups=["PlayerRespawnPoints"]]
-position = Vector2(4060, 4075)
-
-[node name="5" type="Marker2D" parent="RespawnPoints" groups=["PlayerRespawnPoints"]]
-position = Vector2(4226, 2274)
-
-[node name="6" type="Marker2D" parent="RespawnPoints" groups=["PlayerRespawnPoints"]]
-position = Vector2(4077, 443)
-
-[node name="7" type="Marker2D" parent="RespawnPoints" groups=["PlayerRespawnPoints"]]
-position = Vector2(2242, 328)
-
-[node name="SpawnPoints" type="Node" parent="."]
-
-[node name="0" type="Marker2D" parent="SpawnPoints" groups=["PlayerSpawnPoints"]]
-position = Vector2(1680, 1672)
-scale = Vector2(2.21118, 1.49838)
-
-[node name="1" type="Marker2D" parent="SpawnPoints" groups=["PlayerSpawnPoints"]]
-position = Vector2(2831, 1668)
-scale = Vector2(2.21118, 1.49838)
-
-[node name="2" type="Marker2D" parent="SpawnPoints" groups=["PlayerSpawnPoints"]]
-position = Vector2(1695, 2840)
-scale = Vector2(2.21118, 1.49838)
-
-[node name="3" type="Marker2D" parent="SpawnPoints" groups=["PlayerSpawnPoints"]]
-position = Vector2(2828, 2808)
-scale = Vector2(2.21118, 1.49838)
-
-[node name="ConsumableSpawnComponent" parent="." instance=ExtResource("4_68m35")]
-
-[node name="ConsumableSpawnPoints" type="Node" parent="."]
-
-[node name="ConsumableSpawn" type="Marker2D" parent="ConsumableSpawnPoints" groups=["ConsumableSpawnPoints"]]
-position = Vector2(2262, 638)
-
-[node name="ConsumableSpawn2" type="Marker2D" parent="ConsumableSpawnPoints" groups=["ConsumableSpawnPoints"]]
-position = Vector2(3838, 2267)
-
-[node name="ConsumableSpawn3" type="Marker2D" parent="ConsumableSpawnPoints" groups=["ConsumableSpawnPoints"]]
-position = Vector2(2129, 2064)
-
-[node name="ConsumableSpawn4" type="Marker2D" parent="ConsumableSpawnPoints" groups=["ConsumableSpawnPoints"]]
-position = Vector2(2187, 2427)
-
-[node name="ConsumableSpawn5" type="Marker2D" parent="ConsumableSpawnPoints" groups=["ConsumableSpawnPoints"]]
-position = Vector2(2390, 2069)
-
-[node name="ConsumableSpawn6" type="Marker2D" parent="ConsumableSpawnPoints" groups=["ConsumableSpawnPoints"]]
-position = Vector2(708, 1289)
-
-[node name="ConsumableSpawn7" type="Marker2D" parent="ConsumableSpawnPoints" groups=["ConsumableSpawnPoints"]]
-position = Vector2(671, 3831)
-
-[node name="ConsumableSpawn8" type="Marker2D" parent="ConsumableSpawnPoints" groups=["ConsumableSpawnPoints"]]
-position = Vector2(3875, 3794)
-
-[node name="ConsumableSpawn9" type="Marker2D" parent="ConsumableSpawnPoints" groups=["ConsumableSpawnPoints"]]
-position = Vector2(676, 2234)
-
-[node name="ConsumableSpawn10" type="Marker2D" parent="ConsumableSpawnPoints" groups=["ConsumableSpawnPoints"]]
-position = Vector2(3821, 633)
-
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_ecdtc")
 volume_db = -20.0
 autoplay = true
 
-[node name="RapidFirePickup" parent="." instance=ExtResource("5_26hcn")]
-position = Vector2(780, 597)
-
-[node name="SpreadPickup" parent="." instance=ExtResource("6_vok50")]
-position = Vector2(661, 453)
-
-[node name="BorderWalls" type="Node" parent="."]
-
-[node name="TopWall" type="StaticBody2D" parent="BorderWalls"]
-collision_layer = 32
-collision_mask = 150
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="BorderWalls/TopWall"]
-shape = SubResource("WorldBoundaryShape2D_kfbov")
-
-[node name="LeftWall" type="StaticBody2D" parent="BorderWalls"]
-collision_layer = 32
-collision_mask = 150
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="BorderWalls/LeftWall"]
-shape = SubResource("WorldBoundaryShape2D_em78a")
-
-[node name="BottomWall" type="StaticBody2D" parent="BorderWalls"]
-collision_layer = 32
-collision_mask = 150
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="BorderWalls/BottomWall"]
-shape = SubResource("WorldBoundaryShape2D_qneiu")
-
-[node name="RightWall" type="StaticBody2D" parent="BorderWalls"]
-collision_layer = 32
-collision_mask = 150
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="BorderWalls/RightWall"]
-shape = SubResource("WorldBoundaryShape2D_vh5um")
-
-[connection signal="timeout" from="RoundTimer" to="." method="_on_round_timer_timeout"]
 [connection signal="pressed" from="ScoreboardLayer/Scoreboard/Continue" to="." method="_on_continue_pressed"]
 [connection signal="pressed" from="ScoreboardLayer/Scoreboard/ReturnToMenu" to="." method="_on_return_to_menu_pressed"]
 
