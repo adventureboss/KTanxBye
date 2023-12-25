@@ -1,22 +1,21 @@
 extends Node2D
 
 @export var PlayerScene: PackedScene
+@export var map_time : int = 300 # make this configurable for future maps
 
 @onready var multiplayer_manager: MultiplayerManager = get_tree().get_first_node_in_group("MultiplayerManager")
+@onready var arena_time_manager : ArenaTimeManager = get_tree().get_first_node_in_group("ArenaTimeManager")
 @onready var scene_manager: Node2D = get_tree().get_first_node_in_group("SceneManager")
 @onready var music: AudioStreamPlayer = get_node("AudioStreamPlayer")
 @export var scoreboard: Control
-@onready var round_timer = $RoundTimer
 @onready var round_timer_ui = %Time
 
 @onready var countdown = $Countdown
 var player_camera: Camera2D
 
-signal one_minute_left
-
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	one_minute_left.connect(on_one_minute_left)
+	arena_time_manager.one_minute_left.connect(on_one_minute_left)
 	set_multiplayer_authority(scene_manager.get_multiplayer_authority())
 	var i = 0
 	for p in GameManager.players:
@@ -34,43 +33,27 @@ func _ready():
 				current_player.global_position = spawn.global_position
 		i += 1
 
-	pause_round()
+	arena_time_manager.pause_round()
 	countdown.start_countdown(player_camera)
 	
 	await countdown.countdown_completed
 	
 	continue_round()
-	round_timer.start()
+	arena_time_manager.start(map_time)
 
 func _process(delta):
-	if round_timer and round_timer_ui:
-		var time_elapsed = round_timer.time_left
-		round_timer_ui.text = format_seconds_to_string(time_elapsed)
-		# change the timer to red. This feels weird but it shouldn't continue
-		# to change the color every frame, so a one time signal seems like a decent
-		# method
-		if round_timer.time_left < 60 && round_timer.time_left > 59:
-			one_minute_left.emit()
+	if round_timer_ui:
+		if countdown.time_left() > 0:
+			round_timer_ui.text = arena_time_manager.format_time(countdown.time_left())
+		else:
+			var time_elapsed = arena_time_manager.time_left()
+			round_timer_ui.text = arena_time_manager.format_time(time_elapsed)
 
-func format_seconds_to_string(seconds: float):
-	var minutes = floor(seconds / 60)
-	var remaining_seconds = seconds - (minutes * 60)
-	return str(minutes) + ":" + ("%02d" % floor(remaining_seconds))
-
-func _on_round_timer_timeout():
-	pause_round()
-	scoreboard.show_scoreboard(true)
-	# ideas:
-	# - camera zoom out
-	# - trigger UI round over with scoreboard
 
 func _on_continue_pressed():
 	continue_round.rpc()
 	multiplayer_manager.reset_game.rpc()
 
-func pause_round():
-	for player in get_tree().get_nodes_in_group("player"):
-		player.process_mode = Node.PROCESS_MODE_DISABLED
 
 @rpc("any_peer", "call_local")
 func continue_round():
@@ -79,7 +62,7 @@ func continue_round():
 	if scoreboard != null:
 		scoreboard.hide_scoreboard()
 	music.play()
-	round_timer.start()
+	arena_time_manager.start(map_time)
 
 func _on_return_to_menu_pressed():
 	quit_all.rpc()
