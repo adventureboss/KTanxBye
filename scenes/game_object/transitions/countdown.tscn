@@ -1,0 +1,16 @@
+[gd_scene load_steps=2 format=3 uid="uid://fgs0mnvodc23"]
+
+[ext_resource type="Script" path="res://scenes/game_object/transitions/countdown.gd" id="1_5018g"]
+
+[node name="Countdown" type="Node2D"]
+script = ExtResource("1_5018g")
+
+[node name="Camera" type="Camera2D" parent="."]
+position = Vector2(2236, 2240)
+zoom = Vector2(0.5, 0.5)
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 5.0
+one_shot = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

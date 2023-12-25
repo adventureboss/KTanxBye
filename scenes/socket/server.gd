@@ -42,6 +42,8 @@ func _process(_delta):
 			var dataString = packet.get_string_from_utf8()
 			var data = JSON.parse_string(dataString)
 			
+			if data.message == Message.USER_DISCONNECTED:
+				leave_lobby(data.id, data.lobby_id)
 			if data.message == Message.LOBBY:
 				join_lobby(data.id, data.lobby_id, data.name)
 			if data.message == Message.COLOR:
@@ -94,6 +96,25 @@ func join_lobby(user_id, lobby_id, user_name):
 		"lobby_id": lobby_id
 	}
 	send_to_player(user_id, player_data)
+
+func leave_lobby(user_id, lobby_id):
+	if !(lobby_id in lobbies):
+		return
+	var lobby = lobbies[lobby_id]
+	lobby.remove_player(user_id)
+	if lobby.players.is_empty():
+		lobbies.erase(lobby_id)
+		return
+	
+	print("user %d disconnected from lobby %d" % [user_id, lobby_id])
+	var lobby_info = {
+		"message": Message.LOBBY,
+		"players": JSON.stringify(lobbies[lobby_id].players),
+		"host": lobbies[lobby_id].host_id,
+		"lobby_id": lobby_id
+	}
+	for p in lobby.players:
+		send_to_player(p, lobby_info)
 
 func send_to_player(user_id, data):
 	peer.get_peer(user_id).put_packet(JSON.stringify(data).to_utf8_buffer())

@@ -10,27 +10,38 @@ var player_slots: Array[Node]
 var lobby_id_text = ""
 
 signal start_pressed()
+signal back_pressed()
 signal color_changed(color)
 
 func _ready():
 	# get multiplayer manager and subscribe it
 	start_pressed.connect(get_node("/root/Main").on_start_pressed)
+	back_pressed.connect(get_node("/root/Main").on_back_pressed)
 	color_changed.connect(get_node("/root/Main").on_color_changed)
-	if multiplayer.get_unique_id() != GameManager.player_host:
-		start_button.visible = false
+	_change_start_button_visibility()
 	
 	player_slots = get_tree().get_nodes_in_group("PlayerSlots")
 
+func _change_start_button_visibility():
+	if multiplayer.get_unique_id() != GameManager.player_host:
+		start_button.visible = false
+	else:
+		start_button.visible = true
+	
 func load_players_into_lobby(lobby_id, players):
 	# find new players
 	lobby_id_text = lobby_id
 	$Elements/lobby_id.set_text(lobby_id_text)
-	for p in players:
-		for slot in player_slots:
-			if str(players[p].index) == slot.name and slot.text.begins_with("Waiting"):
+	for slot in player_slots:
+		reset_slot(slot, slot.name.to_int())
+		for p in players:
+			if str(players[p].index) == slot.name:
+#				#  and slot.text.begins_with("Waiting")
 				# the slot has not been loaded
 				load_player_into_lobby(players[p].id, players[p].name, players[p].color, players[p].index)
 				break
+	
+	_change_start_button_visibility()
 
 func load_player_into_lobby(id, player_name, player_color, slot_index):
 	if slot_index <= 0:
@@ -55,8 +66,14 @@ func update_player_in_lobby(id, player_name, player_color, slot_index):
 	var slot = player_slots[slot_index-1]
 	slot.text = "%s : %s" % [player_name, player_color]
 
+func reset_slot(slot, slot_index):
+	slot.text = "Waiting for P%d..." % slot_index
+
 func _on_start_pressed():
 	start_pressed.emit()
+
+func _on_back_pressed():
+	back_pressed.emit()
 
 func _on_color_button_item_selected(index):
 	_collect_preferences(index)

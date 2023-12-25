@@ -9,6 +9,9 @@ extends Node2D
 @onready var round_timer = $RoundTimer
 @onready var round_timer_ui = %Time
 
+@onready var countdown = $Countdown
+var player_camera: Camera2D
+
 signal one_minute_left
 
 # Called when the node enters the scene tree for the first time.
@@ -23,11 +26,20 @@ func _ready():
 		current_player.name = str(GameManager.players[p].id)
 		current_player.get_node("HealthComponent").died.connect(_on_player_died)
 		add_child(current_player)
+		if multiplayer.get_unique_id() == GameManager.players[p].id:
+			player_camera = current_player.get_node("Camera2D")
+		
 		for spawn in get_tree().get_nodes_in_group("PlayerSpawnPoints"):
 			if spawn.name == str(i):
 				current_player.global_position = spawn.global_position
 		i += 1
 
+	pause_round()
+	countdown.start_countdown(player_camera)
+	
+	await countdown.countdown_completed
+	
+	continue_round()
 	round_timer.start()
 
 func _process(delta):
@@ -46,22 +58,26 @@ func format_seconds_to_string(seconds: float):
 	return str(minutes) + ":" + ("%02d" % floor(remaining_seconds))
 
 func _on_round_timer_timeout():
-	for player in get_tree().get_nodes_in_group("player"):
-		player.process_mode = Node.PROCESS_MODE_DISABLED
-		scoreboard.show_scoreboard(true)
-		# ideas:
-		# - camera zoom out
-		# - trigger UI round over with scoreboard
+	pause_round()
+	scoreboard.show_scoreboard(true)
+	# ideas:
+	# - camera zoom out
+	# - trigger UI round over with scoreboard
 
 func _on_continue_pressed():
 	continue_round.rpc()
 	multiplayer_manager.reset_game.rpc()
 
+func pause_round():
+	for player in get_tree().get_nodes_in_group("player"):
+		player.process_mode = Node.PROCESS_MODE_DISABLED
+
 @rpc("any_peer", "call_local")
 func continue_round():
 	for player in get_tree().get_nodes_in_group("player"):
 		player.process_mode = Node.PROCESS_MODE_INHERIT
-	scoreboard.hide_scoreboard()
+	if scoreboard != null:
+		scoreboard.hide_scoreboard()
 	music.play()
 	round_timer.start()
 

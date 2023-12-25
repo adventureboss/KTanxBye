@@ -27,7 +27,6 @@ func _ready():
 	# I think it is an easy approach for position, etc.
 	$MultiplayerSynchronizer.set_multiplayer_authority(player_id)
 	if multiplayer.get_unique_id() == player_id:
-		$Camera2D.make_current()
 		health_component.health_changed.connect(on_health_changed)
 		var tank_color = GameManager.players[player_id].color
 		set_tank_texture.rpc(player_id, tank_color)
