@@ -7,12 +7,10 @@
 [ext_resource type="PackedScene" uid="uid://c7re7lky8g0bl" path="res://scenes/start.tscn" id="3_k5fwe"]
 [ext_resource type="Texture2D" uid="uid://cmwqrwqwbkkh5" path="res://assets/menu/logo.png" id="7_la3mv"]
 
-[node name="Main" type="Node2D" node_paths=PackedStringArray("multiplayer_manager", "scene_manager", "name_field", "join_field")]
+[node name="Main" type="Node2D" node_paths=PackedStringArray("multiplayer_manager", "scene_manager")]
 script = ExtResource("2_j1by0")
 multiplayer_manager = NodePath("MultiplayerManager")
 scene_manager = NodePath("SceneManager")
-name_field = NodePath("SceneManager/Start/NameField")
-join_field = NodePath("SceneManager/Start/JoinCodeField")
 
 [node name="SignalServer" parent="." instance=ExtResource("1_1os64")]
 
@@ -29,62 +27,7 @@ multiplayer_manager = NodePath("../MultiplayerManager")
 [node name="Start" parent="SceneManager" instance=ExtResource("3_k5fwe")]
 metadata/_edit_use_anchors_ = true
 
-[node name="Join" parent="SceneManager/Start" index="2"]
-offset_left = 22.0
-offset_top = 422.0
-offset_right = 2322.0
-offset_bottom = 1150.0
-metadata/_edit_use_anchors_ = true
-
-[node name="Host" parent="SceneManager/Start" index="3"]
-offset_left = 23.0
-offset_top = 309.0
-offset_right = 2323.0
-offset_bottom = 1037.0
-metadata/_edit_use_anchors_ = true
-
-[node name="BattleTag" parent="SceneManager/Start" index="4"]
-offset_left = 21.0
-offset_top = 226.0
-offset_right = 139.0
-offset_bottom = 266.0
-metadata/_edit_use_anchors_ = true
-
-[node name="NameField" parent="SceneManager/Start" index="5"]
-offset_left = 112.0
-offset_top = 222.0
-offset_right = 298.0
-offset_bottom = 253.0
-metadata/_edit_use_anchors_ = true
-
-[node name="JoinCode" type="RichTextLabel" parent="SceneManager/Start"]
-layout_mode = 0
-offset_left = 21.0
-offset_top = 533.0
-offset_right = 139.0
-offset_bottom = 573.0
-theme_override_colors/default_color = Color(0.929412, 0.454902, 0.219608, 1)
-text = "Lobby Code:"
-fit_content = true
-scroll_active = false
-autowrap_mode = 0
-metadata/_edit_use_anchors_ = true
-
-[node name="JoinCodeField" type="LineEdit" parent="SceneManager/Start"]
-layout_mode = 0
-offset_left = 127.0
-offset_top = 529.0
-offset_right = 298.0
-offset_bottom = 560.0
-placeholder_text = "Code"
-metadata/_edit_use_anchors_ = true
-
 [node name="logo" type="Sprite2D" parent="."]
 position = Vector2(159.625, 107)
 scale = Vector2(1.125, 1.125)
 texture = ExtResource("7_la3mv")
-
-[connection signal="pressed" from="SceneManager/Start/Join" to="." method="_on_join_pressed"]
-[connection signal="pressed" from="SceneManager/Start/Host" to="." method="_on_host_pressed"]
-
-[editable path="SceneManager/Start"]

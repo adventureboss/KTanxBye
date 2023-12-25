@@ -39,3 +39,17 @@ func change_color(id, color):
 		"index": players[id].index
 	}
 	return players[id]
+
+func remove_player(id):
+	var removed_index = players[id].index
+	players.erase(id)
+	# update indexes
+	var index = removed_index
+	for p in players:
+		if host_id == id and players[p].index == 2:
+			# player 2 is now the host
+			host_id = players[p].id
+		
+		if players[p].index > removed_index:
+			players[p].index = index
+			index += 1

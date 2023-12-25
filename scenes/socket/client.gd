@@ -15,8 +15,8 @@ enum Message {
 
 @export var multiplayer_manager: MultiplayerManager
 @export var scene_manager: Node2D
-@export var name_field : LineEdit
-@export var join_field : LineEdit
+@onready var name_field : LineEdit = $SceneManager/Start/NameField
+@onready var join_field : LineEdit = $SceneManager/Start/JoinCodeField
 var lobby_scene: Control
 
 # free stun server provided by google (temporary)
@@ -46,6 +46,12 @@ func rtc_peer_connnected(id):
 
 func rtc_peer_disconnnected(id):
 	print("rtc peer disconnected; id %d" % id)
+	var message = {
+		"id": id,
+		"message": Message.USER_DISCONNECTED,
+		"lobby_id": lobby_id
+	}
+	peer.put_packet(JSON.stringify(message).to_utf8_buffer())
 
 func _process(_delta):
 	peer.poll()
@@ -65,6 +71,9 @@ func _process(_delta):
 					_send_lobby_message(join_field.text)
 			if data.message == Message.USER_CONNECTED:
 				create_peer(data.id)
+			if data.message == Message.USER_DISCONNECTED:
+				print("disconnecting peer")
+				_disconnect_peer(data.id)
 			if data.message == Message.LOBBY:
 				lobby_id = data.lobby_id
 				host_id = data.host
@@ -102,7 +111,7 @@ func connected(peer_id):
 
 func connect_to_server():
 	peer.create_client("ws://139.144.56.116:8915")
-	#peer.create_client("ws://127.0.0.1:8915")
+	# peer.create_client("ws://127.0.0.1:8915")
 	print("started client")
 
 # WebRTC Connection
@@ -170,7 +179,7 @@ func ice_candidate_created(midName, indexName, sdpName, id):
 	peer.put_packet(JSON.stringify(message).to_utf8_buffer())
 	pass
 
-func _on_join_pressed():
+func on_join_pressed():
 	if !_check_name_field():
 		# should signal something here.
 		return
@@ -180,7 +189,7 @@ func _on_join_pressed():
 		return
 	connect_to_server()
 
-func _on_host_pressed():
+func on_host_pressed():
 	if !_check_name_field():
 		print("empty name field")
 		# should signal something here.
@@ -233,8 +242,30 @@ func on_start_pressed():
 	multiplayer_manager.receive_players.rpc(lobby.players)
 	multiplayer_manager.start_game.rpc()
 
-func on_quit_pressed():
-	if lobby:
-		# clean up the lobby
-	# clean up the player
+func on_back_pressed():
+	# reusing Message.USER_DISCONNECTED. 
+	# to the server its the same thing; remove player from lobby
+	var message = {
+		"id": id,
+		"message": Message.USER_DISCONNECTED,
+		"lobby_id": lobby_id
+	}
+	peer.put_packet(JSON.stringify(message).to_utf8_buffer())
+	_disconnect_peer(id)
+	# resetting peer value, seems like there is no disconnect method
+	peer = WebSocketMultiplayerPeer.new()
+	scene_manager.load_scene("start")
+	in_lobby = false
 	
+	# reload name and join fields
+	join_field = $SceneManager/Start/JoinCodeField
+	name_field = $SceneManager/Start/NameField
+
+func _disconnect_peer(peer_id):
+	# we should only have to disconnect any peers connected via rtc
+	if rtc_peer.has_peer(peer_id):
+		rtc_peer.remove_peer(peer_id)
+
+func on_quit_pressed():
+	# this should trigger the rtc_disconnected signal on other peers
+	get_tree().quit()
