@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://bam04hog13mtt"]
+[gd_scene load_steps=22 format=3 uid="uid://bam04hog13mtt"]
 
 [ext_resource type="Script" path="res://scenes/game_object/player/player.gd" id="1_hkal2"]
 [ext_resource type="PackedScene" uid="uid://73lr8fqud4" path="res://scenes/component/health_component.tscn" id="2_gt4m0"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://drybknwrows3o" path="res://scenes/game_object/player/tank_body.tscn" id="3_1e010"]
 [ext_resource type="Texture2D" uid="uid://cjgsa7jtfnoms" path="res://assets/menu/boost_dark.png" id="3_ciky0"]
 [ext_resource type="Texture2D" uid="uid://8ip3d3virahl" path="res://scenes/game_object/player/tankGreen_barrel3_outline.png" id="3_vvwhs"]
+[ext_resource type="PackedScene" uid="uid://cqxs0jej1q5jn" path="res://scenes/game_object/ui/player_marker.tscn" id="4_m3oq3"]
 [ext_resource type="PackedScene" uid="uid://dbb83yj4h1nw2" path="res://scenes/game_object/ui/emote_wheel.tscn" id="4_vw4ar"]
 [ext_resource type="Script" path="res://scenes/game_object/player/Barrel.gd" id="4_yiyg3"]
 [ext_resource type="PackedScene" uid="uid://dp7s6opobih82" path="res://scenes/component/hurtbox_component.tscn" id="5_fvhfs"]
@@ -111,6 +112,11 @@ layout_mode = 2
 texture = ExtResource("3_ciky0")
 stretch_mode = 2
 
+[node name="PlayerMarker" parent="HUD" node_paths=PackedStringArray("player", "camera") instance=ExtResource("4_m3oq3")]
+unique_name_in_owner = true
+player = NodePath("../..")
+camera = NodePath("../../Camera2D")
+
 [node name="PanelContainer2" type="PanelContainer" parent="HUD"]
 anchors_preset = 8
 anchor_left = 0.5
@@ -210,5 +216,6 @@ frame_progress = 0.217273
 
 [connection signal="timeout" from="BoostTimer" to="." method="_on_boost_timer_timeout"]
 
+[editable path="HUD/PlayerMarker"]
 [editable path="HUD/PanelContainer2/EmoteWheel"]
 [editable path="TankBody"]

@@ -10,9 +10,11 @@ var can_boost = true
 @onready var tank_body: Sprite2D = $TankBody/Sprite2D
 @onready var barrel_color: Sprite2D = $Barrel/Sprite2D
 @onready var boost_timer: Timer = $BoostTimer
+@export var boost_icons: Array[TextureRect]
+@onready var player_name: Label = $PlayerName
+@onready var player_marker: Node2D = %PlayerMarker
 @export var boost_available: TextureRect
 @export var boost_unavailable: TextureRect
-@onready var player_name: Label = $PlayerName
 @onready var emote = load("res://scenes/game_object/player/emote.tscn")
 @export var emote_wheel: Control
 
@@ -28,10 +30,13 @@ func _ready():
 	$MultiplayerSynchronizer.set_multiplayer_authority(player_id)
 	if multiplayer.get_unique_id() == player_id:
 		health_component.health_changed.connect(on_health_changed)
+		player_marker.disable()
 		var tank_color = GameManager.players[player_id].color
 		set_tank_texture.rpc(player_id, tank_color)
 		set_player_name.rpc(player_id)
 	else:
+		player_marker.enable(GameManager.players[player_id].name)
+		
 		boost_available.visible = false
 		boost_unavailable.visible = false
 	emote = emote.instantiate()
