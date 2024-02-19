@@ -1,15 +1,15 @@
-[gd_scene load_steps=3 format=3 uid="uid://bg3nbppfwaxq1"]
+[gd_scene load_steps=3 format=3 uid="uid://c6wtjh8eepss1"]
 
-[ext_resource type="Script" path="res://scenes/game_object/player/emote.gd" id="1_2u4cm"]
-[ext_resource type="Texture2D" uid="uid://b8us55rdy7nbd" path="res://assets/sprites/Emotes/emote_music.png" id="2_saqkc"]
+[ext_resource type="Script" path="res://scenes/game_object/tank/emote.gd" id="1_nsvt8"]
+[ext_resource type="Texture2D" uid="uid://b8us55rdy7nbd" path="res://assets/sprites/Emotes/emote_music.png" id="1_sd6yu"]
 
 [node name="Emote" type="Node2D"]
 visible = false
 position = Vector2(-32, -14)
-script = ExtResource("1_2u4cm")
+script = ExtResource("1_nsvt8")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("2_saqkc")
+texture = ExtResource("1_sd6yu")
 
 [node name="EmoteTimer" type="Timer" parent="."]
 wait_time = 3.0
