@@ -27,11 +27,11 @@ func update_scoreboard():
 		e.queue_free()
 
 	var cells = ["Tag", "Kills", "Deaths", "Assists"]
-	for p in GameManager.players:
-		cells.append(GameManager.players[p].name)
-		cells.append(str(GameManager.players[p].score.kills))
-		cells.append(str(GameManager.players[p].score.deaths))
-		cells.append(str(GameManager.players[p].score.assists))
+	for p in GameManager.tanks:
+		cells.append(GameManager.tanks[p].name)
+		cells.append(str(GameManager.tanks[p].score.kills))
+		cells.append(str(GameManager.tanks[p].score.deaths))
+		cells.append(str(GameManager.tanks[p].score.assists))
 
 	for cell in cells:
 		var entry = entry.instantiate()

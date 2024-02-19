@@ -1,7 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://drybknwrows3o"]
+[gd_scene load_steps=4 format=3 uid="uid://dpwpft7v57fgw"]
 
-[ext_resource type="Script" path="res://scenes/game_object/player/tank_body.gd" id="1_pyoql"]
-[ext_resource type="Texture2D" uid="uid://b1j34xnw6ccm2" path="res://assets/sprites/Tanks/tankGreen_outline.png" id="2_wbtt3"]
+[ext_resource type="Script" path="res://scenes/game_object/player/tank_body.gd" id="1_pettt"]
+[ext_resource type="Texture2D" uid="uid://b1j34xnw6ccm2" path="res://assets/sprites/Tanks/tankGreen_outline.png" id="2_ilfsy"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_j3uvs"]
 properties/0/path = NodePath(".:rotation")
@@ -9,11 +9,11 @@ properties/0/spawn = true
 properties/0/replication_mode = 1
 
 [node name="TankBody" type="Marker2D"]
-script = ExtResource("1_pyoql")
+script = ExtResource("1_pettt")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 rotation = -1.5708
-texture = ExtResource("2_wbtt3")
+texture = ExtResource("2_ilfsy")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_j3uvs")

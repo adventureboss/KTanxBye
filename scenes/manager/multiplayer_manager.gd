@@ -17,12 +17,12 @@ func receive_players(players):
 	set_multiplayer_authority(GameManager.player_host)
 	for p in players:
 		var p_as_int = int(p)
-		GameManager.players[p_as_int] = players[p]
+		GameManager.tanks[p_as_int] = players[p]
 
 @rpc("any_peer")
 func send_player_information(id, player_name, color="Blue", score={"kills": 0, "deaths": 0, "assists": 0}):
-	if !GameManager.players.has(id):
-		GameManager.players[id] = {
+	if !GameManager.tanks.has(id):
+		GameManager.tanks[id] = {
 			"id": id,
 			"name": player_name,
 			"color": color,
@@ -31,32 +31,32 @@ func send_player_information(id, player_name, color="Blue", score={"kills": 0, "
 		load_player_into_lobby.emit(id, player_name, color)
 	
 	if multiplayer.is_server():
-		for i in GameManager.players:
+		for i in GameManager.tanks:
 			if i == GameManager.ENVIRONMENT:
 				continue
 			send_player_information.rpc(i, player_name, color, score)
 
 @rpc("any_peer", "call_local")
 func update_player_color(id, color):
-	GameManager.players[id].color = color
-	update_player_in_lobby.emit(id, GameManager.players[id].name, color)
+	GameManager.tanks[id].color = color
+	update_player_in_lobby.emit(id, GameManager.tanks[id].name, color)
 	
 	if multiplayer.get_unique_id() != GameManager.player_host:
 		return
 	
-	for i in GameManager.players:
+	for i in GameManager.tanks:
 		if i == GameManager.ENVIRONMENT:
 			continue
 		update_player_color.rpc_id(i, id, color)
 
 @rpc("any_peer", "call_local")
 func update_player_score(id, score):
-	GameManager.players[id].score = score
+	GameManager.tanks[id].score = score
 	
 	if multiplayer.get_unique_id() != GameManager.player_host:
 		return
 		
-	for i in GameManager.players:
+	for i in GameManager.tanks:
 		if i == GameManager.ENVIRONMENT || i == GameManager.player_host:
 			continue
 		update_player_score.rpc_id(i, id, score)
@@ -68,7 +68,7 @@ func start_game():
 @rpc("any_peer", "call_local")
 func reset_game():
 	# currently, just resets score board
-	for p in GameManager.players:
+	for p in GameManager.tanks:
 		if p == GameManager.ENVIRONMENT:
 			continue
-		GameManager.players[p].score = {"kills": 0, "deaths": 0, "assists": 0}
+		GameManager.tanks[p].score = {"kills": 0, "deaths": 0, "assists": 0}

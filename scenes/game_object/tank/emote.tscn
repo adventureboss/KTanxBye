@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://bg3nbppfwaxq1"]
+
+[ext_resource type="Script" path="res://scenes/game_object/player/emote.gd" id="1_2u4cm"]
+[ext_resource type="Texture2D" uid="uid://b8us55rdy7nbd" path="res://assets/sprites/Emotes/emote_music.png" id="2_saqkc"]
+
+[node name="Emote" type="Node2D"]
+visible = false
+position = Vector2(-32, -14)
+script = ExtResource("1_2u4cm")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_saqkc")
+
+[node name="EmoteTimer" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
+
+[connection signal="timeout" from="EmoteTimer" to="." method="_on_emote_timer_timeout"]
