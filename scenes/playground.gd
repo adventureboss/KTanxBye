@@ -27,7 +27,7 @@ func _ready():
 		"name": "History",
 		"color": "Green"
 	}]
-	GameManager.players = players
+	GameManager.tanks = players
 	var i = 0
 	for p in players:
 		var current_player = PlayerScene.instantiate()
