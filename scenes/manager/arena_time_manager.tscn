@@ -7,3 +7,4 @@ script = ExtResource("1_qnfu6")
 
 [node name="RoundTimer" type="Timer" parent="."]
 wait_time = 300.0
+one_shot = true

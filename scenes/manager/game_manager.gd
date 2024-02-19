@@ -1,6 +1,6 @@
 extends Node
 const ENVIRONMENT = 10101010
-var players = {
+var tanks = {
 	ENVIRONMENT: {
 		"id": ENVIRONMENT,
 		"name": "Environment",

@@ -4,12 +4,11 @@ class_name ArenaTimeManager
 signal one_minute_left
 
 @onready var round_timer = $RoundTimer
-
 var scoreboard = null
 
 
 func _ready() -> void:
-	scoreboard = get_tree().get_first_node_in_group("Scoredboard")
+	scoreboard = get_tree().get_first_node_in_group("Scoreboard")
 	round_timer.timeout.connect(on_round_timer_timeout)
 
 
@@ -40,6 +39,7 @@ func format_time(seconds: float) -> String:
 func on_round_timer_timeout() -> void:
 	pause_round()
 	scoreboard.show_scoreboard(true)
+	
 	# ideas:
 	# - camera zoom out
 	# - trigger UI round over with scoreboard

@@ -18,14 +18,14 @@ func _ready():
 	arena_time_manager.one_minute_left.connect(on_one_minute_left)
 	set_multiplayer_authority(scene_manager.get_multiplayer_authority())
 	var i = 0
-	for p in GameManager.players:
+	for p in GameManager.tanks:
 		if p == GameManager.ENVIRONMENT:
 			continue
 		var current_player = PlayerScene.instantiate()
-		current_player.name = str(GameManager.players[p].id)
+		current_player.name = str(GameManager.tanks[p].id)
 		current_player.get_node("HealthComponent").died.connect(_on_player_died)
 		add_child(current_player)
-		if multiplayer.get_unique_id() == GameManager.players[p].id:
+		if multiplayer.get_unique_id() == GameManager.tanks[p].id:
 			player_camera = current_player.get_node("Camera2D")
 		
 		for spawn in get_tree().get_nodes_in_group("PlayerSpawnPoints"):
@@ -72,13 +72,13 @@ func quit_all():
 	scene_manager.load_scene("start")
 
 func _on_player_died(id, enemy_id):
-	var currently_dead_score = GameManager.players[id].score
+	var currently_dead_score = GameManager.tanks[id].score
 	multiplayer_manager.update_player_score.rpc_id(GameManager.player_host, id, {
 		"kills": currently_dead_score.kills, 
 		"deaths": currently_dead_score.deaths + 1, 
 		"assists": currently_dead_score.assists
 	})
-	var currently_active_score = GameManager.players[enemy_id].score
+	var currently_active_score = GameManager.tanks[enemy_id].score
 	multiplayer_manager.update_player_score.rpc_id(GameManager.player_host, enemy_id, {
 		"kills": currently_active_score.kills + 1, 
 		"deaths": currently_active_score.deaths,

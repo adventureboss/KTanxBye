@@ -7,10 +7,10 @@ extends Marker2D
 @onready var parent: Node = get_parent()
 var current_rotation = 0
 
-var player_id
+var tank_id
 
 func _ready():
-	player_id = get_parent().player_id
+	tank_id = get_parent().tank_id
 
 func _process(_delta):
 	if $MultiplayerSynchronizer.get_multiplayer_authority() != multiplayer.get_unique_id():

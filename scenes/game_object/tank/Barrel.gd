@@ -23,7 +23,7 @@ func _ready():
 	GameEvents.ability_pick_up.connect(update_ammo)
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	
-	tank_color = GameManager.players[parent_id].color
+	tank_color = GameManager.tanks[parent_id].color
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
