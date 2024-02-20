@@ -75,6 +75,9 @@ wall_min_slide_angle = 0.0
 script = ExtResource("1_6nntg")
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+path_desired_distance = 248.79
+target_desired_distance = 512.69
+path_max_distance = 535.0
 navigation_layers = 3
 debug_enabled = true
 
@@ -107,7 +110,7 @@ scale = Vector2(31.4, 31.4)
 shape = SubResource("CircleShape2D_j8tb6")
 
 [node name="ConsumableSenseArea2D" type="Area2D" parent="."]
-scale = Vector2(1.24, 1.24)
+scale = Vector2(1.56, 1.56)
 collision_layer = 0
 collision_mask = 2
 
@@ -166,11 +169,11 @@ position = Vector2(26, 0)
 rotation = -0.698132
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(12, 0)
+position = Vector2(4, 0)
 shape = SubResource("CircleShape2D_e32xm")
 
 [node name="HurtboxComponent" parent="." node_paths=PackedStringArray("health_component") instance=ExtResource("9_lepo7")]
-position = Vector2(12, 0)
+position = Vector2(4, 0)
 collision_layer = 2
 collision_mask = 16
 health_component = NodePath("../HealthComponent")

@@ -178,12 +178,12 @@ position = Vector2(26, 0)
 rotation = -0.698132
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(13, 1)
+position = Vector2(3, 1)
 scale = Vector2(1.08909, 0.977345)
 shape = SubResource("CircleShape2D_e32xm")
 
 [node name="HurtboxComponent" parent="." node_paths=PackedStringArray("health_component") instance=ExtResource("5_fvhfs")]
-position = Vector2(13, 1)
+position = Vector2(3, 1)
 collision_layer = 2
 collision_mask = 16
 health_component = NodePath("../HealthComponent")
