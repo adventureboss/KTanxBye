@@ -1,6 +1,7 @@
 extends Node2D
 
 @export var PlayerScene: PackedScene
+@export var BotScene: PackedScene
 @export var map_time : int = 300 # make this configurable for future maps
 
 @onready var multiplayer_manager: MultiplayerManager = get_tree().get_first_node_in_group("MultiplayerManager")
@@ -32,6 +33,27 @@ func _ready():
 			if spawn.name == str(i):
 				current_player.global_position = spawn.global_position
 		i += 1
+		
+	var bot = {
+		"id": 13204973,
+		"name": "Bot 1",
+		"color": "Blue",
+		"score": {
+			"kills": 0,
+			"deaths": 0,
+			"assists": 0,
+		}
+	}
+	var bot_id = 13204973
+	GameManager.tanks[bot_id] = bot
+	var current_bot = BotScene.instantiate()
+	current_bot.name = str(bot_id)
+	current_bot.get_node("HealthComponent").died.connect(_on_player_died)
+	add_child(current_bot)
+	
+	for spawn in get_tree().get_nodes_in_group("PlayerSpawnPoints"):
+		if spawn.name == str(i):
+			current_bot.global_position = spawn.global_position
 
 	arena_time_manager.pause_round()
 	countdown.start_countdown(player_camera)
@@ -57,7 +79,7 @@ func _on_continue_pressed():
 
 @rpc("any_peer", "call_local")
 func continue_round():
-	for player in get_tree().get_nodes_in_group("player"):
+	for player in get_tree().get_nodes_in_group("Tanks"):
 		player.process_mode = Node.PROCESS_MODE_INHERIT
 	if scoreboard != null:
 		scoreboard.hide_scoreboard()
