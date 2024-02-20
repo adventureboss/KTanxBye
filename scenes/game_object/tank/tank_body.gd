@@ -13,10 +13,10 @@ func _ready():
 	tank_id = get_parent().tank_id
 
 func _process(_delta):
-	if $MultiplayerSynchronizer.get_multiplayer_authority() != multiplayer.get_unique_id():
+	if multiplayer.get_unique_id() != parent.get_tank_authority():
 		return
 	
-	var movement_vector = get_movement_vector()
+	var movement_vector = parent.get_movement_vector()
 	var proposed_rotation = rad_to_deg(movement_vector.angle())
 	
 	if proposed_rotation < 0:
@@ -36,12 +36,6 @@ func _process(_delta):
 		rotate_tween = create_tween()
 		rotate_tween.tween_method(turn_tank, current_rotation, proposed_rotation, turning_duration).set_ease(Tween.EASE_OUT)
 		current_rotation = proposed_rotation
-
-func get_movement_vector():
-	var x_movement = Input.get_action_strength("move_right") - Input.get_action_strength("move_left")
-	var y_movement = Input.get_action_strength("move_down") - Input.get_action_strength("move_up")
-	
-	return Vector2(x_movement, y_movement)
 
 func turn_tank(degrees: float):
 	# Going to make the movement rigid, so turning at distinct increments
