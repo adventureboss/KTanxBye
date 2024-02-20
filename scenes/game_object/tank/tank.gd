@@ -58,9 +58,9 @@ func set_tank_texture(id, tank_color):
 		body = get_node("../%s/TankBody/Sprite2D" % id)
 		barrel = get_node("../%s/Barrel/Sprite2D" % id)
 	body.texture = load(GameManager.color_dict[tank_color]["Body"])
-	body.scale = Vector2(0.5, 0.5)
+	body.scale = Vector2(1, 1)
 	barrel.texture = load(GameManager.color_dict[tank_color]["Barrel"])
-	barrel.scale = Vector2(0.5, 0.5)
+	barrel.scale = Vector2(1, 1)
 
 func _process(delta):
 	#print("multiplayer %d and get_tank_authority %d" % [ multiplayer.get_unique_id(), get_tank_authority()])
