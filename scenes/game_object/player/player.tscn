@@ -138,14 +138,13 @@ one_shot = true
 [node name="TankBody" parent="." instance=ExtResource("6_e405s")]
 
 [node name="Barrel" type="Marker2D" parent="."]
-position = Vector2(13, 1)
 script = ExtResource("7_ncswm")
 
 [node name="FireDirection" type="Marker2D" parent="Barrel"]
 position = Vector2(23, 0)
 
 [node name="Sprite2D" type="Sprite2D" parent="Barrel"]
-position = Vector2(-6, 1)
+position = Vector2(5, 2)
 rotation = -1.5708
 texture = ExtResource("8_r6xcv")
 centered = false

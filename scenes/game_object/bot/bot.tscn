@@ -98,7 +98,7 @@ wait_time = 30.0
 [node name="FireTimer" type="Timer" parent="."]
 
 [node name="TankSenseArea2D" type="Area2D" parent="."]
-scale = Vector2(1.56, 1.56)
+scale = Vector2(1.16, 1.16)
 collision_layer = 0
 collision_mask = 2
 
@@ -107,7 +107,7 @@ scale = Vector2(31.4, 31.4)
 shape = SubResource("CircleShape2D_j8tb6")
 
 [node name="ConsumableSenseArea2D" type="Area2D" parent="."]
-scale = Vector2(1.56, 1.56)
+scale = Vector2(1.24, 1.24)
 collision_layer = 0
 collision_mask = 2
 
@@ -132,7 +132,7 @@ script = ExtResource("4_m2dl0")
 position = Vector2(23, 0)
 
 [node name="Sprite2D" type="Sprite2D" parent="Barrel"]
-position = Vector2(-6, 1)
+position = Vector2(-6, 0)
 rotation = -1.5708
 texture = ExtResource("8_mqg3e")
 centered = false
