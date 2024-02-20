@@ -1,0 +1,163 @@
+[gd_scene load_steps=17 format=3 uid="uid://7y1xgr3baamu"]
+
+[ext_resource type="Script" path="res://scenes/game_object/bot/bot.gd" id="1_6nntg"]
+[ext_resource type="PackedScene" uid="uid://73lr8fqud4" path="res://scenes/component/health_component.tscn" id="5_g00r3"]
+[ext_resource type="PackedScene" uid="uid://drybknwrows3o" path="res://scenes/game_object/tank/tank_body.tscn" id="6_tjm2h"]
+[ext_resource type="Script" path="res://scenes/game_object/tank/Barrel.gd" id="7_baeh0"]
+[ext_resource type="Texture2D" uid="uid://c33elvtm5do5r" path="res://assets/sprites/Tanks/barrelGreen_outline.png" id="8_mqg3e"]
+[ext_resource type="PackedScene" uid="uid://dp7s6opobih82" path="res://scenes/component/hurtbox_component.tscn" id="9_lepo7"]
+[ext_resource type="PackedScene" uid="uid://dubcod0jv5c7t" path="res://scenes/game_object/tank/health_bar.tscn" id="10_iqqlq"]
+[ext_resource type="Texture2D" uid="uid://qy1axfax8jfx" path="res://assets/sprites/Effects/Explosion1/explosion1.png" id="11_1dqmw"]
+[ext_resource type="Texture2D" uid="uid://ct43tpf4bhlam" path="res://assets/sprites/Effects/Explosion1/explosion2.png" id="12_oto4c"]
+[ext_resource type="Texture2D" uid="uid://1bj57cp5m24g" path="res://assets/sprites/Effects/Explosion1/explosion3.png" id="13_h6iux"]
+[ext_resource type="Texture2D" uid="uid://dh70asex6npw2" path="res://assets/sprites/Effects/Explosion1/explosion4.png" id="14_rxi3r"]
+[ext_resource type="Texture2D" uid="uid://ctmtx3mrofxqa" path="res://assets/sprites/Effects/Explosion1/explosion5.png" id="15_httky"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_e32xm"]
+radius = 16.0312
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pm56w"]
+size = Vector2(34, 30)
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_2jkiu"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 2
+properties/1/path = NodePath(".:scale")
+properties/1/spawn = true
+properties/1/replication_mode = 2
+properties/2/path = NodePath("Barrel:rotation")
+properties/2/spawn = true
+properties/2/replication_mode = 2
+properties/3/path = NodePath("Emote:visible")
+properties/3/spawn = true
+properties/3/replication_mode = 2
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_qctma"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("11_1dqmw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_oto4c")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_h6iux")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_rxi3r")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_httky")
+}, {
+"duration": 1.0,
+"texture": null
+}],
+"loop": false,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Bot" type="CharacterBody2D" groups=["Tanks"]]
+collision_layer = 2
+collision_mask = 126
+motion_mode = 1
+wall_min_slide_angle = 0.0
+script = ExtResource("1_6nntg")
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+navigation_layers = 3
+debug_enabled = true
+
+[node name="PathTimer" type="Timer" parent="."]
+wait_time = 0.2
+autostart = true
+
+[node name="HealthComponent" parent="." instance=ExtResource("5_g00r3")]
+max_health = 50.0
+
+[node name="RespawnTimer" type="Timer" parent="HealthComponent"]
+process_mode = 3
+wait_time = 2.0
+one_shot = true
+
+[node name="TankBody" parent="." instance=ExtResource("6_tjm2h")]
+
+[node name="Barrel" type="Marker2D" parent="."]
+script = ExtResource("7_baeh0")
+
+[node name="FireDirection" type="Marker2D" parent="Barrel"]
+position = Vector2(23, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="Barrel"]
+position = Vector2(10, 0)
+rotation = -1.5708
+texture = ExtResource("8_mqg3e")
+
+[node name="RayCast2D" type="RayCast2D" parent="Barrel"]
+visible = false
+rotation = -1.5708
+
+[node name="Timer" type="Timer" parent="Barrel"]
+
+[node name="SpreadArch" type="Node2D" parent="Barrel"]
+
+[node name="Spread1" type="Marker2D" parent="Barrel/SpreadArch"]
+position = Vector2(26, 3.8147e-06)
+rotation = -0.349066
+
+[node name="Spread2" type="Marker2D" parent="Barrel/SpreadArch"]
+position = Vector2(25, 0)
+
+[node name="Spread3" type="Marker2D" parent="Barrel/SpreadArch"]
+position = Vector2(26, -1.90735e-06)
+rotation = 0.349066
+
+[node name="Spread4" type="Marker2D" parent="Barrel/SpreadArch"]
+position = Vector2(26, 1.90735e-06)
+rotation = 0.698132
+
+[node name="Spread5" type="Marker2D" parent="Barrel/SpreadArch"]
+position = Vector2(26, 0)
+rotation = -0.698132
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_e32xm")
+
+[node name="HurtboxComponent" parent="." node_paths=PackedStringArray("health_component") instance=ExtResource("9_lepo7")]
+collision_layer = 2
+collision_mask = 16
+health_component = NodePath("../HealthComponent")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="HurtboxComponent"]
+shape = SubResource("RectangleShape2D_pm56w")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_2jkiu")
+
+[node name="BoostTimer" type="Timer" parent="."]
+process_mode = 3
+wait_time = 4.0
+one_shot = true
+
+[node name="TankName" type="Label" parent="."]
+offset_left = -21.0
+offset_top = -54.0
+offset_right = 23.0
+offset_bottom = -31.0
+text = "Bot"
+horizontal_alignment = 1
+
+[node name="HealthBar" parent="." instance=ExtResource("10_iqqlq")]
+
+[node name="Explosion" type="AnimatedSprite2D" parent="."]
+process_mode = 3
+visible = false
+sprite_frames = SubResource("SpriteFrames_qctma")
+frame_progress = 0.217273
+
+[connection signal="timeout" from="PathTimer" to="." method="_on_path_timer_timeout"]
+[connection signal="timeout" from="BoostTimer" to="." method="_on_boost_timer_timeout"]
+
+[editable path="TankBody"]

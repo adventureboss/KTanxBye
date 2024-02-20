@@ -12,6 +12,7 @@ var tanks = {
 		}
 	}
 }
+
 var player_host = 0
 
 var abilities = {

@@ -23,7 +23,9 @@ func _process(delta):
 	if multiplayer.get_unique_id() != tank_id:
 		return
 	
-func _move(delta, direction, velocity):
+func _move(delta, direction):
+	if multiplayer.get_unique_id() != tank_id:
+		return
 	if Input.is_action_pressed("boost") and can_boost:
 		apply_boost(direction)
 		can_boost = false

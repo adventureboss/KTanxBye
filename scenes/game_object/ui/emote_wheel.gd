@@ -2,7 +2,7 @@ extends Control
 
 const folder_path = "res://assets/sprites/Emotes/%s"
 
-@onready var player: Player = get_parent().get_parent().get_parent()
+@onready var tank: Tank = get_parent().get_parent().get_parent()
 
 var tank_id_what
 
@@ -22,5 +22,5 @@ func hide_emote_wheel():
 
 func _on_pressed(index):
 	var emote = GameManager.emotes[index]
-	player.show_emote_sprite.rpc(tank_id_what, folder_path % emote.asset)
+	tank.show_emote_sprite.rpc(tank_id_what, folder_path % emote.asset)
 	hide_emote_wheel()

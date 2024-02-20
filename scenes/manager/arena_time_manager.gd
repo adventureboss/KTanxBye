@@ -26,7 +26,7 @@ func time_left() -> float:
 
 
 func pause_round() -> void:
-	for player in get_tree().get_nodes_in_group("player"):
+	for player in get_tree().get_nodes_in_group("Tanks"):
 		player.process_mode = Node.PROCESS_MODE_DISABLED
 
 
