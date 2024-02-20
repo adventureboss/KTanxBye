@@ -3,7 +3,7 @@ extends Node
 @export var scene_prefix: String = "res://scenes/%s.tscn"
 @export var start = "start"
 @export var lobby = "lobby"
-@export var world = "world"
+@export var world = "world_kevin"
 var current = null
 var scene_manager = null
 @export var multiplayer_manager: Node
