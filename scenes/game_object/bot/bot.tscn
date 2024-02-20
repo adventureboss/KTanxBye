@@ -79,7 +79,6 @@ path_desired_distance = 248.79
 target_desired_distance = 512.69
 path_max_distance = 535.0
 navigation_layers = 3
-debug_enabled = true
 
 [node name="PathTimer" type="Timer" parent="."]
 wait_time = 0.5
@@ -186,7 +185,7 @@ replication_config = SubResource("SceneReplicationConfig_2jkiu")
 
 [node name="BoostTimer" type="Timer" parent="."]
 process_mode = 3
-wait_time = 4.0
+wait_time = 20.0
 one_shot = true
 
 [node name="TankName" type="Label" parent="."]

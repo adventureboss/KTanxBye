@@ -101,7 +101,7 @@ func _on_bullet_sense_area_2d_body_entered(body):
 		return
 	if can_boost:
 		# let's make it a chance to see if they do dodge
-		if randf_range(0, 1) < 0.7:
+		if randf_range(0, 1) < 0.9:
 			return
 		var bullet_direction = body.direction
 		var dodge_direction = Vector2(bullet_direction.y, -bullet_direction.x).normalized()
@@ -110,7 +110,7 @@ func _on_bullet_sense_area_2d_body_entered(body):
 		if randf_range(0, 1) < 0.5:
 			dodge_direction = -dodge_direction
 		
-		apply_boost(dodge_direction * 4.0)
+		apply_boost(dodge_direction * 4.5)
 		can_boost = false
 		boost_timer.start()
 
