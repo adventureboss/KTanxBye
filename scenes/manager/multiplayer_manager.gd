@@ -1,5 +1,6 @@
 class_name MultiplayerManager extends Node
 
+const MAX_PLAYERS = 8
 @export var address = "localhost"
 @export var port = 8910
 var peer # really, this'll be self
@@ -57,13 +58,37 @@ func update_player_score(id, score):
 		return
 		
 	for i in GameManager.tanks:
-		if i == GameManager.ENVIRONMENT || i == GameManager.player_host:
+		if i == GameManager.ENVIRONMENT || i == GameManager.player_host || GameManager.tanks[i].bot:
 			continue
 		update_player_score.rpc_id(i, id, score)
 
 @rpc("any_peer", "call_local")
 func start_game():
+	print("startin")
+	generate_bots.rpc()
 	scene_manager.load_world()
+
+@rpc("any_peer", "call_local")
+func generate_bots():
+	# TODO move this to lobby code
+	for t in GameManager.tanks:
+		GameManager.tanks[t]["bot"] = false
+	
+	# + 1 for the environment tank
+	for i in (MAX_PLAYERS - GameManager.tanks.size() + 1):
+		# seed bots
+		var bot = {
+			"id": i,
+			"name": "Bot",
+			"color": "Black",
+			"score": {
+				"kills": 0,
+				"deaths": 0,
+				"assists": 0,
+			},
+			"bot": true
+		}
+		GameManager.tanks[i] = bot
 
 @rpc("any_peer", "call_local")
 func reset_game():

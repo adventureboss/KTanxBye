@@ -45,8 +45,14 @@ var color_dict = {
 			  "Body": "res://assets/sprites/Tanks/tankGreen_outline.png"},
 	"Red": {"Barrel": "res://assets/sprites/Tanks/barrelRed_outline.png",
 			 "Body": "res://assets/sprites/Tanks/tankRed_outline.png"},
+	"Yellow": {"Barrel": "res://assets/sprites/Tanks/barrelYellow_outline.png",
+			 "Body": "res://assets/sprites/Tanks/tankYellow_outline.png"},
 	"Pink": {"Barrel": "res://assets/sprites/Tanks/barrelPink_outline.png",
 			 "Body": "res://assets/sprites/Tanks/tankPink_outline.png"},
+	"Beige": {"Barrel": "res://assets/sprites/Tanks/barrelBeige_outline.png",
+			 "Body": "res://assets/sprites/Tanks/tankBeige_outline.png"},
+	"Black": {"Barrel": "res://assets/sprites/Tanks/barrelBlack_outline.png",
+			 "Body": "res://assets/sprites/Tanks/tankBlack_outline.png"},
 }
 
 var emotes: Array = [{

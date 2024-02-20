@@ -722,6 +722,22 @@ scale = Vector2(2.21118, 1.49838)
 position = Vector2(2828, 2808)
 scale = Vector2(2.21118, 1.49838)
 
+[node name="4" type="Marker2D" parent="SpawnPoints" groups=["PlayerSpawnPoints"]]
+position = Vector2(2252, 3122)
+scale = Vector2(2.21118, 1.49838)
+
+[node name="5" type="Marker2D" parent="SpawnPoints" groups=["PlayerSpawnPoints"]]
+position = Vector2(1382, 2247)
+scale = Vector2(2.21118, 1.49838)
+
+[node name="6" type="Marker2D" parent="SpawnPoints" groups=["PlayerSpawnPoints"]]
+position = Vector2(2243, 1415)
+scale = Vector2(2.21118, 1.49838)
+
+[node name="7" type="Marker2D" parent="SpawnPoints" groups=["PlayerSpawnPoints"]]
+position = Vector2(3161, 2238)
+scale = Vector2(2.21118, 1.49838)
+
 [node name="RoundTimerUI" type="CanvasLayer" parent="."]
 
 [node name="PanelContainer" type="PanelContainer" parent="RoundTimerUI"]

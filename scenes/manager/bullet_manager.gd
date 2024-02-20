@@ -31,7 +31,28 @@ var bullet_sprites = {
 		"spread": "res://assets/sprites/Bullets/bullet_sprites/58.png",
 		"laser": "res://assets/sprites/Bullets/bullet_sprites/22.png",
 		"bazooka": "res://assets/sprites/Bullets/bullet_sprites/41.png",
-		}
+		},
+	"Yellow": {
+		"standard": "res://assets/sprites/Bullets/bullet_sprites/10.png",
+		"rapid_fire": "res://assets/sprites/Bullets/bullet_sprites/18.png",
+		"spread": "res://assets/sprites/Bullets/bullet_sprites/60.png",
+		"laser": "res://assets/sprites/Bullets/bullet_sprites/27.png",
+		"bazooka": "res://assets/sprites/Bullets/bullet_sprites/46.png",
+		},
+	"Beige": {
+		"standard": "res://assets/sprites/Bullets/bullet_sprites/10.png",
+		"rapid_fire": "res://assets/sprites/Bullets/bullet_sprites/18.png",
+		"spread": "res://assets/sprites/Bullets/bullet_sprites/60.png",
+		"laser": "res://assets/sprites/Bullets/bullet_sprites/27.png",
+		"bazooka": "res://assets/sprites/Bullets/bullet_sprites/46.png",
+		},
+	"Black": {
+		"standard": "res://assets/sprites/Bullets/bullet_sprites/07.png",
+		"rapid_fire": "res://assets/sprites/Bullets/bullet_sprites/20.png",
+		"spread": "res://assets/sprites/Bullets/bullet_sprites/62.png",
+		"laser": "res://assets/sprites/Bullets/bullet_sprites/29.png",
+		"bazooka": "res://assets/sprites/Bullets/bullet_sprites/47.png",
+		},
 	}
 
 func _ready():

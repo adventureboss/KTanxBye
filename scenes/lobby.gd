@@ -21,6 +21,9 @@ func _ready():
 	_change_start_button_visibility()
 	
 	player_slots = get_tree().get_nodes_in_group("PlayerSlots")
+	
+	for c in GameManager.color_dict:
+		color_button.add_item(c)
 
 func _change_start_button_visibility():
 	if multiplayer.get_unique_id() != GameManager.player_host:

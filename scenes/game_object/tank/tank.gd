@@ -4,19 +4,20 @@ const MAX_SPEED = 300.0
 const ACCELERATION_SMOOTHING = 25
 var can_boost = true
 
-@onready var health_component : HealthComponent = $HealthComponent
-@onready var health_bar : ProgressBar = $HealthBar/ProgressBar
+@onready var health_component: HealthComponent = $HealthComponent
+@onready var health_bar: ProgressBar = $HealthBar/ProgressBar
+@onready var boost_timer: Timer = $BoostTimer
+
 @onready var barrel_tip: Marker2D = $Barrel
 @onready var tank_body: Sprite2D = $TankBody/Sprite2D
 @onready var barrel_color: Sprite2D = $Barrel/Sprite2D
-@onready var boost_timer: Timer = $BoostTimer
-@onready var tank_name: Label = $TankName
 
 @onready var emote = load("res://scenes/game_object/tank/emote.tscn")
 
 @onready var previous_movement: Vector2 = Vector2.ZERO
 
 @onready var tank_id: int = str(name).to_int()
+@onready var tank_name: Label = $TankName
 
 func _init():
 	allow_instantiation()
@@ -58,9 +59,9 @@ func set_tank_texture(id, tank_color):
 		body = get_node("../%s/TankBody/Sprite2D" % id)
 		barrel = get_node("../%s/Barrel/Sprite2D" % id)
 	body.texture = load(GameManager.color_dict[tank_color]["Body"])
-	body.scale = Vector2(0.5, 0.5)
+	body.scale = Vector2(1, 1)
 	barrel.texture = load(GameManager.color_dict[tank_color]["Barrel"])
-	barrel.scale = Vector2(0.5, 0.5)
+	barrel.scale = Vector2(1, 1)
 
 func _process(delta):
 	#print("multiplayer %d and get_tank_authority %d" % [ multiplayer.get_unique_id(), get_tank_authority()])
@@ -86,6 +87,9 @@ func apply_boost(direction: Vector2):
 	var boost_strength = 2500.0
 	velocity += direction * boost_strength
 
+func control_barrel():
+	assert(false, "Base tank class doesn't know about the barrel")
+
 @rpc("any_peer", "call_local")
 func update_health_display():
 	health_bar.value = health_component.get_health_value()
@@ -103,3 +107,7 @@ func _on_boost_timer_timeout():
 		can_boost = true
 		return true
 	return false
+
+@rpc("any_peer", "call_local")
+func show_emote_sprite(id, path):
+	emote.start_emote(id, path)
