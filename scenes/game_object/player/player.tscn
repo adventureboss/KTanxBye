@@ -18,8 +18,6 @@
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_bk8ck"]
 
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_kex2r"]
-
 [sub_resource type="CircleShape2D" id="CircleShape2D_e32xm"]
 radius = 16.0312
 
@@ -67,6 +65,7 @@ animations = [{
 }]
 
 [node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("boost_available", "boost_unavailable", "emote_wheel") groups=["Players", "Tanks"]]
+position = Vector2(-8, -2)
 collision_layer = 2
 collision_mask = 126
 script = ExtResource("1_hkal2")
@@ -139,15 +138,18 @@ one_shot = true
 [node name="TankBody" parent="." instance=ExtResource("6_e405s")]
 
 [node name="Barrel" type="Marker2D" parent="."]
+position = Vector2(13, 1)
 script = ExtResource("7_ncswm")
 
 [node name="FireDirection" type="Marker2D" parent="Barrel"]
 position = Vector2(23, 0)
 
 [node name="Sprite2D" type="Sprite2D" parent="Barrel"]
-position = Vector2(10, 0)
+position = Vector2(-6, 1)
 rotation = -1.5708
-texture = SubResource("CompressedTexture2D_kex2r")
+texture = ExtResource("8_r6xcv")
+centered = false
+offset = Vector2(-11.55, -14.475)
 
 [node name="RayCast2D" type="RayCast2D" parent="Barrel"]
 visible = false
@@ -177,10 +179,12 @@ position = Vector2(26, 0)
 rotation = -0.698132
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(13, 1)
 scale = Vector2(1.08909, 0.977345)
 shape = SubResource("CircleShape2D_e32xm")
 
 [node name="HurtboxComponent" parent="." node_paths=PackedStringArray("health_component") instance=ExtResource("5_fvhfs")]
+position = Vector2(13, 1)
 collision_layer = 2
 collision_mask = 16
 health_component = NodePath("../HealthComponent")

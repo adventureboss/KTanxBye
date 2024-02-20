@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://7y1xgr3baamu"]
+[gd_scene load_steps=20 format=3 uid="uid://7y1xgr3baamu"]
 
 [ext_resource type="Script" path="res://scenes/game_object/bot/bot.gd" id="1_6nntg"]
 [ext_resource type="Script" path="res://scenes/game_object/tank/barrel.gd" id="4_m2dl0"]
@@ -12,6 +12,13 @@
 [ext_resource type="Texture2D" uid="uid://1bj57cp5m24g" path="res://assets/sprites/Effects/Explosion1/explosion3.png" id="13_h6iux"]
 [ext_resource type="Texture2D" uid="uid://dh70asex6npw2" path="res://assets/sprites/Effects/Explosion1/explosion4.png" id="14_rxi3r"]
 [ext_resource type="Texture2D" uid="uid://ctmtx3mrofxqa" path="res://assets/sprites/Effects/Explosion1/explosion5.png" id="15_httky"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_j8tb6"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_tdd3l"]
+radius = 6.66137
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_c4xou"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_e32xm"]
 radius = 16.0312
@@ -60,6 +67,7 @@ animations = [{
 }]
 
 [node name="Bot" type="CharacterBody2D" groups=["Tanks"]]
+position = Vector2(-7, 0)
 collision_layer = 2
 collision_mask = 126
 motion_mode = 1
@@ -96,7 +104,7 @@ collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="TankSenseArea2D"]
 scale = Vector2(31.4, 31.4)
-shape = SubResource("CircleShape2D_7egey")
+shape = SubResource("CircleShape2D_j8tb6")
 
 [node name="ConsumableSenseArea2D" type="Area2D" parent="."]
 scale = Vector2(1.56, 1.56)
@@ -105,7 +113,7 @@ collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ConsumableSenseArea2D"]
 scale = Vector2(31.4, 31.4)
-shape = SubResource("CircleShape2D_7egey")
+shape = SubResource("CircleShape2D_tdd3l")
 
 [node name="BulletSenseArea2D" type="Area2D" parent="."]
 collision_layer = 0
@@ -113,19 +121,22 @@ collision_mask = 16
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BulletSenseArea2D"]
 scale = Vector2(11.56, 11.56)
-shape = SubResource("CircleShape2D_nseo4")
+shape = SubResource("CircleShape2D_c4xou")
 debug_color = Color(0.952941, 0, 0.54902, 0.419608)
 
 [node name="Barrel" type="Marker2D" parent="."]
-script = ExtResource("7_baeh0")
+position = Vector2(12, 0)
+script = ExtResource("4_m2dl0")
 
 [node name="FireDirection" type="Marker2D" parent="Barrel"]
 position = Vector2(23, 0)
 
 [node name="Sprite2D" type="Sprite2D" parent="Barrel"]
-position = Vector2(10, 0)
+position = Vector2(-6, 1)
 rotation = -1.5708
 texture = ExtResource("8_mqg3e")
+centered = false
+offset = Vector2(-11.55, -14.475)
 
 [node name="RayCast2D" type="RayCast2D" parent="Barrel"]
 visible = false
@@ -155,9 +166,11 @@ position = Vector2(26, 0)
 rotation = -0.698132
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(12, 0)
 shape = SubResource("CircleShape2D_e32xm")
 
 [node name="HurtboxComponent" parent="." node_paths=PackedStringArray("health_component") instance=ExtResource("9_lepo7")]
+position = Vector2(12, 0)
 collision_layer = 2
 collision_mask = 16
 health_component = NodePath("../HealthComponent")

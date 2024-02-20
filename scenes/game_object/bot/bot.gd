@@ -34,6 +34,7 @@ func get_tank_authority():
 	return GameManager.player_host
 	
 func _move(delta, direction):
+	#direction = to_local(nav_agent.get_next_path_position()).normalized()
 	var target_velocity = direction * MAX_SPEED
 
 	velocity = velocity.lerp(target_velocity, 1 - exp(-delta * ACCELERATION_SMOOTHING))
@@ -47,7 +48,7 @@ func _change_target(targets: Array[Node]):
 	var nearest_target = null
 
 	for t in targets:
-		if t.is_class("Tank") && t.get_tank_id() == get_tank_id():
+		if t == self:
 			continue
 		var distance = position.distance_to(t.position)  # Calculate distance to player
 		if distance < shortest_distance:  # If this player is closer
@@ -85,6 +86,7 @@ func _update_path():
 	if randf_range(0,1) < .15 and focused_food != null and food_in_range:
 		nav_agent.target_position = focused_food.global_position
 	elif focused_tank != null:
+		print(focused_tank.global_position)
 		nav_agent.target_position = focused_tank.global_position
 
 func _on_path_timer_timeout():
@@ -133,10 +135,12 @@ func _on_consumable_sense_area_2d_area_exited(area):
 func _on_health_component_died(id, enemy_id):
 	# stop shooting
 	process_mode = Node.PROCESS_MODE_DISABLED
+	pass
 
 func _on_respawn_timer_timeout():
 	process_mode = Node.PROCESS_MODE_INHERIT
 	_change_tank_target()
+	pass
 
 @rpc("any_peer", "call_local")
 func update_health_display():
