@@ -36,7 +36,7 @@ func load_scene(scene_name: String):
 		scene_manager.add_child(current)
 
 func load_world():
-	load_scene(world)
+	Inbetween.transition(Callable(self, "load_scene").bind(world))
 
 func load_lobby():
 	load_scene(lobby)
