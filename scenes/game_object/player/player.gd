@@ -50,7 +50,7 @@ func control_barrel():
 	var mouse_position = get_global_mouse_position()
 	barrel_tip.look_at(mouse_position)
 	
-	if Input.is_action_pressed("fire_primary") and get_parent().process_mode == Node.PROCESS_MODE_INHERIT:
+	if Input.is_action_pressed("fire_primary") and process_mode == Node.PROCESS_MODE_INHERIT:
 		if !barrel_tip.fire_wait:
 			barrel_tip._fire.rpc()
 
