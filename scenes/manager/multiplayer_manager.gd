@@ -63,6 +63,10 @@ func update_player_score(id, score):
 		update_player_score.rpc_id(i, id, score)
 
 @rpc("any_peer", "call_local")
+func set_is_tank_bot(id, bot):
+	GameManager.tanks[id]["bot"] = bot
+
+@rpc("any_peer", "call_local")
 func start_game():
 	print("startin")
 	generate_bots.rpc()
@@ -72,8 +76,9 @@ func start_game():
 func generate_bots():
 	# TODO move this to lobby code
 	for t in GameManager.tanks:
-		GameManager.tanks[t]["bot"] = false
+		set_is_tank_bot(t, false)
 	
+	var bots = {}
 	# + 1 for the environment tank
 	for i in (MAX_PLAYERS - GameManager.tanks.size() + 1):
 		# seed bots
@@ -88,7 +93,9 @@ func generate_bots():
 			},
 			"bot": true
 		}
-		GameManager.tanks[i] = bot
+		bots[i] = bot
+	
+	receive_players.rpc(bots)
 
 @rpc("any_peer", "call_local")
 func reset_game():
