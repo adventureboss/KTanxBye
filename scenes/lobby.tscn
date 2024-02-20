@@ -46,6 +46,7 @@ theme_override_colors/font_color = Color(0.929412, 0.454902, 0.219608, 1)
 text = "Start!"
 
 [node name="Back" type="Button" parent="."]
+layout_mode = 0
 offset_left = 24.0
 offset_top = 664.0
 offset_right = 69.0
@@ -132,15 +133,6 @@ offset_top = 246.0
 offset_right = 87.0
 offset_bottom = 277.0
 scale = Vector2(0.55, 0.505)
-item_count = 4
-popup/item_0/text = "Blue"
-popup/item_0/id = 0
-popup/item_1/text = "Red"
-popup/item_1/id = 1
-popup/item_2/text = "Green"
-popup/item_2/id = 2
-popup/item_3/text = "Pink"
-popup/item_3/id = 3
 
 [node name="Current Lobby" type="RichTextLabel" parent="Elements"]
 offset_left = -126.5
