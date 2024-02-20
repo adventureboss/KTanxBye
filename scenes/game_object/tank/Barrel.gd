@@ -16,27 +16,25 @@ var bullets_fired = 0
 var current_ammo_bullets_fired = 0
 var tank_color
 var parent_id = null
+var parent : Tank = null
+var is_bot = false
 
 func _ready():
-	parent_id = get_parent().name.to_int()
+	parent = get_parent()
+	parent_id = parent.name.to_int()
 	timer.timeout.connect(on_timer_timeout)
 	GameEvents.ability_pick_up.connect(update_ammo)
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	
 	tank_color = GameManager.tanks[parent_id].color
+	is_bot = GameManager.tanks[parent_id].bot
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	if multiplayer.get_unique_id() != parent_id:
+	if multiplayer.get_unique_id() != parent.get_tank_authority():
 		return
-
-	var mouse_position = get_global_mouse_position()
-	look_at(mouse_position)
 	
-	if Input.is_action_pressed("fire_primary") and get_parent().process_mode == Node.PROCESS_MODE_INHERIT:
-		if !fire_wait:
-			_fire.rpc()
-			
+	parent.control_barrel()
 
 @rpc("any_peer", "call_local")
 func _fire():

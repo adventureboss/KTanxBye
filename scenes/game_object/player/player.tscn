@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://dp7s6opobih82" path="res://scenes/component/hurtbox_component.tscn" id="5_fvhfs"]
 [ext_resource type="PackedScene" uid="uid://drybknwrows3o" path="res://scenes/game_object/tank/tank_body.tscn" id="6_e405s"]
 [ext_resource type="Script" path="res://scenes/game_object/tank/barrel.gd" id="7_ncswm"]
+[ext_resource type="Texture2D" uid="uid://c33elvtm5do5r" path="res://assets/sprites/Tanks/barrelGreen_outline.png" id="8_r6xcv"]
 [ext_resource type="Texture2D" uid="uid://qy1axfax8jfx" path="res://assets/sprites/Effects/Explosion1/explosion1.png" id="8_xuf46"]
 [ext_resource type="Texture2D" uid="uid://ct43tpf4bhlam" path="res://assets/sprites/Effects/Explosion1/explosion2.png" id="9_n372a"]
 [ext_resource type="PackedScene" uid="uid://dubcod0jv5c7t" path="res://scenes/game_object/tank/health_bar.tscn" id="9_ptccx"]
@@ -197,12 +198,14 @@ one_shot = true
 
 [node name="TankName" type="Label" parent="."]
 offset_left = -21.0
-offset_top = -54.0
+offset_top = -59.0
 offset_right = 23.0
-offset_bottom = -31.0
+offset_bottom = -36.0
 horizontal_alignment = 1
 
 [node name="HealthBar" parent="." instance=ExtResource("9_ptccx")]
+offset_top = -35.0
+offset_bottom = -30.0
 
 [node name="Explosion" type="AnimatedSprite2D" parent="."]
 process_mode = 3

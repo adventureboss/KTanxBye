@@ -19,24 +19,27 @@ func _ready():
 	arena_time_manager.one_minute_left.connect(on_one_minute_left)
 	set_multiplayer_authority(scene_manager.get_multiplayer_authority())
 	var i = 0
-	for p in GameManager.tanks:
-		if p == GameManager.ENVIRONMENT:
+	for t in GameManager.tanks:
+		if t == GameManager.ENVIRONMENT:
 			continue
 		var current_tank
-		if GameManager.tanks[p].bot:
+		if GameManager.tanks[t].bot:
 			current_tank = BotScene.instantiate()
 		else:
 			current_tank = PlayerScene.instantiate()
-		current_tank.name = str(GameManager.tanks[p].id)
+		current_tank.name = str(GameManager.tanks[t].id)
 		current_tank.get_node("HealthComponent").died.connect(_on_player_died)
 		add_child(current_tank)
-		if multiplayer.get_unique_id() == GameManager.tanks[p].id:
+		if multiplayer.get_unique_id() == GameManager.tanks[t].id:
 			player_camera = current_tank.get_node("Camera2D")
 		
 		for spawn in get_tree().get_nodes_in_group("PlayerSpawnPoints"):
 			if spawn.name == str(i):
 				current_tank.global_position = spawn.global_position
 		i += 1
+	
+	# Setup bots to listen to all deaths
+	# TODO
 
 	arena_time_manager.pause_round()
 	countdown.start_countdown(player_camera)

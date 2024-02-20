@@ -74,7 +74,8 @@ func generate_bots():
 	for t in GameManager.tanks:
 		GameManager.tanks[t]["bot"] = false
 	
-	for i in (MAX_PLAYERS - GameManager.tanks.size()):
+	# + 1 for the environment tank
+	for i in (MAX_PLAYERS - GameManager.tanks.size() + 1):
 		# seed bots
 		var bot = {
 			"id": i,

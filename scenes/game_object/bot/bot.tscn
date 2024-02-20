@@ -1,9 +1,9 @@
 [gd_scene load_steps=17 format=3 uid="uid://7y1xgr3baamu"]
 
 [ext_resource type="Script" path="res://scenes/game_object/bot/bot.gd" id="1_6nntg"]
+[ext_resource type="Script" path="res://scenes/game_object/tank/barrel.gd" id="4_m2dl0"]
 [ext_resource type="PackedScene" uid="uid://73lr8fqud4" path="res://scenes/component/health_component.tscn" id="5_g00r3"]
 [ext_resource type="PackedScene" uid="uid://drybknwrows3o" path="res://scenes/game_object/tank/tank_body.tscn" id="6_tjm2h"]
-[ext_resource type="Script" path="res://scenes/game_object/tank/Barrel.gd" id="7_baeh0"]
 [ext_resource type="Texture2D" uid="uid://c33elvtm5do5r" path="res://assets/sprites/Tanks/barrelGreen_outline.png" id="8_mqg3e"]
 [ext_resource type="PackedScene" uid="uid://dp7s6opobih82" path="res://scenes/component/hurtbox_component.tscn" id="9_lepo7"]
 [ext_resource type="PackedScene" uid="uid://dubcod0jv5c7t" path="res://scenes/game_object/tank/health_bar.tscn" id="10_iqqlq"]
@@ -71,7 +71,7 @@ navigation_layers = 3
 debug_enabled = true
 
 [node name="PathTimer" type="Timer" parent="."]
-wait_time = 0.2
+wait_time = 0.5
 autostart = true
 
 [node name="HealthComponent" parent="." instance=ExtResource("5_g00r3")]
@@ -83,6 +83,38 @@ wait_time = 2.0
 one_shot = true
 
 [node name="TankBody" parent="." instance=ExtResource("6_tjm2h")]
+
+[node name="ItemTimer" type="Timer" parent="."]
+wait_time = 30.0
+
+[node name="FireTimer" type="Timer" parent="."]
+
+[node name="TankSenseArea2D" type="Area2D" parent="."]
+scale = Vector2(1.56, 1.56)
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TankSenseArea2D"]
+scale = Vector2(31.4, 31.4)
+shape = SubResource("CircleShape2D_7egey")
+
+[node name="ConsumableSenseArea2D" type="Area2D" parent="."]
+scale = Vector2(1.56, 1.56)
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ConsumableSenseArea2D"]
+scale = Vector2(31.4, 31.4)
+shape = SubResource("CircleShape2D_7egey")
+
+[node name="BulletSenseArea2D" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 16
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BulletSenseArea2D"]
+scale = Vector2(11.56, 11.56)
+shape = SubResource("CircleShape2D_nseo4")
+debug_color = Color(0.952941, 0, 0.54902, 0.419608)
 
 [node name="Barrel" type="Marker2D" parent="."]
 script = ExtResource("7_baeh0")
@@ -143,13 +175,15 @@ one_shot = true
 
 [node name="TankName" type="Label" parent="."]
 offset_left = -21.0
-offset_top = -54.0
+offset_top = -59.0
 offset_right = 23.0
-offset_bottom = -31.0
+offset_bottom = -36.0
 text = "Bot"
 horizontal_alignment = 1
 
 [node name="HealthBar" parent="." instance=ExtResource("10_iqqlq")]
+offset_top = -35.0
+offset_bottom = -30.0
 
 [node name="Explosion" type="AnimatedSprite2D" parent="."]
 process_mode = 3
@@ -158,6 +192,13 @@ sprite_frames = SubResource("SpriteFrames_qctma")
 frame_progress = 0.217273
 
 [connection signal="timeout" from="PathTimer" to="." method="_on_path_timer_timeout"]
+[connection signal="died" from="HealthComponent" to="." method="_on_health_component_died"]
+[connection signal="timeout" from="HealthComponent/RespawnTimer" to="." method="_on_respawn_timer_timeout"]
+[connection signal="area_entered" from="TankSenseArea2D" to="." method="_on_tank_sense_area_2d_area_entered"]
+[connection signal="area_exited" from="TankSenseArea2D" to="." method="_on_tank_sense_area_2d_area_exited"]
+[connection signal="area_entered" from="ConsumableSenseArea2D" to="." method="_on_consumable_sense_area_2d_area_entered"]
+[connection signal="area_exited" from="ConsumableSenseArea2D" to="." method="_on_consumable_sense_area_2d_area_exited"]
+[connection signal="body_entered" from="BulletSenseArea2D" to="." method="_on_bullet_sense_area_2d_body_entered"]
 [connection signal="timeout" from="BoostTimer" to="." method="_on_boost_timer_timeout"]
 
 [editable path="TankBody"]

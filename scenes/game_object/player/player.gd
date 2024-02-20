@@ -42,8 +42,17 @@ func get_movement_vector():
 	return Vector2(x_movement, y_movement)
 
 func apply_boost(direction: Vector2):
+	print(direction)
 	var boost_strength = 2500.0
 	velocity += direction * boost_strength
+
+func control_barrel():
+	var mouse_position = get_global_mouse_position()
+	barrel_tip.look_at(mouse_position)
+	
+	if Input.is_action_pressed("fire_primary") and get_parent().process_mode == Node.PROCESS_MODE_INHERIT:
+		if !barrel_tip.fire_wait:
+			barrel_tip._fire.rpc()
 
 @rpc("any_peer", "call_local")
 func update_health_display():
@@ -59,4 +68,4 @@ func _on_boost_timer_timeout():
 
 @rpc("any_peer", "call_local")
 func show_emote_sprite(id, path):
-	emote.start_emote(id, path)
+	super(id, path)
