@@ -65,7 +65,7 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("boost_available", "boost_unavailable", "emote_wheel") groups=["player"]]
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("boost_available", "boost_unavailable", "emote_wheel") groups=["Players", "Tanks"]]
 collision_layer = 2
 collision_mask = 126
 script = ExtResource("1_hkal2")

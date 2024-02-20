@@ -16,7 +16,7 @@ var can_boost = true
 
 @onready var previous_movement: Vector2 = Vector2.ZERO
 
-var tank_id: int
+@onready var tank_id: int = str(name).to_int()
 
 func _init():
 	allow_instantiation()
@@ -25,12 +25,9 @@ func allow_instantiation():
 	assert(false, "The tank class is cannot be instantiated")
 
 func _ready():
-	tank_id = str(name).to_int()
 	print("setting tank_id %d" % tank_id)
-	# although the player is not in control of most things now,
-	# I think it is an easy approach for position, etc.
-	$MultiplayerSynchronizer.set_multiplayer_authority(tank_id)
-	if multiplayer.get_unique_id() == tank_id:
+	$MultiplayerSynchronizer.set_multiplayer_authority(get_tank_authority())
+	if multiplayer.get_unique_id() == get_tank_authority():
 		health_component.health_changed.connect(on_health_changed)
 		var tank_color = GameManager.tanks[tank_id].color
 		set_tank_texture.rpc(tank_id, tank_color)
@@ -39,18 +36,22 @@ func _ready():
 func get_tank_id():
 	return tank_id
 
+func get_tank_authority():
+	return tank_id
+
 @rpc("any_peer", "call_local")
-func set_tank_name(tank_id):
-	if $MultiplayerSynchronizer.get_multiplayer_authority() == tank_id:
-		tank_name.text = GameManager.tanks[tank_id].name
+func set_tank_name(id):
+	print("set name synchronizer %d and get_tank_authority %d" % [$MultiplayerSynchronizer.get_multiplayer_authority(), get_tank_authority()])
+	if $MultiplayerSynchronizer.get_multiplayer_authority() == get_tank_authority():
+		tank_name.text = GameManager.tanks[id].name
 	else:
-		get_node("../%s/TankName" % tank_id).text = GameManager.tanks[tank_id].name
+		get_node("../%s/TankName" % id).text = GameManager.tanks[id].name
 
 @rpc("any_peer", "call_local")
 func set_tank_texture(id, tank_color):
 	var body
 	var barrel
-	if multiplayer.get_unique_id() == id:
+	if multiplayer.get_unique_id() == get_tank_authority():
 		body = tank_body
 		barrel = barrel_color
 	else:
@@ -62,7 +63,8 @@ func set_tank_texture(id, tank_color):
 	barrel.scale = Vector2(0.5, 0.5)
 
 func _process(delta):
-	if multiplayer.get_unique_id() != tank_id:
+	#print("multiplayer %d and get_tank_authority %d" % [ multiplayer.get_unique_id(), get_tank_authority()])
+	if multiplayer.get_unique_id() != get_tank_authority():
 		return
 	
 	var movement_vector = get_movement_vector()
@@ -72,9 +74,9 @@ func _process(delta):
 	velocity = velocity.lerp(target_velocity, 1 - exp(-delta * ACCELERATION_SMOOTHING))
 	
 	# calling move_and_slide in the child classes
-	_move(delta, direction, velocity)
+	_move(delta, direction)
 	
-func _move(delta, direction, velocity):
+func _move(delta, direction):
 	pass
 	
 func get_movement_vector():
